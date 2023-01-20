@@ -1,7 +1,19 @@
+import React, { useState } from 'react';
 import Head from 'next/head'
-import React from 'react';
+
+import {useForm} from 'react-hook-form';
+import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
 
 export default function Home() {
+  const [toggleLogin, setToggleLogin] = useState<boolean>(true);
+  const {register, handleSubmit, formState: {errors}} = useForm();
+  const onSubmit:SubmitHandler<FieldValues> = (data) => {
+    console.log(data);
+  }
+  const onToggleLogin = ():void => {
+    setToggleLogin((prev) => !prev);
+  }
+
   return (
     <>
       <Head>
@@ -12,14 +24,21 @@ export default function Home() {
         <link rel="stylesheet" href="https://unpkg.com/mvp.css@1.12/mvp.css" /> 
       </Head>
       <main>
-        <form onSubmit={onSubmit}>
+        <form onSubmit={handleSubmit(onSubmit)}>
           <label htmlFor='username'>UserName</label>
-          <input type="text" id="username" name="username" placeholder='username' style={{width:'50%'}}/>
+          <input {...register('username', {required: true})} id="username" placeholder='username'style={{width:'50%'}}/>
+          {errors.username && <p style={{color:'red'}}>Username is required</p>}
           <label htmlFor='password'>PassWord</label>
-          <input type="password" id="password" name="password" placeholder='password' />
-          <input type="submit" value="로그인!" />
+          <input {...register('password', {required: true})} type="password" id="password" placeholder='password' />
+          {errors.password && <p style={{color:'red'}}>Password is required</p>}
+          <input type="submit" value={toggleLogin ? '로그인' : '회원가입'} />
         </form>
+        <button onClick={onToggleLogin}>{!toggleLogin ? '로그인하기' : '회원가입하기'}</button>
       </main>
     </>
   )
 }
+
+// export async function getServerSideProps() {
+
+// }
