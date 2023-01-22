@@ -1,12 +1,44 @@
 import React, { useState } from 'react';
 import Head from 'next/head'
+import axios, {AxiosError, AxiosResponse} from 'axios';
 
 import {useForm} from 'react-hook-form';
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
 
+//TODO : BackEnd Url 입력하기
+const API_LOGIN_URL = "";
+const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
+
 export default function Home() {
   const [toggleLogin, setToggleLogin] = useState<boolean>(true);
   const {register, handleSubmit, formState: {errors}} = useForm();
+  
+  const onLogin = (username:string, password:string) => {
+    axios.post(API_LOGIN_URL, {username, password})
+      .then(onLoginSuccess)
+      .catch(onError);
+  }
+  
+  const onSilentRefresh = (data:{username:string, password:string}) => {
+    axios.post('/silent-refresh', data)
+      .then(onLoginSuccess)
+      .catch(onError);
+  }
+  
+  const onLoginSuccess = (response : AxiosResponse) => {
+    const { accessToken } = response.data;
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+
+    setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
+  }
+
+  const onError = (error: Error|AxiosError) => {
+    console.debug(error);
+  }
+  const onSignUp = async (username:string, password:string) => {
+    axios.post('/singup', {username, password});
+  }
+
   const onSubmit:SubmitHandler<FieldValues> = (data) => {
     console.log(data);
   }
