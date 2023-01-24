@@ -5,22 +5,21 @@ import axios, {AxiosError, AxiosResponse} from 'axios';
 import {useForm} from 'react-hook-form';
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
 
-//TODO : BackEnd Url 입력하기
-const API_LOGIN_URL = "";
-const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
-
 export default function Home() {
+  const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
+
   const [toggleLogin, setToggleLogin] = useState<boolean>(true);
   const {register, handleSubmit, formState: {errors}} = useForm();
-  
+
   const onLogin = (username:string, password:string) => {
-    axios.post(API_LOGIN_URL, {username, password})
+    //http로 입력해서 Error 발생 가능!
+    axios.post(`http://${window.location.host}/api/auth/login`, {username, password})
       .then(onLoginSuccess)
       .catch(onError);
   }
   
   const onSilentRefresh = (data:{username:string, password:string}) => {
-    axios.post('/silent-refresh', data)
+    axios.post(`http://${window.location.host}/api/auth/silent-refresh`, data)
       .then(onLoginSuccess)
       .catch(onError);
   }
@@ -33,15 +32,21 @@ export default function Home() {
   }
 
   const onError = (error: Error|AxiosError) => {
-    console.debug(error);
+    console.log(error);
   }
   const onSignUp = async (username:string, password:string) => {
-    axios.post('/singup', {username, password});
+    axios.post(`http://${window.location.host}/api/auth/singup`, {username, password})
+      .then(onSignUpSuccess)
+      .catch(onError);
+  }
+  const onSignUpSuccess = (response : AxiosResponse) => {
+
   }
 
-  const onSubmit:SubmitHandler<FieldValues> = (data) => {
-    console.log(data);
+  const onSubmit:SubmitHandler<FieldValues> = ({username, password}) => {
+    {toggleLogin ? onLogin(username, password) : onSignUp(username, password)}
   }
+
   const onToggleLogin = ():void => {
     setToggleLogin((prev) => !prev);
   }
@@ -70,7 +75,3 @@ export default function Home() {
     </>
   )
 }
-
-// export async function getServerSideProps() {
-
-// }
