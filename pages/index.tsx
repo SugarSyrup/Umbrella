@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Head from 'next/head'
+import Head from 'next/head';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 
 import {useForm} from 'react-hook-form';
