@@ -1,29 +1,13 @@
-import { useState, useEffect, FormEvent } from "react";
+import { useState, useEffect, FormEvent, useRef } from "react";
 import Head from 'next/head';
 
 export default function Chats() {
     const [_messages,setMessages] = useState<string[]>(["Chatting Service is Now starting!"]);
-    const [sendMessage, setSendMessage] = useState<string>("");
-    const [socket, setSocket] = useState<WebSocket>();
-    // const [tmpSocket, _] = useState<WebSocket>(new WebSocket('wss://umbrellawss.fly.dev/'));
-
-    // useEffect(() => {
-    // const socket = new WebSocket('wss://umbrellawss.fly.dev/');
-    //     socket.addEventListener("open", () => {
-    //         console.log('✔webSocket is Connected!✔');
-    //     });
-    //     socket.addEventListener("close", () => {
-    //         console.log('❌webSocket Connection is Closed!❌');
-    //     });
-    //     socket.addEventListener("message", (message) => {
-    //         setMessages(prev => [...prev, message.data]);
-    //         console.log(_messages);
-    //     });
-    // }, []);
+    const [sendMessage, setSendMessage] = useState<string>();
+    const socket = useRef<WebSocket>();
     
     useEffect(() => {
         const _socket = new WebSocket('wss://umbrellawss.fly.dev/');
-        setSocket(_socket);
         _socket.addEventListener("open", () => {
             console.log('✔webSocket is Connected!✔');
         });
@@ -32,14 +16,14 @@ export default function Chats() {
         });
         _socket.addEventListener("message", (message) => {
             setMessages(prev => [...prev, message.data]);
-            console.log(_messages);
         });
+        socket.current = _socket;
     }, []);
 
     const onSubmit = (event:FormEvent) => {
         event.preventDefault();
-        if(socket !== undefined) {
-            socket.send(JSON.stringify({type:"new_message",payload:sendMessage}));
+        if(socket.current !== undefined) {
+            socket.current.send(JSON.stringify({type:"new_message",payload:sendMessage}));
         }
     }
     const onChange = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -68,3 +52,8 @@ export default function Chats() {
         </form>
     </>)
 }
+
+// export function getServerSideProps() {
+//     const _socket = new WebSocket('wss://umbrellawss.fly.dev/');
+
+// }
