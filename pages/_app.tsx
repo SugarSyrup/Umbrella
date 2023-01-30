@@ -1,4 +1,4 @@
-import '@/styles/resets.css'
+import '@/styles/resets.scss'
 import axios from 'axios'
 import type { AppProps } from 'next/app'
 
