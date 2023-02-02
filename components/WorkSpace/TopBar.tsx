@@ -1,8 +1,7 @@
 import { useState } from "react"
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSun,faChevronDown } from "@fortawesome/free-solid-svg-icons";
-import { faMoon } from "@fortawesome/free-regular-svg-icons";
+import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function TopBar() {
     const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
@@ -10,13 +9,14 @@ export default function TopBar() {
         <div className="container">
             <div className="welcome">
                 <span>Welcome back, SugarSyrup</span>
+                {/* 만약 알림과 메세지를 주고 받는 다면, 그 알림을 입력 받는 칸 */}
                 <span>You received 5 Messages, Missed 3 alarms, have a good day</span>
             </div>
-            <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
-            <div>
-                <img src="images/butterfly.jpg"></img>
+            <div className="user">
+                {/* todo : user정보 추가 예정 */}
+                <img src="images/butterfly.jpg" className="thumbnail"></img>
                 <span>SugarSyrup</span>
-                <FontAwesomeIcon icon={faChevronDown} />
+                <FontAwesomeIcon icon={faChevronDown}/>
             </div>
         </div>
         <style jsx>{`
@@ -36,6 +36,7 @@ export default function TopBar() {
                 flex-direction:column;
                 justify-content:center;
                 align-items:flex-start;
+                margin-left:10px;
             }
 
             div.welcome span:nth-child(1) {
@@ -45,6 +46,26 @@ export default function TopBar() {
             }
             div.welcome span:nth-child(2) {
                 color:grey;
+            }
+
+            
+            div.user {
+                display:flex;
+                flex-direction:row;
+                justify-content:center;
+                align-items:center;
+
+                margin-right:50px;
+            }
+            div.user img.thumbnail {
+                border:1px solid black;
+                border-radius: 50%;
+                width:100px;
+                height:100px;
+                margin-right:30px;
+            }
+            div.user span{
+                margin-right:20px;
             }
         `}</style>
     </>)

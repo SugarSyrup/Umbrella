@@ -1,4 +1,4 @@
-import WorkSpaceLayOut from '@/components/Layout';
+import WorkSpaceLayOut from '@/components/WorkSpace/Layout';
 import { ThemeProvider } from 'styled-components';
 
 const mainTheme = {
