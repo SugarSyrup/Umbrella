@@ -5,7 +5,7 @@ const nextConfig = {
   reactStrictMode: false,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')],
-    prependData: `@import "styles/_variables.scss"; @import "styles/_mixins.scss";`,
+    // prependData: `@import "@/styles/_variables.scss"; @import "@/styles/_mixins.scss";`,
   },
   // async rewrites() {
   //   return[{

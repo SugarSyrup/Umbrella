@@ -61,9 +61,9 @@ export default function Home() {
         <span className="hrr">or</span>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* todo : 정규식으로 이메일 비밀번호 양식 제한하기 */}
-          <input {...register('username', {required: true})} placeholder='Email' />
+          <input {...register('username', {required: true, pattern: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/})} placeholder='Email' />
           {errors.username && <p style={{color:'red'}}>Username is required</p>}
-          <input {...register('password', {required: true})} type="password" placeholder='Password' />
+          <input {...register('password', {required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/})} type="password" placeholder='Password' />
           {errors.password && <p style={{color:'red'}}>Password is required</p>}
           <input type="submit" value={'Log in'} />
         </form>
