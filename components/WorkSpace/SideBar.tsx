@@ -1,7 +1,10 @@
 export default function SideBar() {
     return(<>
         <div className="container">
-            
+            <span>@Your Community</span>
+            <ul>
+                <li>Code Reivews</li>
+            </ul>
         </div>
         <style jsx>{`
             .container{
