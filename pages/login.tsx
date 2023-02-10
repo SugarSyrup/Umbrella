@@ -4,6 +4,10 @@ import axios, {AxiosError, AxiosResponse} from 'axios';
 import {useForm} from 'react-hook-form';
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
 
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
+import { RiKakaoTalkFill } from 'react-icons/ri';
+
 //import '@/styles/pages/login.module.scss';
 
 export default function Home() {
@@ -58,15 +62,27 @@ export default function Home() {
         <div className="oAuths">
 
         </div>
-        <span className="hrr">or</span>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* todo : 정규식으로 이메일 비밀번호 양식 제한하기 */}
           <input {...register('username', {required: true, pattern: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/})} placeholder='Email' />
           {errors.username && <p style={{color:'red'}}>Username is required</p>}
           <input {...register('password', {required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/})} type="password" placeholder='Password' />
           {errors.password && <p style={{color:'red'}}>Password is required</p>}
-          <input type="submit" value={'Log in'} />
+          <span>Forgot Password?</span>
+          <input type="submit" value={'Log in'} className="submit"/>
         </form>
+        <span className="hrr">or</span>
+        <div className="icons">
+          <div className="icon google">
+            <FcGoogle />
+          </div>
+          <div className="icon kakao">
+            <RiKakaoTalkFill />
+          </div>
+          <div className="icon github">
+            <FaGithub />
+          </div>
+        </div>
       </main>
       <style jsx>{`
         .mainContainer{
@@ -105,11 +121,12 @@ export default function Home() {
         }
         .textContainer .smallTxt {
           font-size:15px;
-          font-color:grey;
+          font-weight:600;
+          margin-top:10px;
           margin-bottom:20px;
         }
         .smallTxt a{
-          color: purple;
+          color: #9484FF;
         }
 
         .hrr{
@@ -132,6 +149,15 @@ export default function Home() {
             line-height: 0px;
             margin: 0px 8px;
         }
+
+        p{
+          font-size:12px;
+          font-weight:bolder;
+          margin-top:-17px; 
+          margin-bottom:20px;
+          margin-left:-250px;
+        }
+
         form{
           display:flex;
           flex-direction:column;
@@ -139,6 +165,9 @@ export default function Home() {
           align-items:center;
 
           width:100%;
+          margin-top:40px;
+
+          position:relative;
         }
 
         input{
@@ -149,6 +178,63 @@ export default function Home() {
           height:40px;
           border-radius:5px;
           padding-left:10px;
+        }
+
+        .submit{
+          margin-top:30px;
+          margin-bottom:30px;
+          cursor:pointer;
+          border-radius:80px;
+          background-color:#9484FF;
+
+          font-size:18px;
+          font-weight:bolder;
+        }
+
+        form span {
+          font-size:10px;
+          font-weight:bolder;
+          position:absolute;
+          right:20px;
+          top:120px;
+          cursor:pointer;
+        }
+
+        form span:hover{
+          color : #9484FF;
+        }
+
+        .icons {
+          width:100%;
+          height:20%;
+
+          display:flex;
+          flex-direction:row;
+          justify-content:space-around;
+          align-items:center;
+        }
+
+        .icon {
+          width:60px;
+          height:60px;
+          border-radius:10px;
+          
+
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          font-size:30px;
+        }
+
+        .google{
+          border:0.3px solid #EDEDED;
+        }
+        .kakao {
+          background-color:#FAE200;
+        }
+        .github {
+          background-color:black;
+          color:white;
         }
       `}</style>
     </div>
