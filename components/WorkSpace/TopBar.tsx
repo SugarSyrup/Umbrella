@@ -5,24 +5,21 @@ import { faChevronDown } from "@fortawesome/free-solid-svg-icons";
 
 export default function TopBar() {
     const [isDarkMode, setIsDarkMode] = useState<boolean>(true);
-    return(<>
-        <div className="container">
-            <div className="welcome">
-                {/* todo : 페이지 이동 에 따라 해당 span은 바뀔 예정 ex. codeReviews로 가면 그에 맞게 제목 변경 */}
-                <span>Welcome back, SugarSyrup</span>
-                {/* 만약 알림과 메세지를 주고 받는 다면, 그 알림을 입력 받는 칸 */}
-                <span>You received 5 Messages, Missed 3 alarms, have a good day</span>
-            </div>
-            <div className="user">
-                {/* todo : user정보 추가 예정 */}
-                <img src="images/butterfly.jpg" className="thumbnail"></img>
-                <span>SugarSyrup</span>
-                <FontAwesomeIcon icon={faChevronDown}/>
-            </div>
+    return(<div className="container">
+        <div className="welcome">
+            {/* todo : 페이지 이동 에 따라 해당 span은 바뀔 예정 ex. codeReviews로 가면 그에 맞게 제목 변경 */}
+            <span>Welcome back, SugarSyrup</span>
+            {/* 만약 알림과 메세지를 주고 받는 다면, 그 알림을 입력 받는 칸 */}
+            <span>You received 5 Messages, Missed 3 alarms, have a good day</span>
+        </div>
+        <div className="user">
+            {/* todo : user정보 추가 예정 */}
+            <img src="images/butterfly.jpg" className="thumbnail"></img>
+            <span>SugarSyrup</span>
+            <FontAwesomeIcon icon={faChevronDown}/>
         </div>
         <style jsx>{`
             div.container{
-                width:80vw;
                 height:15vh;
                 background-color:#FFFFFF;
                 padding:30px 60px;
@@ -69,5 +66,5 @@ export default function TopBar() {
                 margin-right:20px;
             }
         `}</style>
-    </>)
+    </div>)
 }
