@@ -1,7 +1,7 @@
 import TopBar from "./TopBar";
 import SideBar from "./SideBar";
 
-export default function WorkSpaceLayOut({children}: React.PropsWithChildren<{}>) {
+export default function WorkSpaceLayOut({children} : { children: JSX.Element }) {
     return (<div className="container">
         <SideBar />
         <div>
