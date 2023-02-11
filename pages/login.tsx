@@ -3,6 +3,8 @@ import axios, {AxiosError, AxiosResponse} from 'axios';
 
 import {useForm} from 'react-hook-form';
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
 
 import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
@@ -10,11 +12,20 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 
 //import '@/styles/pages/login.module.scss';
 
+
+const schema = Yup.object({
+  username: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
+  password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/,'8글자 이상 염문자, 숫자, 특수문자를 조합해서 입력하세요').required('비밀번호를 입력해 주세요'),
+}).required();
+type FormData = Yup.InferType<typeof schema>;
+
 export default function Home() {
   const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
   const [toggleLogin, setToggleLogin] = useState<boolean>(true);
-  const {register, handleSubmit, formState: {errors}} = useForm();
+  const {register, handleSubmit, formState: {errors}} = useForm({
+    resolver: yupResolver(schema)
+  });
 
   const onLogin = (username:string, password:string) => {
     //http로 입력해서 Error 발생 가능!
@@ -59,15 +70,12 @@ export default function Home() {
             <span className="heading">Log in</span>
             <span className="smallTxt">New to Umbrella? <a>Create an new account</a></span>
         </div>
-        <div className="oAuths">
-
-        </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* todo : 정규식으로 이메일 비밀번호 양식 제한하기 */}
-          <input {...register('username', {required: true, pattern: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/})} placeholder='Email' />
-          {errors.username && <p style={{color:'red'}}>Username is required</p>}
-          <input {...register('password', {required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/})} type="password" placeholder='Password' />
-          {errors.password && <p style={{color:'red'}}>Password is required</p>}
+          <input {...register('username')} placeholder='Email' />
+          {errors.username && <p style={{color:'red'}}>{errors.username?.message}</p>}
+          <input {...register('password')} type="password" placeholder='Password' />
+          <p style={{color:'red'}}>{errors.password?.message}</p>
           <span>Forgot Password?</span>
           <input type="submit" value={'Log in'} className="submit"/>
         </form>

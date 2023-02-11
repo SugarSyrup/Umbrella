@@ -15,6 +15,7 @@
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
     "@fortawesome/free-solid-svg-icons": "^6.2.1",
     "@fortawesome/react-fontawesome": "^0.2.0",
+    "@hookform/resolvers": "^2.9.11",
     "@next/font": "13.1.2",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
@@ -39,7 +40,8 @@
     "tls": "^0.0.1",
     "typescript": "4.9.4",
     "utf-8-validate": "^6.0.1",
-    "ws": "^8.12.0"
+    "ws": "^8.12.0",
+    "yup": "^1.0.0"
   },
   "browser": {
     "fs": false,
