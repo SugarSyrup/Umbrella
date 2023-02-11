@@ -3,14 +3,29 @@ import axios, {AxiosError, AxiosResponse} from 'axios';
 
 import {useForm} from 'react-hook-form';
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
+import { yupResolver } from '@hookform/resolvers/yup';
+import * as Yup from 'yup';
+
+import { FcGoogle } from 'react-icons/fc';
+import { FaGithub } from 'react-icons/fa';
+import { RiKakaoTalkFill } from 'react-icons/ri';
 
 //import '@/styles/pages/login.module.scss';
+
+
+const schema = Yup.object({
+  username: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
+  password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/,'8글자 이상 염문자, 숫자, 특수문자를 조합해서 입력하세요').required('비밀번호를 입력해 주세요'),
+});
+type FormData = Yup.InferType<typeof schema>;
 
 export default function Home() {
   const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
   const [toggleLogin, setToggleLogin] = useState<boolean>(true);
-  const {register, handleSubmit, formState: {errors}} = useForm();
+  const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
+    resolver: yupResolver(schema)
+  });
 
   const onLogin = (username:string, password:string) => {
     //http로 입력해서 Error 발생 가능!
@@ -53,20 +68,28 @@ export default function Home() {
       <main>
         <div className="textContainer">
             <span className="heading">Log in</span>
-            <span className="smallTxt">New to Umbrella? <a>Create an new account</a></span>
+            <span className="smallTxt">New to Umbrella? <a href="/user/join">Create an new account</a></span>
         </div>
-        <div className="oAuths">
-
-        </div>
-        <span className="hrr">or</span>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {/* todo : 정규식으로 이메일 비밀번호 양식 제한하기 */}
-          <input {...register('username', {required: true, pattern: /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/})} placeholder='Email' />
-          {errors.username && <p style={{color:'red'}}>Username is required</p>}
-          <input {...register('password', {required: true, pattern: /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/})} type="password" placeholder='Password' />
-          {errors.password && <p style={{color:'red'}}>Password is required</p>}
-          <input type="submit" value={'Log in'} />
+          <input {...register('username')} placeholder='Email' />
+          {errors.username && <p style={{color:'red'}}>{errors.username?.message}</p>}
+          <input {...register('password')} type="password" placeholder='Password' />
+          <p style={{color:'red'}}>{errors.password?.message}</p>
+          <a href="/user/find-password">Forgot Password?</a>
+          <input type="submit" value={'Log in'} className="submit"/>
         </form>
+        <span className="hrr">or</span>
+        <div className="icons">
+          <div className="icon google">
+            <FcGoogle />
+          </div>
+          <div className="icon kakao">
+            <RiKakaoTalkFill />
+          </div>
+          <div className="icon github">
+            <FaGithub />
+          </div>
+        </div>
       </main>
       <style jsx>{`
         .mainContainer{
@@ -105,11 +128,13 @@ export default function Home() {
         }
         .textContainer .smallTxt {
           font-size:15px;
-          font-color:grey;
+          font-weight:600;
+          margin-top:10px;
           margin-bottom:20px;
         }
         .smallTxt a{
-          color: purple;
+          text-decoration : none;
+          color: #9484FF;
         }
 
         .hrr{
@@ -132,6 +157,15 @@ export default function Home() {
             line-height: 0px;
             margin: 0px 8px;
         }
+
+        p{
+          font-size:12px;
+          font-weight:bolder;
+          margin-top:-17px; 
+          margin-bottom:20px;
+          margin-left:-250px;
+        }
+
         form{
           display:flex;
           flex-direction:column;
@@ -139,6 +173,9 @@ export default function Home() {
           align-items:center;
 
           width:100%;
+          margin-top:40px;
+
+          position:relative;
         }
 
         input{
@@ -149,6 +186,65 @@ export default function Home() {
           height:40px;
           border-radius:5px;
           padding-left:10px;
+        }
+
+        .submit{
+          margin-top:30px;
+          margin-bottom:30px;
+          cursor:pointer;
+          border-radius:80px;
+          background-color:#9484FF;
+
+          font-size:18px;
+          font-weight:bolder;
+        }
+
+        form a {
+          text-decoration : none;
+          color:black;
+          font-size:10px;
+          font-weight:bolder;
+          position:absolute;
+          right:20px;
+          top:120px;
+          cursor:pointer;
+        }
+
+        form a:hover{
+          color : #9484FF;
+        }
+
+        .icons {
+          width:100%;
+          height:20%;
+
+          display:flex;
+          flex-direction:row;
+          justify-content:space-around;
+          align-items:center;
+        }
+
+        .icon {
+          width:60px;
+          height:60px;
+          border-radius:10px;
+          
+
+          display:flex;
+          justify-content:center;
+          align-items:center;
+          font-size:30px;
+        }
+
+        .google{
+          border:0.3px solid #EDEDED;
+        }
+        .kakao {
+          background-color:#FAE200;
+        }
+        .github {
+          background-color:black;
+          color:white;
         }
       `}</style>
     </div>
