@@ -72,10 +72,10 @@ export default function Home() {
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input {...register('username')} placeholder='Email' />
-          {errors.username && <p style={{color:'red'}}>{errors.username?.message}</p>}
+          <p style={{color:'red'}}>{errors.username?.message}</p>
           <input {...register('password')} type="password" placeholder='Password' />
           <p style={{color:'red'}}>{errors.password?.message}</p>
-          <a href="/user/find-password">Forgot Password?</a>
+            <a href="/user/find-password">Forgot Password?</a>
           <input type="submit" value={'Log in'} className="submit"/>
         </form>
         <span className="hrr">or</span>
@@ -159,37 +159,38 @@ export default function Home() {
         }
 
         p{
+          height:17px;
           font-size:12px;
           font-weight:bolder;
-          margin-top:-17px; 
+          align-items:flex-end;          
+          margin-left:5px;
           margin-bottom:20px;
-          margin-left:-250px;
+          margin-top:5px;
         }
 
         form{
           display:flex;
           flex-direction:column;
           justify-content:flex-start;
-          align-items:center;
+          align-items:flex-start;
 
           width:100%;
-          margin-top:40px;
+          margin-top:20px;
 
           position:relative;
         }
 
         input{
-          width:90%;
-          margin-bottom:20px;
+          width:100%;
           border:0px;
           background-color:#F3F3F3;
-          height:40px;
+          height:50px;
           border-radius:5px;
           padding-left:10px;
         }
 
         .submit{
-          margin-top:30px;
+          margin-top:20px;
           margin-bottom:30px;
           cursor:pointer;
           border-radius:80px;
@@ -204,9 +205,10 @@ export default function Home() {
           color:black;
           font-size:10px;
           font-weight:bolder;
+
           position:absolute;
-          right:20px;
-          top:120px;
+          right:-10px;
+          top:150px;
           cursor:pointer;
         }
 
