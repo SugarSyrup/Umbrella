@@ -68,14 +68,14 @@ export default function Home() {
       <main>
         <div className="textContainer">
             <span className="heading">Log in</span>
-            <span className="smallTxt">New to Umbrella? <a>Create an new account</a></span>
+            <span className="smallTxt">New to Umbrella? <a href="/user/join">Create an new account</a></span>
         </div>
         <form onSubmit={handleSubmit(onSubmit)}>
           <input {...register('username')} placeholder='Email' />
           {errors.username && <p style={{color:'red'}}>{errors.username?.message}</p>}
           <input {...register('password')} type="password" placeholder='Password' />
           <p style={{color:'red'}}>{errors.password?.message}</p>
-          <span>Forgot Password?</span>
+          <a href="/user/find-password">Forgot Password?</a>
           <input type="submit" value={'Log in'} className="submit"/>
         </form>
         <span className="hrr">or</span>
@@ -133,6 +133,7 @@ export default function Home() {
           margin-bottom:20px;
         }
         .smallTxt a{
+          text-decoration : none;
           color: #9484FF;
         }
 
@@ -198,7 +199,9 @@ export default function Home() {
           font-weight:bolder;
         }
 
-        form span {
+        form a {
+          text-decoration : none;
+          color:black;
           font-size:10px;
           font-weight:bolder;
           position:absolute;
@@ -207,7 +210,7 @@ export default function Home() {
           cursor:pointer;
         }
 
-        form span:hover{
+        form a:hover{
           color : #9484FF;
         }
 
