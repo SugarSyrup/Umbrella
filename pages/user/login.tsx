@@ -22,17 +22,9 @@ type FormData = Yup.InferType<typeof schema>;
 export default function Home() {
   const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
-  const [toggleLogin, setToggleLogin] = useState<boolean>(true);
   const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
     resolver: yupResolver(schema)
   });
-
-  const onLogin = (username:string, password:string) => {
-    //http로 입력해서 Error 발생 가능!
-    axios.post(`http://${window.location.host}/api/auth/login`, {username, password})
-      .then(onLoginSuccess)
-      .catch(onError);
-  }
   
   const onSilentRefresh = (data:{username:string, password:string}) => {
     axios.post(`http://${window.location.host}/api/auth/silent-refresh`, data)
@@ -50,17 +42,11 @@ export default function Home() {
   const onError = (error: Error|AxiosError) => {
     console.log(error);
   }
-  const onSignUp = async (username:string, password:string) => {
-    axios.post(`http://${window.location.host}/api/auth/singup`, {username, password})
-      .then(onSignUpSuccess)
-      .catch(onError);
-  }
-  const onSignUpSuccess = (response : AxiosResponse) => {
-
-  }
 
   const onSubmit:SubmitHandler<FieldValues> = ({username, password}) => {
-    {toggleLogin ? onLogin(username, password) : onSignUp(username, password)}
+    axios.post(`http://${window.location.host}/api/auth/login`, {username, password})
+      .then(onLoginSuccess)
+      .catch(onError);
   }
 
   return (
