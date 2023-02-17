@@ -62,7 +62,7 @@ export default function Home() {
           <input {...register('password')} type="password" placeholder='Password' />
           <p style={{color:'red'}}>{errors.password?.message}</p>
           <a href="/user/find-password">Forgot Password?</a>
-          <input type="submit" value={'Log in'} className="submit"/>
+          <input type="submit" value={'Log in'} className={styles.submit}/>
         </form>
         <span className={styles.hrr}>or</span>
         <div className={styles.icons}>
