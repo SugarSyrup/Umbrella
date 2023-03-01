@@ -1,29 +1,20 @@
-import { useState, useEffect, FormEvent, useRef } from "react";
+import { useState, FormEvent } from "react";
 import Head from 'next/head';
 
+import { useMySocket, MySocketState } from "@/utils/useMySocket";
+
 export default function Chats() {
-    const [_messages,setMessages] = useState<string[]>(["Chatting Service is Now starting!"]);
+    const {responseMessage, myWebSocket} = useMySocket((state) => {
+        if (state === MySocketState.onNewMessageReceived ) {
+            console.log('onNewMessageReceived');
+        }
+    });
     const [sendMessage, setSendMessage] = useState<string>();
-    const socket = useRef<WebSocket>();
-    
-    useEffect(() => {
-        const _socket = new WebSocket('wss://umbrellawss.fly.dev/');
-        _socket.addEventListener("open", () => {
-            console.log('✔webSocket is Connected!✔');
-        });
-        _socket.addEventListener("close", () => {
-            console.log('❌webSocket Connection is Closed!❌');
-        });
-        _socket.addEventListener("message", (message) => {
-            setMessages(prev => [...prev, message.data]);
-        });
-        socket.current = _socket;
-    }, []);
 
     const onSubmit = (event:FormEvent) => {
         event.preventDefault();
-        if(socket.current !== undefined) {
-            socket.current.send(JSON.stringify({type:"new_message",payload:sendMessage}));
+        if(myWebSocket.current !== undefined) {
+            myWebSocket.current.send(JSON.stringify({type:"new_message",payload:sendMessage}));
         }
     }
     const onChange = (event:React.ChangeEvent<HTMLInputElement>) => {
@@ -38,7 +29,7 @@ export default function Chats() {
         </Head>
         <h1>Chatting</h1>
         {
-            _messages.map((message) => {
+            responseMessage.map((message) => {
                 return (<div key={message}>
                     <span >{message}</span>
                     <br />
