@@ -13,7 +13,7 @@ const schema = Yup.object({
 });
 type FormData = Yup.InferType<typeof schema>;
 
-const LoginForm = ({submit}) => {
+const LoginForm = () => {
     const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
@@ -48,7 +48,7 @@ const LoginForm = ({submit}) => {
         <p style={{color:'red'}}>{errors.username?.message}</p>
         <input {...register('password')} type="password" placeholder='Password' />
         <p style={{color:'red'}}>{errors.password?.message}</p>
-        <a href="/user/find-password">Forgot Password?</a>
+        <a href="/user/forget-password">Forgot Password?</a>
         <input aria-label="submit" type="submit" value={'Log in'} className="submit"/>
     </form>
     )
