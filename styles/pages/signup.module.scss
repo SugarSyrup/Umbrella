@@ -1,0 +1,23 @@
+div.rowDisplay{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-between;
+    align-items: center;
+
+    width:100%;
+
+    margin-bottom:30px;
+
+    input{
+        width:40%;
+    }
+
+    select{
+        -o-appearance: none;
+        -webkit-appearance: none;
+        -moz-appearance: none;
+        appearance: none;
+
+        outline: 0 none;
+    }
+}

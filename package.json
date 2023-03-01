@@ -27,6 +27,7 @@
     "ajax": "^0.0.4",
     "axios": "^1.2.3",
     "bufferutil": "^4.0.7",
+    "classnames": "^2.3.2",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.2",
     "fs": "^0.0.1-security",
