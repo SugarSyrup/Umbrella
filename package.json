@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "vercel-deploy": "next build && next export"
+    "vercel-deploy": "next build && next export",
+    "test": "jest --watch"
   },
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.1",
@@ -17,6 +18,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hookform/resolvers": "^2.9.11",
     "@next/font": "13.1.2",
+    "@testing-library/user-event": "^14.4.3",
     "@types/node": "18.11.18",
     "@types/react": "18.0.26",
     "@types/react-dom": "18.0.10",
@@ -25,6 +27,7 @@
     "ajax": "^0.0.4",
     "axios": "^1.2.3",
     "bufferutil": "^4.0.7",
+    "classnames": "^2.3.2",
     "eslint": "8.32.0",
     "eslint-config-next": "13.1.2",
     "fs": "^0.0.1-security",
@@ -47,5 +50,12 @@
     "fs": false,
     "os": false,
     "path": false
+  },
+  "devDependencies": {
+    "@babel/preset-typescript": "^7.21.0",
+    "@testing-library/jest-dom": "^5.16.5",
+    "@testing-library/react": "^14.0.0",
+    "jest": "^29.4.3",
+    "jest-environment-jsdom": "^29.4.3"
   }
 }
