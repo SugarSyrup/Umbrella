@@ -2,10 +2,14 @@ import { useForm } from 'react-hook-form';
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-
 import axios, {AxiosError, AxiosResponse} from 'axios';
 
+import { FormInput } from '../atoms/FormInput';
+import { FormInputErrorMessage } from '../atoms/FormInputErrorMessage';
+
 import styles from '@/styles/pages/login.module.scss';
+import { TextLink } from '../atoms/TextLink';
+import { RectangleButton } from '../atoms/RectangleButton';
 
 const schema = Yup.object({
     username: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
@@ -43,14 +47,14 @@ const LoginForm = () => {
     }
 
     return(
-    <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
-        <input {...register('username')} placeholder='Email' />
-        <p style={{color:'red'}}>{errors.username?.message}</p>
-        <input {...register('password')} type="password" placeholder='Password' />
-        <p style={{color:'red'}}>{errors.password?.message}</p>
-        <a href="/user/forget-password">Forgot Password?</a>
-        <input aria-label="submit" type="submit" value={'Log in'} className="submit"/>
-    </form>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
+            <FormInput placeholder='email' type='email' {...register('username')} />
+            { errors?.username ? <FormInputErrorMessage errorMessage={errors.username.message} color="red"/> : <></> }
+            <FormInput placeholder='password' type='password' {...register('password')} />
+            { errors?.password ? <FormInputErrorMessage errorMessage={errors.password.message} color="red"/> : <></> }
+            <TextLink href="/user/forget-password" content="Forgot Password?"/>
+            <RectangleButton type="submit" content="LogIn"/>
+        </form>
     )
 }
 

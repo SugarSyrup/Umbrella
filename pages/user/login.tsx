@@ -4,7 +4,7 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 
 import styles from '@/styles/pages/login.module.scss';
 
-import LoginForm from '@/components/user/LoginForm';
+import LoginForm from '@/components/molecules/LoginForm';
 
 export default function Home() {
 
