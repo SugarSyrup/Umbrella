@@ -1,13 +1,13 @@
 import { ReactNode } from "react"
 
 export interface OAuthLinkButtonPropsType {
-    content:ReactNode
+    children:JSX.Element
 }
 
-export function OAuthLinkButton({content}:OAuthLinkButtonPropsType) {
+export function OAuthLinkButton({children}:OAuthLinkButtonPropsType) {
     return(
         <div>
-            {content}
+            {children}
         </div>
     )
 }

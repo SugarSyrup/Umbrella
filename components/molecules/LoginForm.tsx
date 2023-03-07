@@ -34,6 +34,8 @@ const LoginForm = () => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     
         setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
+        //TODO : 다음 페이지로 리 다이렉션
+        //TODO : 로그인 정보 저장하기
     }
     
     const onError = (error: Error|AxiosError) => {
