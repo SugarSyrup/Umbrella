@@ -5,11 +5,12 @@ import * as Yup from 'yup';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 
 import { FormInput } from '../atoms/FormInput';
-import { FormInputErrorMessage } from '../atoms/FormInputErrorMessage';
+import { FormInputErrorMessage } from '../atoms/InputErrorMessage';
 
 import styles from '@/styles/pages/login.module.scss';
 import { TextLink } from '../atoms/TextLink';
 import { RectangleButton } from '../atoms/RectangleButton';
+import styled from 'styled-components';
 
 const schema = Yup.object({
     username: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
@@ -17,7 +18,7 @@ const schema = Yup.object({
 });
 type FormData = Yup.InferType<typeof schema>;
 
-const LoginForm = () => {
+export function LoginForm() {
     const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
@@ -49,15 +50,25 @@ const LoginForm = () => {
     }
 
     return(
-        <form onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
+        <StyledForm onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
             <FormInput placeholder='email' type='email' {...register('username')} />
             { errors?.username ? <FormInputErrorMessage errorMessage={errors.username.message} color="red"/> : <></> }
             <FormInput placeholder='password' type='password' {...register('password')} />
             { errors?.password ? <FormInputErrorMessage errorMessage={errors.password.message} color="red"/> : <></> }
             <TextLink href="/user/forget-password" content="Forgot Password?"/>
             <RectangleButton type="submit" content="LogIn"/>
-        </form>
+        </StyledForm>
     )
-}
+};
 
-export default LoginForm;
+const StyledForm = styled.form`
+    width:100%;
+    margin-top:40px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+
+    position:relative;
+`
