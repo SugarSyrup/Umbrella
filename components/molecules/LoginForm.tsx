@@ -2,15 +2,23 @@ import { useForm } from 'react-hook-form';
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
+import styled from 'styled-components';
 import axios, {AxiosError, AxiosResponse} from 'axios';
+import { useRouter } from 'next/router';
+
+//redux
+import { RootState } from '../../store/index';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeCurUser } from '../../store/CurUserSlice';
 
 import { AuthFormInput } from '../atoms/AuthFormInput.styles';
 import { SmallErrorMessage } from '../atoms/SmallErrorMessage.styles';
 import { StyledLink } from '../atoms/TextLink.styles';
+import { RectangleButton } from '../atoms/RectangleButton.styles';
 
 import styles from '@/styles/pages/login.module.scss';
-import { RectangleButton } from '../atoms/RectangleButton.styles';
-import styled from 'styled-components';
+
+const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 
 const schema = Yup.object({
     username: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
@@ -19,10 +27,11 @@ const schema = Yup.object({
 type FormData = Yup.InferType<typeof schema>;
 
 export function LoginForm() {
-    const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
+    const router = useRouter();
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
     });
+    const dispatch = useDispatch();
       
     const onSilentRefresh = (data:{username:string, password:string}) => {
         axios.post(`http://${window.location.host}/api/auth/silent-refresh`, data)
@@ -35,8 +44,14 @@ export function LoginForm() {
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     
         setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
-        //TODO : 다음 페이지로 리 다이렉션
+       
         //TODO : 로그인 정보 저장하기
+        dispatch(changeCurUser(response.data.username as string));
+        
+        //TODO : 다음 페이지로 리 다이렉션
+        router.push({
+            pathname: 'user/workspace'
+        })
     }
     
     const onError = (error: Error|AxiosError) => {

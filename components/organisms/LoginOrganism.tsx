@@ -1,7 +1,7 @@
 import { LoginForm } from "../molecules/LoginForm";
 import { LoginOAuthLinkButtonDiv } from "../molecules/LoginOAuthButtons";
 
-import { TextLink } from "../atoms/TextLink.styles";
+import { StyledLink } from "../atoms/TextLink.styles";
 import styled from "styled-components";
 
 const StyledMain = styled.div`
@@ -24,7 +24,7 @@ export function LoginOrganism() {
         <StyledMain>
             <span style={{fontSize:"36px", fontWeight:"bolder", marginBottom:"20px"}}>로그인</span>
             <span>
-                Umbrella에 처음 이십니까? <TextLink href='/user/signup' content='Create an New Account'/>    
+                Umbrella에 처음 이십니까? <StyledLink href='/user/signup'>Create an New Account</StyledLink>    
             </span>
             <LoginForm />
             <StyledHrr>or</StyledHrr>
