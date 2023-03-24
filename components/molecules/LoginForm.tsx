@@ -4,12 +4,12 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 
-import { FormInput } from '../atoms/FormInput';
-import { FormInputErrorMessage } from '../atoms/InputErrorMessage';
+import { AuthFormInput } from '../atoms/AuthFormInput.styles';
+import { SmallErrorMessage } from '../atoms/SmallErrorMessage.styles';
+import { StyledLink } from '../atoms/TextLink.styles';
 
 import styles from '@/styles/pages/login.module.scss';
-import { TextLink } from '../atoms/TextLink';
-import { RectangleButton } from '../atoms/RectangleButton';
+import { RectangleButton } from '../atoms/RectangleButton.styles';
 import styled from 'styled-components';
 
 const schema = Yup.object({
@@ -51,12 +51,12 @@ export function LoginForm() {
 
     return(
         <StyledForm onSubmit={handleSubmit(onSubmit)} className={styles.loginForm}>
-            <FormInput placeholder='email' type='email' {...register('username')} />
-            { errors?.username ? <FormInputErrorMessage errorMessage={errors.username.message} color="red"/> : <></> }
-            <FormInput placeholder='password' type='password' {...register('password')} />
-            { errors?.password ? <FormInputErrorMessage errorMessage={errors.password.message} color="red"/> : <></> }
-            <TextLink href="/user/forget-password" content="Forgot Password?"/>
-            <RectangleButton type="submit" content="LogIn"/>
+            <AuthFormInput placeholder='email' type='email' {...register('username')} />
+            { errors?.username ? <SmallErrorMessage>errors.username.message</SmallErrorMessage> : <></> }
+            <AuthFormInput placeholder='password' type='password' {...register('password')} />
+            { errors?.password ? <SmallErrorMessage>errors.password.message</SmallErrorMessage> : <></> }
+            <StyledLink href="/user/forget-password">Forgot Password?</StyledLink>
+            <RectangleButton type="submit">LogIn</RectangleButton>
         </StyledForm>
     )
 };
