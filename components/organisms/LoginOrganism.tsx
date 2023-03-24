@@ -1,7 +1,7 @@
 import { LoginForm } from "../molecules/LoginForm";
 import { LoginOAuthLinkButtonDiv } from "../molecules/LoginOAuthButtons";
 
-import { TextLink } from "../atoms/TextLink";
+import { TextLink } from "../atoms/TextLink.styles";
 import styled from "styled-components";
 
 const StyledMain = styled.div`
