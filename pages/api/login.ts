@@ -1,31 +1,9 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-
-type LoginResponseDataType = {
-    accessToken : string,
-    nickname : string
-}
-
-type UserData = {
-    id:number,
-    email: string,
-    password: string,
-    nickname: string,
-}
-
-const UserDB:UserData[] = [
-    {
-        id:1,
-        email:"admin@naver.com",
-        password:"1q2w3e4r!",
-        nickname: "admin",
-    },
-    {
-        id:2,
-        email:"tlfvm04@naver.com",
-        password:"1q2w3e4r!",
-        nickname: "tlfvm",
-    },
-]
+import { UserData, UserDB } from './data';
+// type LoginResponseDataType = {
+//     accessToken : string,
+//     nickname : string
+// }
 
 export default function handler (req: NextApiRequest, res: NextApiResponse)  {
     if(req.method === 'POST'){
@@ -37,8 +15,8 @@ export default function handler (req: NextApiRequest, res: NextApiResponse)  {
                 console.log(email, password);
                 if(user.password === password){
                     return res.status(200).json({ 
-                        accessToken : "1q2w3e4r!",
-                        nickname : "asdf"
+                        access_token : "1q2w3e4r!",
+                        nick_name : "asdf"
                     });
                 }
                 return res.status(401).send({

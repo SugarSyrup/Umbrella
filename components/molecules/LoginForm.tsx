@@ -41,12 +41,12 @@ export function LoginForm() {
           .catch(onError);
     }
     const onLoginSuccess = (response : AxiosResponse) => {
-        const { accessToken, nickname } = response.data;
-        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        const { access_token, nick_name } = response.data;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
     
         setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
        
-        dispatch(changeCurUser(nickname as string));
+        dispatch(changeCurUser(nick_name as string));
         
         router.push({
             pathname: 'workspace'
