@@ -9,7 +9,7 @@ import * as Yup from 'yup';
 
 import { RectangleButton } from '@/components/atoms/RectangleButton.styles';
 import { InputWithErrorMessage } from '@/components/molecules/InputWithErrorMessage';
-import { StyledForm } from './LoginForm.styles';
+import { StyledForm, StyledRowDiv, StyledSelect } from './UserForm.styles';
 
 const schema = Yup.object({
     email: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
@@ -45,18 +45,18 @@ export function SignUpForm() {
     }
 
     return(
-        <StyledForm onSubmit={handleSubmit(onSubmit)}>
+        <StyledForm onSubmit={handleSubmit(onSubmit)} style={{marginTop:'10px'}}>
             <InputWithErrorMessage inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message}/>
-          <InputWithErrorMessage inputProps={{placeholder:'password', type:'password', ...register('password')}} errorMessage={errors.password?.message}/>
-          <InputWithErrorMessage inputProps={{placeholder:'Password를 다시 입력해 주세요', type:'password', ...register('passwordCheck')}} errorMessage={errors.passwordCheck?.message}/>
+            <InputWithErrorMessage inputProps={{placeholder:'password', type:'password', ...register('password')}} errorMessage={errors.password?.message}/>
+            <InputWithErrorMessage inputProps={{placeholder:'Password를 다시 입력해 주세요', type:'password', ...register('passwordCheck')}} errorMessage={errors.passwordCheck?.message}/>
 
-          <div>
-            <InputWithErrorMessage inputProps={{placeholder:'Age', type:'number', ...register('age')}} errorMessage={errors.age?.message}/>
-            <select {...register('gender')}>
-              <option value="woman">여성</option>
-              <option value="man">남성</option>
-            </select>
-          </div>
+            <StyledRowDiv>
+                <InputWithErrorMessage inputProps={{placeholder:'Age', type:'number', ...register('age')}} errorMessage={errors.age?.message}/>
+                <StyledSelect {...register('gender')}>
+                    <option value="woman">여성</option>
+                    <option value="man">남성</option>
+                </StyledSelect>
+            </StyledRowDiv>
     
           <RectangleButton type="submit">Sign Up</RectangleButton>
         </StyledForm>

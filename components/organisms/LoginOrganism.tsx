@@ -3,7 +3,7 @@ import { LoginOAuthLinkButtonDiv } from "../molecules/LoginOAuthButtons";
 
 import { LoginHeader } from "../atoms/LoginHeader.styles";
 import { StyledLink } from "../atoms/TextLink.styles";
-import { StyledLoginOrganism, StyledHrr } from "./LoginOragnism.styles";
+import { StyledLoginOrganism, StyledHrr } from "./UserOragnism.styles";
 
 export function LoginOrganism() {
     return(

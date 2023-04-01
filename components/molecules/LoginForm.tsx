@@ -12,7 +12,7 @@ import { changeCurUser } from '../../store/CurUserSlice';
 import { StyledLink } from '../atoms/TextLink.styles';
 import { RectangleButton } from '../atoms/RectangleButton.styles';
 
-import { StyledForm } from './LoginForm.styles';
+import { StyledForm } from './UserForm.styles';
 import { InputWithErrorMessage } from './InputWithErrorMessage';
 
 const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
