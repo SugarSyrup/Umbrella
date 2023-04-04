@@ -13,7 +13,7 @@ export const StyledForm = styled.form`
 `
 
 export const EmptySpace = styled.div`
-    height: 37px;
+    height: 25px;
 `
 
 export const InputWithErroMessageDiv = styled.div`
@@ -32,10 +32,8 @@ export const StyledRowDiv = styled.div`
 `;
 
 export const StyledSelect = styled.select`
-    margin-left:50px;
-    width: 50%;
+    width:100%;
     height: 50px;
-    padding-left: 10px;
     border: 0px;
     border-radius: 5px;
     background-color: #F3F3F3;
@@ -43,4 +41,9 @@ export const StyledSelect = styled.select`
     option{
         height:10px;
     }
+`;
+
+export const StyledSelectDiv = styled.div`
+    margin-left:50px;
+    width: 50%; 
 `;

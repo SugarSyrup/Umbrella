@@ -2,7 +2,7 @@ import styled from "styled-components";
 import { CSSProperties } from "styled-components";
 
 export const SmallErrorMessage = styled.p<CSSProperties>`
-    height:17px;
+    height:10px;
 
     font-size:11px;
     font-weight:bolder;

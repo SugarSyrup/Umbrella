@@ -16,6 +16,7 @@ interface InputWithErrorMessagePropsType {
 export const InputWithErrorMessage = ({inputProps, errorMessage} : InputWithErrorMessagePropsType) => {
     return(
         <InputWithErroMessageDiv>
+            <label style={{fontSize:'12px', fontWeight:'bold'}}>{inputProps.name}</label>
             <AuthFormInput {...inputProps}/>
             { errorMessage ? <SmallErrorMessage>{errorMessage}</SmallErrorMessage> : <EmptySpace /> }
         </InputWithErroMessageDiv>

@@ -65,7 +65,7 @@ export function LoginForm() {
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
             <InputWithErrorMessage inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message}/>
             <InputWithErrorMessage inputProps={{placeholder:'password', type:'password', ...register('password')}} errorMessage={errors.password?.message}/>
-            <StyledLink fontSize="8px" position="absolute" right="0" top={errors?.password ? "170px" : "150px"} href="/user/forget-password">Forgot Password?</StyledLink>
+            <StyledLink fontSize="8px" position="absolute" right="0" top={errors?.password ? "190px" : "170px"} href="/user/forget-password">Forgot Password?</StyledLink>
             <RectangleButton type="submit">LogIn</RectangleButton>
         </StyledForm>
     )
