@@ -17,7 +17,7 @@ const schema = Yup.object({
     passwordCheck: Yup.string().label('confirm password').oneOf([Yup.ref('password')], 'Password는 반드시 똑같이 입력해야 합니다.'), //Yup 라이브러리에 대한 적당한 공부?
     nick_name: Yup.string().max(8).min(2).required('닉네임을 입력해주세요'),
     name: Yup.string().required('이름을 입력해 주세요'),
-    age: Yup.number().required('나이를 입력해 주세요'),
+    birth: Yup.date().required(),
     gender: Yup.string().required(),
 });
 type FormData = Yup.InferType<typeof schema>;
@@ -40,8 +40,10 @@ export function SignUpForm() {
         })
     }
 
-    const onSubmit:SubmitHandler<FieldValues> = ({email, password, nickname, name, age, gender}) => {
-        axios.post(`${API_URL}/signup`, {email, password, nick_name:nickname, name ,age, gender})
+    const onSubmit:SubmitHandler<FieldValues> = ({email, password, nickname, name, birth, gender}) => {
+        let _birth = `${birth.getFullYear()}${birth.getMonth().toString().length < 2 ? '0' + birth.getMonth().toString() : birth.getMonth()}${birth.getDate().toString().length < 2 ? '0' + birth.getDate().toString() : birth.getDate()}`;
+
+        axios.post(`${API_URL}/signup`, {email, password, nick_name:nickname, name ,birth:_birth, gender})
           .then(onSignUpSuccess)
           .catch(onError);
     }
@@ -55,7 +57,7 @@ export function SignUpForm() {
             <InputWithErrorMessage inputProps={{placeholder:'Name', type:'text', ...register('name')}} errorMessage={errors.name?.message}/>
 
             <StyledRowDiv>
-                <InputWithErrorMessage inputProps={{placeholder:'Age', type:'number', ...register('age')}} errorMessage={errors.age?.message}/>
+                <InputWithErrorMessage inputProps={{placeholder:'birth', type:'date', ...register('birth')}} errorMessage={errors.birth?.message}/>
                 <StyledSelectDiv style={{display:'flex', flexDirection:'column'}}>
                     <label style={{fontSize:'12px', fontWeight:'bold'}}>성별</label>
                     <StyledSelect {...register('gender')}>
