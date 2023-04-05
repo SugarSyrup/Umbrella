@@ -41,7 +41,7 @@ export function SignUpForm() {
     }
 
     const onSubmit:SubmitHandler<FieldValues> = ({email, password, nickname, name, age, gender}) => {
-        axios.post(`${API_URL}/singup`, {email, password, nick_name:nickname, name ,age, gender})
+        axios.post(`${API_URL}/signup`, {email, password, nick_name:nickname, name ,age, gender})
           .then(onSignUpSuccess)
           .catch(onError);
     }
