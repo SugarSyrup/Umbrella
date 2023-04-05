@@ -9,12 +9,11 @@ import { useRouter } from 'next/router';
 import { useDispatch } from 'react-redux';
 import { changeCurUser } from '../../store/CurUserSlice';
 
-import { AuthFormInput } from '../atoms/AuthFormInput.styles';
-import { SmallErrorMessage } from '../atoms/SmallErrorMessage.styles';
 import { StyledLink } from '../atoms/TextLink.styles';
 import { RectangleButton } from '../atoms/RectangleButton.styles';
 
-import { StyledForm, EmptySpace } from './LoginForm.styles';
+import { StyledForm } from './UserForm.styles';
+import { InputWithErrorMessage } from './InputWithErrorMessage';
 
 const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 //const API_URL = process.env.NEXT_PUBLIC_API_MOCKING === ('enabled') ? 'https://backend.dev/login' : `http://${window.location.host}/api/auth/silent-refresh`;
@@ -64,11 +63,9 @@ export function LoginForm() {
 
     return(
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-            <AuthFormInput placeholder='email' type='email' {...register('email')} />
-            { errors?.email ? <SmallErrorMessage>{errors.email.message}</SmallErrorMessage> : <EmptySpace/> }
-            <AuthFormInput placeholder='password' type='password' {...register('password')} />
-            { errors?.password ? <SmallErrorMessage>{errors.password.message}</SmallErrorMessage> : <EmptySpace/> }
-            <StyledLink fontSize="8px" position="absolute" right="0" top={errors?.password ? "170px" : "150px"} href="/user/forget-password">Forgot Password?</StyledLink>
+            <InputWithErrorMessage inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message}/>
+            <InputWithErrorMessage inputProps={{placeholder:'password', type:'password', ...register('password')}} errorMessage={errors.password?.message}/>
+            <StyledLink fontSize="8px" position="absolute" right="0" top={errors?.password ? "190px" : "170px"} href="/user/forget-password">Forgot Password?</StyledLink>
             <RectangleButton type="submit">LogIn</RectangleButton>
         </StyledForm>
     )
