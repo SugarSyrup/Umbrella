@@ -1,39 +1,100 @@
 import styled from "styled-components";
+import Lenis from '@studio-freight/lenis';
+import { useEffect, useRef } from "react";
+import { gsap } from 'gsap';
+import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+
 
 export default function Home() {
+    const sectionRef = useRef(null);
+    const triggerRef = useRef(null);
+    gsap.registerPlugin(ScrollTrigger);
+
+    useEffect(() => {
+        const lenis = new Lenis({
+            duration: 1.2,
+            easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+        })
+
+        function raf(time) {
+            lenis.raf(time)
+            requestAnimationFrame(raf)
+        }
+        requestAnimationFrame(raf)
+
+        // const horSection = gsap.utils.toArray(".hor__wrap .hor");
+        // const horWrap = document.querySelector(".hor__wrap");
+        // const horWrapWidth = horWrap.offsetWidth;
+
+        // const pin = gsap.to(sectionRef.current, {
+        //     xPercent: -100 * (horSection.length - 1),
+        //     ease: "none",
+        //     scrollTrigger: {
+        //         trigger: triggerRef.current,
+        //         start: "top 10%",
+        //         snap: 1 / (horSection.length - 1),
+        //         end: () => `+=${horWrapWidth}`,
+                
+        //         pin: true,
+        //         scrub: 1,
+        //         markers: false,
+        //     }
+        // });
+        //https://www.youtube.com/watch?v=PeFqGrEHnp0
+        const pin = gsap.fromTo(sectionRef.current, {
+            translateX: 0
+        }, {
+            translateX: "-300vw",
+            ease: "none",
+            duration: 1,
+            scrollTrigger: {
+                trigger: triggerRef.current,
+                start:"top -30%",
+                end: "2000 top",
+                scrub: 0.6,
+                pin:true,
+            }
+        })
+
+        return () => {
+            pin.kill();
+        }
+    },[])
+
     return (
     <StyledMain>
         <StyledHeader id="header">
             <nav>
                   <ul>
-                        <li><a href="#">About</a></li>
+                        <li><a href="#"><img width="40px" src='/images/logo.png' alt="logo" /></a></li>
                         <li>
                             <a href="#">Site</a>
                             <a href="#">Work</a>
                             <a href="#">Script</a>
                         </li>
-                        <li><a href="#">contact</a></li>
+                        <li><a href="#">login / signup</a></li>
                   </ul>
             </nav>     
         </StyledHeader>
         <StyledMainContent id="main">
             <section id="section1">
               <div className="text__effect1">
-                  <div>frontend</div>
-                  <div>devel</div>
+                  <p>For</p><p>Better</p><p>Co-working</p><p>Experience</p>
               </div>
               <div className="text__effect2">
-                  <div className="left"><span>box1</span></div>
-                  <div className="right"><span>box2</span></div>
+                <span>
+                    편리하게 연동되는 종합 업무 플랫폼
+                </span>
               </div>
               <div className="text__effect3">
-                  <div className="left"><span>box3</span></div>
-                  <div className="right"><span>box4</span></div>
+                <span>
+                    업무를 위해 연동되는 다양한 기능들
+                </span>
               </div>
           </section> 
-          <section id="section2" className="horizontal">
+          <section id="section2" className="horizontal" ref={triggerRef} >
               <h2><span>creative website</span></h2>
-              <div className="hor__wrap">
+              <div className="hor__wrap" id="wrap" ref={sectionRef}>
                   <div className="hor"><span>site1</span></div>
                   <div className="hor"><span>site2</span></div>
                   <div className="hor"><span>site3</span></div>
@@ -42,22 +103,22 @@ export default function Home() {
               </div>
           </section>
           <section id="section3">
-              <div className="text__effect1">
-                  <div>frontend</div>
-                  <div>devel</div>
+              <div className="text__effect4">
+                  <span>Ready to Start?</span>
+                  <a href="user/login">LOGIN</a>
               </div>
-              <div className="text__effect2">
+              {/* <div className="text__effect2">
                   <div className="left"><span>box1</span></div>
                   <div className="right"><span>box2</span></div>
               </div>
               <div className="text__effect3">
                   <div className="left"><span>box3</span></div>
                   <div className="right"><span>box4</span></div>
-              </div>
+              </div> */}
           </section> 
         </StyledMainContent>
         <StyledFooter id="footer">     
-          <a href="mailto:webstoryboy@naver.com">webstoryboy@naver.com</a>
+          <a href="mailto:tlfvm04@naver.com">tlfvm04@naver.com</a>
         </StyledFooter>
         
     </StyledMain>
@@ -65,6 +126,7 @@ export default function Home() {
 }
 
 const StyledMain = styled.div`
+    overflow-x: hidden;
     margin: 0;
     padding: 0%;
 `
@@ -74,7 +136,7 @@ const StyledHeader = styled.header`
   left: 0; top: 0;
   width: 100%;
   z-index: 10000;
-  border-bottom: 1px solid #2e382848;
+  border-bottom: 1px solid #34283847;
   backdrop-filter : blur(10px);  
 
   ul{
@@ -106,27 +168,26 @@ const StyledFooter = styled.footer`
 const StyledMainContent = styled.main`
   #section1 {
     background: #EDF0ED;
-    padding-top: 80px;
+    padding-top: 40px;
   }
   .text__effect1 {
       text-align: left;
-      color: #2E3828;
-      font-size: 19vw;
+      color: #372838;
+      font-size: 14vw;
       line-height: 0.81;
       font-family: 'Saint Monica Regular';
       padding: 0 0 1vw 1vw;
-      margin-top: 1vw;
       text-transform: uppercase;
-      border-bottom: 1px solid #2e382848;
+      border-bottom: 1px solid #34283847;
   }
   .text__effect2 {
       height: 50vh;
-      border-bottom: 1px solid #2e382848;
+      border-bottom: 1px solid #34283847;
       display: flex;
   }
   .text__effect2 .left {
       width: 30%;
-      border-right: 1px solid #2e382848;
+      border-right: 1px solid #34283847;
   }
   .text__effect2 .right {
       width: 70%;
@@ -139,12 +200,12 @@ const StyledMainContent = styled.main`
   }
   .text__effect3 {
       height: 50vh;
-      border-bottom: 1px solid #2e382848;
+      border-bottom: 1px solid #34283847;
       display: flex;
   }
   .text__effect3 .left {
       width: 70%;
-      border-right: 1px solid #2e382848;
+      border-right: 1px solid #34283847;
   }
   .text__effect3 .right {
       width: 30%;
@@ -154,6 +215,32 @@ const StyledMainContent = styled.main`
       padding: 10px;
       font-family: 'Abel';
       display: inline-block;
+  }
+  .text__effect4 {
+      display:flex;
+      flex-direction:column;
+      justify-content: center;
+      align-items:center;
+
+      color: #2E3828;
+      font-size: 6vw;
+      font-family: 'Saint Monica Regular';
+      font-weight:bolder;
+      word-spacing: -5px;
+
+      margin-top: 5vw;
+      padding-bottom: 3vw;
+
+      text-transform: uppercase;
+      border-bottom: 1px solid #33283847;
+
+      a{
+        padding: 20px 100px;
+        border-radius: 10px;
+        color:black;
+        background-color:paleturquoise;
+        text-decoration:none;
+      }
   }
 
   /* section2 */
