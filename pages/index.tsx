@@ -1,5 +1,7 @@
 import styled from "styled-components";
 import Lenis from '@studio-freight/lenis';
+// import Lottie from 'react-lottie';
+// import animationData from '../src/lotties/73985-colleagues-working-together.json';
 import { useEffect, useRef } from "react";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -49,7 +51,7 @@ export default function Home() {
             duration: 1,
             scrollTrigger: {
                 trigger: triggerRef.current,
-                start:"top -30%",
+                start:"top 10%",
                 end: "2000 top",
                 scrub: 0.6,
                 pin:true,
@@ -86,20 +88,19 @@ export default function Home() {
                     편리하게 연동되는 종합 업무 플랫폼
                 </span>
               </div>
-              <div className="text__effect3">
+              <div className="text__effect2">
                 <span>
                     업무를 위해 연동되는 다양한 기능들
                 </span>
               </div>
           </section> 
           <section id="section2" className="horizontal" ref={triggerRef} >
-              <h2><span>creative website</span></h2>
               <div className="hor__wrap" id="wrap" ref={sectionRef}>
-                  <div className="hor"><span>site1</span></div>
-                  <div className="hor"><span>site2</span></div>
-                  <div className="hor"><span>site3</span></div>
-                  <div className="hor"><span>site4</span></div>
-                  <div className="hor"><span>site5</span></div>
+                  <div className="hor"><span>Chat</span></div>
+                  <div className="hor"><span>Drive</span></div>
+                  <div className="hor"><span>Schedule</span></div>
+                  <div className="hor"><span>Meeting</span></div>
+                  <div className="hor"><span>Board</span></div>
               </div>
           </section>
           <section id="section3">
@@ -181,9 +182,18 @@ const StyledMainContent = styled.main`
       border-bottom: 1px solid #34283847;
   }
   .text__effect2 {
-      height: 50vh;
+      height: 30vh;
       border-bottom: 1px solid #34283847;
       display: flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
+
+      color: #2E3828;
+      font-size: 3vw;
+      font-family: 'Saint Monica Regular';
+      font-weight:bolder;
+      word-spacing: -5px;
   }
   .text__effect2 .left {
       width: 30%;
@@ -245,7 +255,7 @@ const StyledMainContent = styled.main`
 
   /* section2 */
   #section2 {
-      background: #2E3828;
+      background: #2c2838;
   }
   #section2 h2 {
       color: #fff;
