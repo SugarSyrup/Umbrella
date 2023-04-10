@@ -1,23 +1,16 @@
 /** @type {import('next').NextConfig} */
-const path = require('path');
+// const ScrollTrigger = require('gsap/ScrollTrigger');
+
+// const withPlugins = require('next-compose-plugins');
+// const withTM = require('next-transpile-modules')([ScrollTrigger])
+const withImage = require('next-images');
 
 const nextConfig = {
   reactStrictMode: true,
   compiler: {
     styledComponents: true,
   },
-  // async rewrites() {
-  //   return[{
-  //     source:"/api/auth/login",
-  //     destination:"",//login api url
-  //   },{
-  //     source:"/api/auth/signup",
-  //     destination:"",//SignUp api url
-  //   },{
-  //     source:"/api/auth/silent-refresh",
-  //     destination:"",//SignUp api url
-  //   }]
-  // }
 }
 
-module.exports = nextConfig
+// module.exports = withPlugins([withTM], nextConfig);
+module.exports = withImage(nextConfig);
