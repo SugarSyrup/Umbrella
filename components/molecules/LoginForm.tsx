@@ -35,12 +35,19 @@ export function LoginForm() {
     const dispatch = useDispatch();
 
     const onSubmit:SubmitHandler<FieldValues> = ({email, password}) => {
-        axios.post(`${API_URL}/login`, {email, password})
+        const UserData = {
+            "email" : email,
+            "password" : password,
+        }
+        axios.post(`${API_URL}/login`, UserData, {
+            headers:{ "Content-Type": `application/json`}
+        })
           .then(onLoginSuccess)
           .catch(onError);
     }
     const onLoginSuccess = (response : AxiosResponse) => {
-        const { access_token, nick_name } = response.data;
+        const access_token = response.headers.authorization;
+        const {nick_name} = response.data;
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
     
         setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
