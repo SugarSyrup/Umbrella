@@ -52,7 +52,9 @@ export function SignUpForm() {
             "gender": gender
         };
 
-        axios.post(`${API_URL}/signup`, {email, password, nick_name:nickname, name ,birth:_birth, gender})
+        axios.post(`${API_URL}/signup`, userData, {
+            headers:{ "Content-Type" : "application/json" }
+        })
           .then(onSignUpSuccess)
           .catch(onError);
     }
