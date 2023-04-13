@@ -1,12 +1,10 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import { UserTemplate } from "@/components/templates/UserTemplate";
+import { WorkSpaceOrganism } from "@/components/organisms/WorkSpaceOrganism";
 
-import { RootState } from '@/store';
-import { CurUserState } from '@/store/CurUserSlice';
-
-export default function ABC()  {   
-    const users = useSelector<RootState, CurUserState>(state => state.user);
-    return(<>
-        <span>{users.name}</span>    
-    </>)
+export default function Home() {
+  return (
+    <UserTemplate>
+      <WorkSpaceOrganism />
+    </UserTemplate>
+  )
 }

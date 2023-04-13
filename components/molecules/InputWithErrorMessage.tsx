@@ -5,7 +5,8 @@ import { EmptySpace, InputWithErroMessageDiv } from "./UserForm.styles";
 
 interface InputPropsType extends UseFormRegisterReturn {
     placeholder?: string,
-    type: string
+    type: string,
+    pattern? : string,
 }
 
 interface InputWithErrorMessagePropsType {
