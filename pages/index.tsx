@@ -1,7 +1,11 @@
 import styled from "styled-components";
 import Lenis from '@studio-freight/lenis';
-// import Lottie from 'react-lottie';
-// import animationData from '../src/lotties/73985-colleagues-working-together.json';
+import Lottie from 'react-lottie';
+import companyData from '../src/lotties/company.json';
+import featureData from '../src/lotties/features2.json';
+import chatData from '../src/lotties/chat.json';
+import docsData from '../src/lotties/docs.json';
+import calendarData from '../src/lotties/calendar.json';
 import { useEffect, useRef } from "react";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -10,6 +14,7 @@ import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
 export default function Home() {
     const sectionRef = useRef(null);
     const triggerRef = useRef(null);
+    const textTriggerRef = useRef(null);
     gsap.registerPlugin(ScrollTrigger);
 
     useEffect(() => {
@@ -23,6 +28,15 @@ export default function Home() {
             requestAnimationFrame(raf)
         }
         requestAnimationFrame(raf)
+
+        // gsap.timeline({
+        //     scrollTrigger: {
+        //         trigger: textTriggerRef.current,
+        //         pin:true,
+        //         start:'top top',
+        //         end: '+=3000'
+        //     }
+        // })
 
         // const horSection = gsap.utils.toArray(".hor__wrap .hor");
         // const horWrap = document.querySelector(".hor__wrap");
@@ -38,7 +52,7 @@ export default function Home() {
         //         end: () => `+=${horWrapWidth}`,
                 
         //         pin: true,
-        //         scrub: 1,
+        // //         scrub: 1,
         //         markers: false,
         //     }
         // });
@@ -51,7 +65,7 @@ export default function Home() {
             duration: 1,
             scrollTrigger: {
                 trigger: triggerRef.current,
-                start:"top 10%",
+                start:"top 8%",
                 end: "2000 top",
                 scrub: 0.6,
                 pin:true,
@@ -68,13 +82,14 @@ export default function Home() {
         <StyledHeader id="header">
             <nav>
                   <ul>
-                        <li><a href="#"><img width="40px" src='/images/logo.png' alt="logo" /></a></li>
+                        <li><a href="/"><img width="40px" src='/images/logo.png' alt="logo" /></a></li>
                         <li>
-                            <a href="#">Site</a>
-                            <a href="#">Work</a>
-                            <a href="#">Script</a>
+                            <a href="#main">Site</a>
+                            <a href="#sectoin2">Features</a>
+                            {/* <a href="#">Annoncement</a> */}
+                            <a href="#">Contact Us</a>
                         </li>
-                        <li><a href="#">login / signup</a></li>
+                        <li><a href="/user/login">login / signup</a></li>
                   </ul>
             </nav>     
         </StyledHeader>
@@ -83,30 +98,87 @@ export default function Home() {
               <div className="text__effect1">
                   <p>For</p><p>Better</p><p>Co-working</p><p>Experience</p>
               </div>
-              <div className="text__effect2">
-                <span>
-                    편리하게 연동되는 종합 업무 플랫폼
+              <div className="text__effect2" ref={textTriggerRef}>
+                <Lottie 
+                    options={{
+                        loop: true,
+                        autoplay: true,
+                        animationData: companyData,
+                        rendererSettings: {
+                          preserveAspectRatio: "xMidYMid slice"
+                        }}}
+                    width={800}
+                />
+                <span className="right">
+                    편리하게 연동되는 종합 협업 플랫폼
                 </span>
-              </div>
+              </div>    
               <div className="text__effect2">
-                <span>
+                <span className="left">
                     업무를 위해 연동되는 다양한 기능들
                 </span>
+                <Lottie 
+                    options={{
+                        loop: true,
+                        autoplay: true,
+                        animationData: featureData,
+                        rendererSettings: {
+                          preserveAspectRatio: "xMidYMid slice"
+                        }}}
+                    width={800}
+                    height={800}
+                />
               </div>
           </section> 
           <section id="section2" className="horizontal" ref={triggerRef} >
               <div className="hor__wrap" id="wrap" ref={sectionRef}>
-                  <div className="hor"><span>Chat</span></div>
-                  <div className="hor"><span>Drive</span></div>
-                  <div className="hor"><span>Schedule</span></div>
+                  <div className="hor">
+                    <Lottie 
+                      options={{
+                          loop: true,
+                          autoplay: true,
+                          animationData: chatData,
+                          rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                          }}}
+                      width={800}
+                      height={800}
+                    />
+                  </div>
+                  <div className="hor">
+                    <Lottie 
+                      options={{
+                          loop: true,
+                          autoplay: true,
+                          animationData: docsData,
+                          rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                          }}}
+                      width={800}
+                      height={800}
+                    />
+                  </div>
+                  <div className="hor">
+                    <Lottie 
+                      options={{
+                          loop: true,
+                          autoplay: true,
+                          animationData: calendarData,
+                          rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                          }}}
+                      width={800}
+                      height={800}
+                    />
+                  </div>
                   <div className="hor"><span>Meeting</span></div>
                   <div className="hor"><span>Board</span></div>
               </div>
           </section>
           <section id="section3">
               <div className="text__effect4">
-                  <span>Ready to Start?</span>
-                  <a href="user/login">LOGIN</a>
+                    <span>지금 엄브렐라를 통해 협업을 시작해보세요</span>
+                  <a href="user/login">지금 시작하기</a>
               </div>
               {/* <div className="text__effect2">
                   <div className="left"><span>box1</span></div>
@@ -118,8 +190,9 @@ export default function Home() {
               </div> */}
           </section> 
         </StyledMainContent>
-        <StyledFooter id="footer">     
-          <a href="mailto:tlfvm04@naver.com">tlfvm04@naver.com</a>
+        <StyledFooter id="footer">  
+          <p>Team Umbrella</p>
+          <span>Contact Us : <a href="mailto:tlfvm04@naver.com">tlfvm04@naver.com</a></span>
         </StyledFooter>
         
     </StyledMain>
@@ -156,6 +229,13 @@ const StyledHeader = styled.header`
 `
 
 const StyledFooter = styled.footer`
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    align-items:center;
+
+    height:40px;
+
   text-align: center;
   font-family: 'Abel';
   padding: 10px;
@@ -168,39 +248,43 @@ const StyledFooter = styled.footer`
 
 const StyledMainContent = styled.main`
   #section1 {
-    background: #EDF0ED;
+    //background: #EDF0ED;
+    background-color:white;
     padding-top: 40px;
   }
   .text__effect1 {
-      text-align: left;
-      color: #372838;
-      font-size: 14vw;
-      line-height: 0.81;
-      font-family: 'Saint Monica Regular';
-      padding: 0 0 1vw 1vw;
-      text-transform: uppercase;
-      border-bottom: 1px solid #34283847;
+    font-family: 'Saint Monica Regular';
+    font-size: 14vw;
+    color: #372838;
+
+    text-align: left;
+    text-transform: uppercase;
+
+    padding: 0 0 1vw 1vw;
+    margin:10px 0px 50px 0px;
+//    border-bottom: 1px solid #34283847;
+
+    line-height: 0.81;
   }
   .text__effect2 {
-      height: 30vh;
-      border-bottom: 1px solid #34283847;
-      display: flex;
-      flex-direction:column;
-      justify-content:center;
-      align-items:center;
+    height:500px;
+    margin-top:100px;
+    padding-bottom:40px;
+//    border-bottom: 1px solid #34283847;
+    
+    display: flex;
+    flex-direction:row;
+    justify-content:center;
+    align-items:center;
 
-      color: #2E3828;
-      font-size: 3vw;
-      font-family: 'Saint Monica Regular';
-      font-weight:bolder;
-      word-spacing: -5px;
-  }
-  .text__effect2 .left {
-      width: 30%;
-      border-right: 1px solid #34283847;
-  }
-  .text__effect2 .right {
-      width: 70%;
+    color: #2E3828;
+    font-size: 3vw;
+    font-family: 'Saint Monica Regular';
+    font-weight:bolder;
+    word-spacing: -5px;
+    div{
+        margin:0px;
+    }
   }
   .text__effect2 span {
       color: #2E3828;
@@ -208,6 +292,15 @@ const StyledMainContent = styled.main`
       font-family: 'Abel';
       display: inline-block;
   }
+  .text__effect2 span.left{
+    margin-left:100px;
+    margin-right:-100px;
+  }
+  .text__effect2 span.right{
+    margin-right:100px;
+    margin-left:-100px;
+  }
+
   .text__effect3 {
       height: 50vh;
       border-bottom: 1px solid #34283847;
@@ -233,23 +326,45 @@ const StyledMainContent = styled.main`
       align-items:center;
 
       color: #2E3828;
-      font-size: 6vw;
+      font-size: 2vw;
       font-family: 'Saint Monica Regular';
       font-weight:bolder;
       word-spacing: -5px;
 
       margin-top: 5vw;
       padding-bottom: 3vw;
-
-      text-transform: uppercase;
       border-bottom: 1px solid #33283847;
 
+      span {
+        margin-bottom:10px;
+      }
+
       a{
-        padding: 20px 100px;
-        border-radius: 10px;
-        color:black;
-        background-color:paleturquoise;
-        text-decoration:none;
+        position: relative;
+        display: inline-block;
+        font-size: 22px;
+        text-decoration: none;
+        padding: 20px 60px;
+        color: white;
+        margin: 20px 10px 10px;
+        border-radius: 6px;
+        text-align: center;
+        transition: top .01s linear;
+        text-shadow: 0 1px 0 #37283815;
+        background-color: #4d384f;
+        box-shadow: 0 0 0 1px #372838 inset,
+                0 0 0 2px rgba(255,255,255,0.15) inset,
+                0 8px 0 0 rgba(70, 53, 68, 0.7),
+                0 8px 0 1px rgba(0,0,0,.4),
+                0 8px 8px 1px rgba(0,0,0,0.5);
+      }
+      a:hover{
+        background-color: #634a60;
+      }
+      a:active{
+        box-shadow: 0 0 0 1px #cb99c5 inset,
+                0 0 0 2px rgba(255,255,255,0.15) inset,
+                0 0 0 1px rgba(0,0,0,0.4);
       }
   }
 

@@ -6,7 +6,7 @@ export type UserData = {
     password: string,
     nick_name: string,
     name:string,
-    age:number,
+    birth:string,
     gender:string
 }
 
@@ -17,7 +17,7 @@ export const UserDB:UserData[] = [
         password:"1q2w3e4r!",
         nick_name: "admin",
         name:"rlacnsqo",
-        age:24,
+        birth:'12241212',
         gender:"female",
     },
     {
@@ -26,7 +26,7 @@ export const UserDB:UserData[] = [
         password:"1q2w3e4r!",
         nick_name: "tlfvm",
         name:"rlacnsqo",
-        age:24,
+        birth:'12241212',
         gender:"female",
     },
 ]
