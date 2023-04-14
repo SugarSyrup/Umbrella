@@ -3,6 +3,9 @@ import Lenis from '@studio-freight/lenis';
 import Lottie from 'react-lottie';
 import companyData from '../src/lotties/company.json';
 import featureData from '../src/lotties/features2.json';
+import chatData from '../src/lotties/chat.json';
+import docsData from '../src/lotties/docs.json';
+import calendarData from '../src/lotties/calendar.json';
 import { useEffect, useRef } from "react";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -129,9 +132,45 @@ export default function Home() {
           </section> 
           <section id="section2" className="horizontal" ref={triggerRef} >
               <div className="hor__wrap" id="wrap" ref={sectionRef}>
-                  <div className="hor"><span>Chat</span></div>
-                  <div className="hor"><span>Drive</span></div>
-                  <div className="hor"><span>Schedule</span></div>
+                  <div className="hor">
+                    <Lottie 
+                      options={{
+                          loop: true,
+                          autoplay: true,
+                          animationData: chatData,
+                          rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                          }}}
+                      width={800}
+                      height={800}
+                    />
+                  </div>
+                  <div className="hor">
+                    <Lottie 
+                      options={{
+                          loop: true,
+                          autoplay: true,
+                          animationData: docsData,
+                          rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                          }}}
+                      width={800}
+                      height={800}
+                    />
+                  </div>
+                  <div className="hor">
+                    <Lottie 
+                      options={{
+                          loop: true,
+                          autoplay: true,
+                          animationData: calendarData,
+                          rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                          }}}
+                      width={800}
+                      height={800}
+                    />
+                  </div>
                   <div className="hor"><span>Meeting</span></div>
                   <div className="hor"><span>Board</span></div>
               </div>
