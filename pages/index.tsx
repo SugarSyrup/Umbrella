@@ -82,7 +82,7 @@ export default function Home() {
         <StyledHeader id="header">
             <nav>
                   <ul>
-                        <li><a href="/"><img width="40px" src='/images/logo.png' alt="logo" /></a></li>
+                        <li><a href="/"><img width="100px" src='/images/logo.png' alt="logo" /></a></li>
                         <li>
                             <a href="#main">Site</a>
                             <a href="#sectoin2">Features</a>

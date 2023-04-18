@@ -9,7 +9,6 @@ import { useRouter } from 'next/router';
 
 export function WorkSpaceOrganism() {
     const router = useRouter();
-    const [username, setUsername] = useState("");
     const [workspace, setWorkspace] = useState<string[]>([]);
     const  {name}  = useSelector((state:RootState) => state.user);
 
