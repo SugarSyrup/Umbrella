@@ -180,14 +180,6 @@ export default function Home() {
                     <span>지금 엄브렐라를 통해 협업을 시작해보세요</span>
                   <a href="user/login">지금 시작하기</a>
               </div>
-              {/* <div className="text__effect2">
-                  <div className="left"><span>box1</span></div>
-                  <div className="right"><span>box2</span></div>
-              </div>
-              <div className="text__effect3">
-                  <div className="left"><span>box3</span></div>
-                  <div className="right"><span>box4</span></div>
-              </div> */}
           </section> 
         </StyledMainContent>
         <StyledFooter id="footer">  

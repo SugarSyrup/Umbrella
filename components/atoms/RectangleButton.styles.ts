@@ -12,7 +12,8 @@ export const RectangleButton = styled.button`
     border:0px;
     border-radius:80px;
 
-    background-color:#9484FF;
+    background-color:#372838;
+    color:white;
         
     cursor:pointer;
     
