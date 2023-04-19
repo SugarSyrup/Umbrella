@@ -9,6 +9,8 @@ import calendarData from '../src/lotties/calendar.json';
 import { useEffect, useRef } from "react";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
+import Link from "next/link";
+import Image from "next/image";
 
 
 export default function Home() {
@@ -23,7 +25,7 @@ export default function Home() {
             easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         })
 
-        function raf(time) {
+        function raf(time:number) {
             lenis.raf(time)
             requestAnimationFrame(raf)
         }
@@ -82,14 +84,14 @@ export default function Home() {
         <StyledHeader id="header">
             <nav>
                   <ul>
-                        <li><a href="/"><img width="100px" src='/images/logo.png' alt="logo" /></a></li>
+                        <li><Link href="/"><Image src='/images/logo.png' alt="logo" /></Link></li>
                         <li>
                             <a href="#main">Site</a>
                             <a href="#sectoin2">Features</a>
                             {/* <a href="#">Annoncement</a> */}
                             <a href="#">Contact Us</a>
                         </li>
-                        <li><a href="/user/login">login / signup</a></li>
+                        <li><Link href="/user/login">login / signup</Link></li>
                   </ul>
             </nav>     
         </StyledHeader>
