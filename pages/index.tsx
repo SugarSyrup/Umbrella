@@ -4,8 +4,10 @@ import Lottie from 'react-lottie';
 import companyData from '../src/lotties/company.json';
 import featureData from '../src/lotties/features2.json';
 import chatData from '../src/lotties/chat.json';
-import docsData from '../src/lotties/docs.json';
+import docsData from '../src/lotties/sharing.json';
 import calendarData from '../src/lotties/calendar.json';
+import KanBanData from '../src/lotties/kanban.json';
+import meetingData from '../src/lotties/meeting.json';
 import { useEffect, useRef } from "react";
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/dist/ScrollTrigger';
@@ -84,7 +86,7 @@ export default function Home() {
         <StyledHeader id="header">
             <nav>
                   <ul>
-                        <li><Link href="/"><Image src='/images/logo.png' alt="logo" /></Link></li>
+                        <li><Link href="/"><Image src='/images/logo.png' alt="logo" width={80} height={30}/></Link></li>
                         <li>
                             <a href="#main">Site</a>
                             <a href="#sectoin2">Features</a>
@@ -139,26 +141,26 @@ export default function Home() {
                       options={{
                           loop: true,
                           autoplay: true,
-                          animationData: chatData,
+                          animationData: docsData,
                           rendererSettings: {
                             preserveAspectRatio: "xMidYMid slice"
                           }}}
-                      width={800}
-                      height={800}
+                      width={1100}
                     />
+                    <span>팀원끼리 편리한 정보 공유</span>
                   </div>
                   <div className="hor">
                     <Lottie 
                       options={{
                           loop: true,
                           autoplay: true,
-                          animationData: docsData,
+                          animationData: chatData,
                           rendererSettings: {
                             preserveAspectRatio: "xMidYMid slice"
                           }}}
-                      width={800}
-                      height={800}
+                          width={1100}
                     />
+                    <span>메신저와 실시간 채팅으로 인한 자유로운 소통</span>
                   </div>
                   <div className="hor">
                     <Lottie 
@@ -170,11 +172,36 @@ export default function Home() {
                             preserveAspectRatio: "xMidYMid slice"
                           }}}
                       width={800}
-                      height={800}
                     />
+                    <span>공유 캘린더와 시간 관리기능을 활용한 일정 관리</span>
                   </div>
-                  <div className="hor"><span>Meeting</span></div>
-                  <div className="hor"><span>Board</span></div>
+                  <div className="hor">
+                    
+                  <Lottie 
+                      options={{
+                          loop: true,
+                          autoplay: true,
+                          animationData: KanBanData,
+                          rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                          }}}
+                      width={1200}
+                    />
+                    <span>칸반보드를 활용한 할 일 추적/관리</span>
+                  </div>
+                  <div className="hor">
+                    <Lottie 
+                      options={{
+                          loop: true,
+                          autoplay: true,
+                          animationData: meetingData,
+                          rendererSettings: {
+                            preserveAspectRatio: "xMidYMid slice"
+                          }}}
+                      width={1100}
+                    />
+                    <span>칸반보드를 활용한 할 일 추적/관리</span>
+                  </div>
               </div>
           </section>
           <section id="section3">
@@ -242,7 +269,6 @@ const StyledFooter = styled.footer`
 
 const StyledMainContent = styled.main`
   #section1 {
-    //background: #EDF0ED;
     background-color:white;
     padding-top: 40px;
   }
@@ -256,13 +282,13 @@ const StyledMainContent = styled.main`
 
     padding: 0 0 1vw 1vw;
     margin:10px 0px 50px 0px;
-//    border-bottom: 1px solid #34283847;
 
     line-height: 0.81;
   }
   .text__effect2 {
     height:500px;
     margin-top:100px;
+    margin-bottom:200px;
     padding-bottom:40px;
 //    border-bottom: 1px solid #34283847;
     
@@ -385,13 +411,20 @@ const StyledMainContent = styled.main`
   .hor__wrap > div {
       width: 80vw;
       height: 90%;
-      border: 1px solid #fff;
+      
       margin-right: 1vw;
       margin-left: 1vw;
+
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+      align-items:center;
   }
   .hor__wrap > div span {
       padding: 10px;
       font-family: 'Abel';
+      font-size:30px;
+      font-weight:bolder;
       color: #fff;
       display: inline-block;
   }
