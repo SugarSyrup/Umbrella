@@ -48,7 +48,7 @@ export function SignUpForm() {
             "password" : password,
             "nick_name" : nickname,
             "name" : name,
-            "birth_date" : birth,
+            "birth_date" : _birth,
             "gender": gender
         };
 

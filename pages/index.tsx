@@ -200,7 +200,7 @@ export default function Home() {
                           }}}
                       width={1100}
                     />
-                    <span>칸반보드를 활용한 할 일 추적/관리</span>
+                    <span>온라인 화상회의 지원</span>
                   </div>
               </div>
           </section>
