@@ -1,10 +1,10 @@
-import { UserTemplate } from "@/components/templates/UserTemplate";
+import { UserAuthTemplate } from "@/components/templates/UserAuthTemplate";
 import { WorkSpaceOrganism } from "@/components/organisms/WorkSpaceOrganism";
 
 export default function Home() {
   return (
-    <UserTemplate>
+    <UserAuthTemplate>
       <WorkSpaceOrganism />
-    </UserTemplate>
+    </UserAuthTemplate>
   )
 }
