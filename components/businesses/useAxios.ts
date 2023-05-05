@@ -1,14 +1,14 @@
 import { useState, useEffect } from 'react';
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse} from 'axios';
+import axios, { AxiosError, RawAxiosRequestConfig, AxiosResponse, AxiosRequestConfig} from 'axios';
 
-axios.defaults.baseURL = process.env.production === "develop" ? "http://localhost:3000/api" : "";
+axios.defaults.baseURL = process.env.production === "develop" ? "" : "http://localhost:3000/api/";
 
-const useAxios = (axiosParams: AxiosRequestConfig) => {
+const useAxios = (axiosParams: RawAxiosRequestConfig) => {
     const [ response, setResponse ] = useState<AxiosResponse>();
     const [ error, setError ] = useState<AxiosError>();
     const [ loading, setLoading ] = useState(axiosParams.method === "GET" || axiosParams.method === "get");
 
-    const fetchData = async (params: AxiosRequestConfig) => {
+    const fetchData = async (params: RawAxiosRequestConfig) => {
         await axios.request(params)
             .then(response => {
                 setResponse(response);
