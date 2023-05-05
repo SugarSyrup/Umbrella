@@ -32,24 +32,23 @@ export function LoginForm() {
         resolver: yupResolver(schema)
     });
     const dispatch = useDispatch();
-    
-    const [userdata, setUserdata] = useState<{}>();
+
     const { response, error, loading, sendData } = useAxios({
         method: `POST`,
         url: `login`,
         headers : {
             "Content-Type" : "application/json",
-        },
-        data: userdata
+        }
     })
 
     const onSubmit:SubmitHandler<FieldValues> = ({email, password}) => {
-        setUserdata({
+        const userdata = {
             email : email,
             password : password,
-        })
+        };
 
-        sendData();
+        sendData(userdata);
+        
         if(response) {
             onLoginSuccess(response);
         }

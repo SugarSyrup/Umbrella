@@ -54,16 +54,17 @@ export function SignUpForm() {
     const onSubmit:SubmitHandler<FieldValues> = ({email, password, nickname, name, birth, gender}) => {
         let _birth = `${birth.getFullYear()}${birth.getMonth().toString().length < 2 ? '0' + birth.getMonth().toString() : birth.getMonth()}${birth.getDate().toString().length < 2 ? '0' + birth.getDate().toString() : birth.getDate()}`;
 
-        setUserdata({
+        const userdata = {
             email : email,
             password : password,
             nick_name : nickname,
             name : name,
             birth_date : _birth,
             gender: gender
-        });
+        };
 
-        sendData();
+        sendData(userdata);
+        
         if(response) {
             onSignUpSuccess(response)
         }

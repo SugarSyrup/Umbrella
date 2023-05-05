@@ -27,7 +27,8 @@ const useAxios = (axiosParams: RawAxiosRequestConfig) => {
         }
     }, []);
 
-    const sendData = () => {
+    const sendData = (data: {}) => {
+        axiosParams.data = data;
         fetchData(axiosParams);
     }
 
