@@ -14,6 +14,7 @@ export function UserAuthTemplate(props : UserAuthTemplateProps) {
     const  {isLoggedIn}  = useSelector((state:RootState) => state.user);
 
     useEffect(() => {
+        console.log(isLoggedIn);
         if(!isLoggedIn) 
             router.push({pathname:'login'});
             //TODO : 권한 없어서 로그인 창으로 튕길때, 알림 메세지가 로그인 창에서 떠야하나??
