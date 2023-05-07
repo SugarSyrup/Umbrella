@@ -2,10 +2,12 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 export interface CurUserState {
   name: string;
+  isLoggedIn: boolean;
 }
 
 const initialState: CurUserState = {
   name: 'anon',
+  isLoggedIn : false,
 };
 
 const CurUserSlice = createSlice({
@@ -17,6 +19,7 @@ const CurUserSlice = createSlice({
       action: PayloadAction<string>
     ) => {
       state.name = action.payload;
+      state.isLoggedIn = true;
     },
   },
 });

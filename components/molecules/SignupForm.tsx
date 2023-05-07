@@ -1,5 +1,7 @@
-import React from 'react';
-import axios, {AxiosError, AxiosResponse} from 'axios';
+import React, {useState} from 'react';
+import {AxiosError, AxiosResponse} from 'axios';
+
+import useAxios from '../businesses/useAxios';
 
 import { useRouter } from 'next/router';
 import {useForm} from 'react-hook-form';
@@ -23,13 +25,20 @@ const schema = Yup.object({
 type FormData = Yup.InferType<typeof schema>;
 
 export function SignUpForm() {
-    const API_URL = `http://localhost:3000/api`;
     const router = useRouter();
 
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
     });
-    
+
+    const { response, error, loading, sendData } = useAxios({
+        method: `POST`,
+        url: `signup`,
+        headers : {
+            "Content-Type" : "application/json",
+        }
+    })
+
     const onError = (error: Error|AxiosError) => {
         console.log(error);
     }
@@ -43,20 +52,24 @@ export function SignUpForm() {
     const onSubmit:SubmitHandler<FieldValues> = ({email, password, nickname, name, birth, gender}) => {
         let _birth = `${birth.getFullYear()}${birth.getMonth().toString().length < 2 ? '0' + birth.getMonth().toString() : birth.getMonth()}${birth.getDate().toString().length < 2 ? '0' + birth.getDate().toString() : birth.getDate()}`;
 
-        const userData = {
-            "email" : email,
-            "password" : password,
-            "nick_name" : nickname,
-            "name" : name,
-            "birth_date" : _birth,
-            "gender": gender
+        const userdata = {
+            email : email,
+            password : password,
+            nick_name : nickname,
+            name : name,
+            birth_date : _birth,
+            gender: gender
         };
 
-        axios.post(`${API_URL}/signup`, userData, {
-            headers:{ "Content-Type" : "application/json" }
-        })
-          .then(onSignUpSuccess)
-          .catch(onError);
+        sendData(userdata);
+
+        if(response) {
+            onSignUpSuccess(response)
+        }
+
+        if(error) { 
+            onError(error);
+        }
     }
 
     return(

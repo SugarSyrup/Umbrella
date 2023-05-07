@@ -4,6 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 //redux
 import { useDispatch } from 'react-redux';
@@ -14,8 +15,9 @@ import { RectangleButton } from '../atoms/RectangleButton.styles';
 
 import { StyledForm } from './UserForm.styles';
 import { InputWithErrorMessage } from './InputWithErrorMessage';
+import useAxios from '../businesses/useAxios';
 
-const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
+// const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 //const API_URL = process.env.NEXT_PUBLIC_API_MOCKING === ('enabled') ? 'https://backend.dev/login' : `http://${window.location.host}/api/auth/silent-refresh`;
 
 const schema = Yup.object({
@@ -25,32 +27,41 @@ const schema = Yup.object({
 type FormData = Yup.InferType<typeof schema>;
 
 export function LoginForm() {
-//    const API_URL = `http://${window.location.host}/api`;
-    const API_URL = `http://localhost:3000/api`;
-
     const router = useRouter();
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
     });
     const dispatch = useDispatch();
 
-    const onSubmit:SubmitHandler<FieldValues> = ({email, password}) => {
-        const UserData = {
-            "email" : email,
-            "password" : password,
+    const { response, error, loading, sendData } = useAxios({
+        method: `POST`,
+        url: `login`,
+        headers : {
+            "Content-Type" : "application/json",
         }
-        axios.post(`${API_URL}/login`, UserData, {
-            headers:{ "Content-Type": `application/json`}
-        })
-          .then(onLoginSuccess)
-          .catch(onError);
+    })
+
+    const onSubmit:SubmitHandler<FieldValues> = ({email, password}) => {
+        const userdata = {
+            email : email,
+            password : password,
+        };
+        sendData(userdata);
+
+        // if(response) {
+        //     onLoginSuccess(response);
+        // }
+
+        // if (error) { 
+        //     onError(error);
+        // }
     }
     const onLoginSuccess = (response : AxiosResponse) => {
         const access_token = response.headers.authorization;
         const {nick_name} = response.data;
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
     
-        setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
+        // setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
        
         dispatch(changeCurUser(nick_name as string));
         
@@ -62,11 +73,23 @@ export function LoginForm() {
         console.log(error);
     }
 
-    const onSilentRefresh = (data:{email:string, password:string}) => {
-        axios.post(`${API_URL}/refresh`, data)
-          .then(onLoginSuccess)
-          .catch(onError);
-    }
+    // const onSilentRefresh = (data:{email:string, password:string}) => {
+    //     axios.post(`${API_URL}/refresh`, data)
+    //       .then(onLoginSuccess)
+    //       .catch(onError);
+    // }
+
+    useEffect(() => {
+        if(response){
+            onLoginSuccess(response);
+        }
+    }, [response])
+
+    useEffect(() => {
+        if(error) {
+            onError(error);
+        }
+    }, [error])
 
     return(
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
