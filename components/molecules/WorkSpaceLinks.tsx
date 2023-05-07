@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import useAxios from "../businesses/useAxios";
+import Link from "next/link";
+import styled from "styled-components";
 
 export function WorkSpaceLinks() {
     const [workspace, setWorkSpace] = useState<string[]>([]);
@@ -12,8 +14,7 @@ export function WorkSpaceLinks() {
     })
 
     useEffect(() => {
-        console.log(response?.data);
-        if(response?.data) {
+        if(response) {
             setWorkSpace(response.data);
         }
     },[response])
@@ -26,3 +27,11 @@ export function WorkSpaceLinks() {
         </>
     )
 }
+
+const StyledWorkSpaceLink = styled(Link)`
+    text-decoration : none;
+
+    color:black;
+    font-size:10px;
+    font-weight:bolder;
+`

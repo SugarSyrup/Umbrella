@@ -31,14 +31,12 @@ export function SignUpForm() {
         resolver: yupResolver(schema)
     });
 
-    const [userdata, setUserdata] = useState<{}>();
     const { response, error, loading, sendData } = useAxios({
         method: `POST`,
         url: `signup`,
         headers : {
             "Content-Type" : "application/json",
-        },
-        data: userdata
+        }
     })
 
     const onError = (error: Error|AxiosError) => {
@@ -64,7 +62,7 @@ export function SignUpForm() {
         };
 
         sendData(userdata);
-        
+
         if(response) {
             onSignUpSuccess(response)
         }

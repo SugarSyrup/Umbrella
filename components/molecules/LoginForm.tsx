@@ -4,7 +4,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import axios, {AxiosError, AxiosResponse} from 'axios';
 import { useRouter } from 'next/router';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 //redux
 import { useDispatch } from 'react-redux';
@@ -46,16 +46,15 @@ export function LoginForm() {
             email : email,
             password : password,
         };
-
         sendData(userdata);
-        
-        if(response) {
-            onLoginSuccess(response);
-        }
 
-        if (error) { 
-            onError(error);
-        }
+        // if(response) {
+        //     onLoginSuccess(response);
+        // }
+
+        // if (error) { 
+        //     onError(error);
+        // }
     }
     const onLoginSuccess = (response : AxiosResponse) => {
         const access_token = response.headers.authorization;
@@ -79,6 +78,18 @@ export function LoginForm() {
     //       .then(onLoginSuccess)
     //       .catch(onError);
     // }
+
+    useEffect(() => {
+        if(response){
+            onLoginSuccess(response);
+        }
+    }, [response])
+
+    useEffect(() => {
+        if(error) {
+            onError(error);
+        }
+    }, [error])
 
     return(
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
