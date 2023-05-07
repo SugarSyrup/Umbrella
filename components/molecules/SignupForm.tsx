@@ -13,8 +13,8 @@ import { StyledForm, StyledRowDiv, StyledSelect, StyledSelectDiv } from './UserF
 
 const schema = Yup.object({
     email: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
-    password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/,'8글자 이상 염문자, 숫자, 특수문자를 조합해서 입력하세요').required('비밀번호를 입력해 주세요'),
-    passwordCheck: Yup.string().label('confirm password').oneOf([Yup.ref('password')], 'Password는 반드시 똑같이 입력해야 합니다.'), //Yup 라이브러리에 대한 적당한 공부?
+    password: Yup.string().min(8,"비밀번호는 최소 8자리 입니다.").max(20,"비밀번호는 최대 20자리 입니다.").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/,'8글자 이상 염문자, 숫자, 특수문자를 조합해서 입력하세요').required('비밀번호를 입력해 주세요'),
+    passwordCheck: Yup.string().min(8,"비밀번호는 최소 8자리 입니다.").max(20,"비밀번호는 최대 20자리 입니다.").label('confirm password').oneOf([Yup.ref('password')], 'Password는 반드시 똑같이 입력해야 합니다.'), //Yup 라이브러리에 대한 적당한 공부?
     nick_name: Yup.string().max(8).min(2).required('닉네임을 입력해주세요'),
     name: Yup.string().required('이름을 입력해 주세요'),
     birth: Yup.date().required(),
