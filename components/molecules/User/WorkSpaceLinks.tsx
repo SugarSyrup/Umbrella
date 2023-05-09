@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import useAxios from "../businesses/useAxios";
+import useAxios from "../../businesses/useAxios";
 import Link from "next/link";
 import styled from "styled-components";
 

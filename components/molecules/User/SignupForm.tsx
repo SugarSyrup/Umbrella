@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {AxiosError, AxiosResponse} from 'axios';
 
-import useAxios from '../businesses/useAxios';
+import useAxios from '../../businesses/useAxios';
 
 import { useRouter } from 'next/router';
 import {useForm} from 'react-hook-form';
@@ -10,7 +10,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 
 import { RectangleButton } from '@/components/atoms/RectangleButton.styles';
-import { InputWithErrorMessage } from '@/components/molecules/InputWithErrorMessage';
+import { InputWithErrorMessage } from '@/components/molecules/User/InputWithErrorMessage';
 import { StyledForm, StyledRowDiv, StyledSelect, StyledSelectDiv } from './UserForm.styles';
 
 const schema = Yup.object({

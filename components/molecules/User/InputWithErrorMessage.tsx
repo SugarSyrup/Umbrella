@@ -1,5 +1,5 @@
-import { AuthFormInput } from "../atoms/AuthFormInput.styles";
-import { SmallErrorMessage } from "../atoms/SmallErrorMessage.styles";
+import { AuthFormInput } from "../../atoms/AuthFormInput.styles";
+import { SmallErrorMessage } from "../../atoms/SmallErrorMessage.styles";
 import { UseFormRegisterReturn } from "react-hook-form";
 import { EmptySpace, InputWithErroMessageDiv } from "./UserForm.styles";
 

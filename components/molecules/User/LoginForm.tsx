@@ -8,14 +8,14 @@ import { useEffect, useState } from 'react';
 
 //redux
 import { useDispatch } from 'react-redux';
-import { changeCurUser } from '../../store/CurUserSlice';
+import { changeCurUser } from '../../../store/CurUserSlice';
 
-import { StyledLink } from '../atoms/TextLink.styles';
-import { RectangleButton } from '../atoms/RectangleButton.styles';
+import { StyledLink } from '../../atoms/TextLink.styles';
+import { RectangleButton } from '../../atoms/RectangleButton.styles';
 
 import { StyledForm } from './UserForm.styles';
 import { InputWithErrorMessage } from './InputWithErrorMessage';
-import useAxios from '../businesses/useAxios';
+import useAxios from '../../businesses/useAxios';
 
 // const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 //const API_URL = process.env.NEXT_PUBLIC_API_MOCKING === ('enabled') ? 'https://backend.dev/login' : `http://${window.location.host}/api/auth/silent-refresh`;

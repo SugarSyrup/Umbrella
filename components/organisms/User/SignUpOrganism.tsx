@@ -1,6 +1,6 @@
-import { LoginHeader } from "../atoms/LoginHeader.styles";
+import { LoginHeader } from "../../atoms/LoginHeader.styles";
 import { StyledLoginOrganism } from "./UserOragnism.styles";
-import { SignUpForm } from "../molecules/SignupForm";
+import { SignUpForm } from "../../molecules/User/SignupForm";
 
 export function SignUpOrganism() {
     return(

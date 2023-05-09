@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
 import { StyledLoginOrganism } from "./UserOragnism.styles";
-import { LoginHeader } from "../atoms/LoginHeader.styles";
-import { PassWordChangeForm } from "../molecules/PassWordChangeForm";
+import { LoginHeader } from "../../atoms/LoginHeader.styles";
+import { PassWordChangeForm } from "../../molecules/User/PassWordChangeForm";
 
 export function PasswordChangeOrganism() {
     const router = useRouter();

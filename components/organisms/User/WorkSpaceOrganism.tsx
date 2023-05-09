@@ -5,8 +5,8 @@ import { useSelector } from "react-redux";
 import { RootState } from "@/store";
 
 import { StyledLoginOrganism } from "./UserOragnism.styles";
-import { LoginHeader } from "../atoms/LoginHeader.styles";
-import { WorkSpaceLinks } from "../molecules/WorkSpaceLinks";
+import { LoginHeader } from "../../atoms/LoginHeader.styles";
+import { WorkSpaceLinks } from "../../molecules/User/WorkSpaceLinks";
 
 export function WorkSpaceOrganism() {
     const router = useRouter();

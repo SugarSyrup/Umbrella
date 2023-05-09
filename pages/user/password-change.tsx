@@ -1,5 +1,5 @@
 import { UserAuthTemplate } from "@/components/templates/UserAuthTemplate";
-import { PasswordChangeOrganism } from "@/components/organisms/PasswordChangeOrganism";
+import { PasswordChangeOrganism } from "@/components/organisms/User/PasswordChangeOrganism";
 import { UserTemplate } from "@/components/templates/UserTemplate";
 
 export default function Home() {

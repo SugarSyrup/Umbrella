@@ -6,11 +6,11 @@ import {AxiosError, AxiosResponse} from 'axios';
 import { useRouter } from 'next/router';
 import { useEffect } from 'react';
 
-import { RectangleButton } from '../atoms/RectangleButton.styles';
+import { RectangleButton } from '../../atoms/RectangleButton.styles';
 
 import { StyledForm } from './UserForm.styles';
 import { InputWithErrorMessage } from './InputWithErrorMessage';
-import useAxios from '../businesses/useAxios';
+import useAxios from '../../businesses/useAxios';
 
 const schema = Yup.object({
     old_password: Yup.string().matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/,'8글자 이상 염문자, 숫자, 특수문자를 조합해서 입력하세요').required('비밀번호를 입력해 주세요'),

@@ -1,8 +1,8 @@
-import { LoginForm } from "../molecules/LoginForm";
-import { LoginOAuthLinkButtonDiv } from "../molecules/LoginOAuthButtons";
+import { LoginForm } from "../../molecules/User/LoginForm";
+import { LoginOAuthLinkButtonDiv } from "../../molecules/User/LoginOAuthButtons";
 
-import { LoginHeader } from "../atoms/LoginHeader.styles";
-import { StyledLink } from "../atoms/TextLink.styles";
+import { LoginHeader } from "../../atoms/LoginHeader.styles";
+import { StyledLink } from "../../atoms/TextLink.styles";
 import { StyledLoginOrganism, StyledHrr } from "./UserOragnism.styles";
 
 export function LoginOrganism() {

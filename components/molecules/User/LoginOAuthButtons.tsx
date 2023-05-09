@@ -3,7 +3,7 @@ import { FcGoogle } from 'react-icons/fc';
 import { FaGithub } from 'react-icons/fa';
 import { RiKakaoTalkFill } from 'react-icons/ri';
 
-import { OAuthLinkButton } from "../atoms/OAuthButton.styles";
+import { OAuthLinkButton } from "../../atoms/OAuthButton.styles";
 import { StyledDiv } from './LoginOAuthButtons.styles';
 
 export function LoginOAuthLinkButtonDiv() {

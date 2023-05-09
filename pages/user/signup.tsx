@@ -1,5 +1,5 @@
 import { UserTemplate } from "@/components/templates/UserTemplate";
-import { SignUpOrganism } from "@/components/organisms/SignUpOrganism";
+import { SignUpOrganism } from "@/components/organisms/User/SignUpOrganism";
 
 export default function Home() {
   return (
