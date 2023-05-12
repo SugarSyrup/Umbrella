@@ -3,7 +3,8 @@ import type { AppProps } from 'next/app'
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
 import { Provider } from 'react-redux';
-import { store } from 'store/store';
+import { store, persistor } from "../store/store";
+import { PersistGate } from "redux-persist/integration/react";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -58,10 +59,12 @@ const defaultTheme = {
 function App({ Component, pageProps }: AppProps) {
   return (
     <Provider store={store}>
-      <ThemeProvider theme={defaultTheme}>
-        <GlobalStyle />
-        <Component {...pageProps} />
-      </ThemeProvider>
+      <PersistGate loading="null" persistor={persistor}>
+        <ThemeProvider theme={defaultTheme}>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </ThemeProvider>
+      </PersistGate>
     </Provider>
   )
 }
