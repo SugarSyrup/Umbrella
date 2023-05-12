@@ -18,7 +18,7 @@
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hookform/resolvers": "^2.9.11",
     "@next/font": "13.1.2",
-    "@reduxjs/toolkit": "^1.9.3",
+    "@reduxjs/toolkit": "^1.9.5",
     "@studio-freight/lenis": "^1.0.6",
     "@testing-library/user-event": "^14.4.3",
     "@types/next-redux-wrapper": "^3.0.0",

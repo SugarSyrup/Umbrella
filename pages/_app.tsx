@@ -1,7 +1,9 @@
-import { wrapper } from 'store';
 import axios from 'axios'
 import type { AppProps } from 'next/app'
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
+
+import { Provider } from 'react-redux';
+import { store } from 'store/store';
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -53,15 +55,13 @@ const defaultTheme = {
   primaryColor: "#372838"
 }
 
-axios.defaults.withCredentials = true;
-
 function App({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </ThemeProvider>
+    <Provider store={store}>
+      <ThemeProvider theme={defaultTheme}>
+        <GlobalStyle />
+        <Component {...pageProps} />
+      </ThemeProvider>
+    </Provider>
   )
 }
-
-export default wrapper.withRedux(App);
