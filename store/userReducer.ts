@@ -22,6 +22,8 @@ export const userReducer = (state = initialState, action : ActionType) => {
     }
 }
 
+export type userReducerState = ReturnType<typeof userReducer>
+
 const persistConfig = {
   key: "userInfo",
   storage: storageSession,
