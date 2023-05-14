@@ -1,5 +1,5 @@
-export const LOGIN = "LOGIN";
-export const LOGOUT = "LOGOUT";
+export const LOGIN = "LOGIN" as const;
+export const LOGOUT = "LOGOUT" as const;
 
 export type userDataType = {
     nick_name : string,
@@ -14,6 +14,6 @@ export function loginAction(userData: userDataType) {
 
 export function logoutAction() {
     return {
-        type: LOGOUT
+        type: LOGOUT,
     }
 }

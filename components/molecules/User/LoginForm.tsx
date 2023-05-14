@@ -63,7 +63,7 @@ export function LoginForm() {
     
         // setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
        
-        dispatch(loginAction(nick_name));
+        dispatch(loginAction({nick_name}));
         
         router.push({
             pathname: 'workspace'

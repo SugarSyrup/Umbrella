@@ -1,4 +1,3 @@
-import axios from 'axios'
 import type { AppProps } from 'next/app'
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
@@ -58,13 +57,15 @@ const defaultTheme = {
 
 function App({ Component, pageProps }: AppProps) {
   return (
-    <Provider store={store}>
-      <PersistGate loading="null" persistor={persistor}>
-        <ThemeProvider theme={defaultTheme}>
+    <ThemeProvider theme={defaultTheme}>
+      <Provider store={store}> 
+        <PersistGate loading="Loading..." persistor={persistor}>
           <GlobalStyle />
           <Component {...pageProps} />
-        </ThemeProvider>
-      </PersistGate>
-    </Provider>
+        </PersistGate>
+       </Provider>
+    </ThemeProvider>  
   )
 }
+
+export default App;
