@@ -1,7 +1,7 @@
 import { useState, FormEvent } from "react";
 import Head from 'next/head';
 
-import { useMySocket, MySocketState } from "@/utils/useMySocket";
+import { useMySocket, MySocketState } from "@/components/businesses/useMySocket";
 
 export default function Chats() {
     const {responseMessage, myWebSocket} = useMySocket((state) => {
