@@ -30,7 +30,6 @@ type FormData = Yup.InferType<typeof schema>;
 
 export function SignUpForm() {
     const router = useRouter();
-    const [emailAuth, setEmailAuth] = useState(false);
 
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
@@ -75,14 +74,6 @@ export function SignUpForm() {
         if(error) { 
             onError(error);
         }
-    }
-
-    const onEmailAuthClick = (event:React.FormEvent<HTMLButtonElement>) => {
-        setEmailAuth(prev => !prev);
-    }
-
-    const onCodeCheck = () => {
-        
     }
 
     return(

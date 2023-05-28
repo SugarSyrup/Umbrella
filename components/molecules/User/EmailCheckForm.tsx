@@ -41,7 +41,7 @@ export function EmailCheckForm({inputProps, errorMessage} : InputWithErrorMessag
     }
 
     const onError = (error: Error|AxiosError) => {
-        //Email을 재입력하거나, 인증코드를 다시 확인해 주세요
+        //이거는 전송 에러일건데?
     }
 
     const onSubmit = () => {
