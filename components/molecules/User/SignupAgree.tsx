@@ -84,8 +84,8 @@ export function SignUpAgreeForm({onSubmit}: SignUpAgreeFormPropsType) {
                 </p>
             </div>
             <div style={{ display:"flex", marginTop:"20px", position:"relative",right:"-80px"}}>
-                <input type='checkbox' onClick={onCheckboxClick}/>
-                <label>위의 이용약관에 동의합니다.</label>
+                <input id="check" type='checkbox' onClick={onCheckboxClick}/>
+                <label htmlFor="check">위의 이용약관에 동의합니다.</label>
             </div>
             <RectangleButton type="submit">회원가입하기!</RectangleButton>
         </StyledForm>
