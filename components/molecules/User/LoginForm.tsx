@@ -46,6 +46,7 @@ export function LoginForm() {
             email : email,
             password : password,
         };
+        console.log(userdata);
         sendData(userdata);
 
         // if(response) {
@@ -80,12 +81,14 @@ export function LoginForm() {
     // }
 
     useEffect(() => {
+        console.log(response);
         if(response){
             onLoginSuccess(response);
         }
     }, [response])
 
     useEffect(() => {
+        console.log(error);
         if(error) {
             onError(error);
         }
