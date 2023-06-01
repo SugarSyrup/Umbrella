@@ -1,5 +1,7 @@
 import styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
+import { SideNavigator } from '../molecules/Workspace/SideNavigator';
+import { AddContent } from '../molecules/Workspace/AddContent';
 
 const mainTheme = {
     primaryColor: "202123",
@@ -11,8 +13,14 @@ export default function WorkSpaceTemplate() {
     return(
     <ThemeProvider theme={mainTheme}>
         <WorkspaceLayout>
-            <WorkspaceSidebar />
-            <WorkspaceHeader />
+            <WorkspaceSidebar>
+                <SidebarHeading>@Your Company</SidebarHeading>
+                <SideNavigator />
+                <AddContent />
+            </WorkspaceSidebar>
+            <WorkspaceHeader>
+            
+            </WorkspaceHeader>
             <WorkspaceMain />
         </WorkspaceLayout>
     </ThemeProvider>
@@ -35,7 +43,13 @@ const WorkspaceLayout = styled.div`
 
 const WorkspaceSidebar = styled.aside`
     grid-area: sidebar;
-    background-color:yellow;
+    background-color:black;
+    color:white;
+    
+    display:flex;
+    flex-direction:column;
+    justify-content:center;
+    align-items:center;
 `
 
 const WorkspaceHeader = styled.aside`
@@ -46,4 +60,10 @@ const WorkspaceHeader = styled.aside`
 const WorkspaceMain = styled.aside`
     grid-area: main;   
     background-color: blue;
+`
+
+const SidebarHeading = styled.h1`
+    font-size:36px;
+    font-weight:bolder;
+    word-spacing:-3px;
 `
