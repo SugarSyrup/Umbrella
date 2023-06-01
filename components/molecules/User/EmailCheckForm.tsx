@@ -11,8 +11,12 @@ import styled from 'styled-components';
 import { AuthFormInput } from '@/components/atoms/AuthFormInput.styles';
 import { SmallErrorMessage } from '@/components/atoms/SmallErrorMessage.styles';
 
+interface EmailCheckFormPropsType extends InputWithErrorMessagePropsType{
+    setIsChecked : React.Dispatch<React.SetStateAction<boolean>>
+}
 
-export function EmailCheckForm({inputProps} : InputWithErrorMessagePropsType) {
+//아래 Props로 제공받는 errorMessage를 어떻게 활용, ref포함 ref도 받는데 지금 여기서 임의데로 안받고 있음, 받으면서 버그 없게 고쳐진것 같으니 사용해보셈
+export function EmailCheckForm({inputProps, errorMessage, setIsChecked} : EmailCheckFormPropsType) {
     const [emailAuth, setEmailAuth] = useState(false);
     const [emailErrorMsg, setEmailErrorMsg] = useState<string|undefined>();
     const [codeErrorMsg, setCodeErrorMsg] = useState<string|undefined>();
@@ -38,6 +42,9 @@ export function EmailCheckForm({inputProps} : InputWithErrorMessagePropsType) {
                     emailRef.current.disabled = true;
                 }
                 setEmailAuth(false);
+                
+                //부모요소에 이메일 인증이 완료되었음을 알림
+                setIsChecked(true);
             }
             //인증 번호와 작성한 번호가 다를때
             else {
