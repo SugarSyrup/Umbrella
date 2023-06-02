@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 
 //redux
 import { useDispatch } from 'react-redux';
-import { loginAction } from '@/store/userActions';
 
 import { StyledLink } from '../../atoms/TextLink.styles';
 import { RectangleButton } from '../../atoms/RectangleButton.styles';
@@ -16,6 +15,8 @@ import { RectangleButton } from '../../atoms/RectangleButton.styles';
 import { StyledForm } from './UserForm.styles';
 import { InputWithErrorMessage } from './InputWithErrorMessage';
 import useAxios from '../../businesses/useAxios';
+import wrapper from '@/store/configureStore';
+import { setIsLogin } from '@/store/userSlice';
 
 // const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
 //const API_URL = process.env.NEXT_PUBLIC_API_MOCKING === ('enabled') ? 'https://backend.dev/login' : `http://${window.location.host}/api/auth/silent-refresh`;
@@ -63,7 +64,7 @@ export function LoginForm() {
     
         // setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
        
-        dispatch(loginAction({nick_name}));
+        dispatch(setIsLogin(true));
         
         router.push({
             pathname: 'workspace'
@@ -100,3 +101,9 @@ export function LoginForm() {
         </StyledForm>
     )
 };
+
+// export const getStaticProps = wrapper.getStaticProps((store) => async ({ params }) => {
+//     const data = await fetch(params!.id as string);
+//     store.dispatch(setIsLogin(true));
+//     return { props: {data}}
+// })

@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
-import { userReducerState } from 'store/userReducer';
+import { userReducerState } from '@/store/tmp/userReducer';
 
 export interface UserAuthTemplateProps { 
     children: React.ReactNode
