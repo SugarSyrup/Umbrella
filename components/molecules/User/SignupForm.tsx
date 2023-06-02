@@ -30,6 +30,7 @@ type FormData = Yup.InferType<typeof schema>;
 
 export function SignUpForm() {
     const router = useRouter();
+    const [isEmailChecked, setIsEmailChecked] = useState(false);
 
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
@@ -65,7 +66,13 @@ export function SignUpForm() {
             gender: gender
         };
 
-        sendData(userdata);
+        if(isEmailChecked) {
+            sendData(userdata);
+        }
+        else {
+            window.alert("이메일 인증을 우선 해주세요")
+        }
+        
 
         if(response) {
             onSignUpSuccess(response)
@@ -78,7 +85,7 @@ export function SignUpForm() {
 
     return(
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-            <EmailCheckForm inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message}/>
+            <EmailCheckForm inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message} setIsChecked={setIsEmailChecked}/>
             <InputWithErrorMessage inputProps={{placeholder:'password', type:'password', ...register('password')}} errorMessage={errors.password?.message}/>
             <InputWithErrorMessage inputProps={{placeholder:'Password를 다시 입력해 주세요', type:'password', ...register('passwordCheck')}} errorMessage={errors.passwordCheck?.message}/>
             <InputWithErrorMessage inputProps={{placeholder:'NickName', type:'text', ...register('nick_name')}} errorMessage={errors.nick_name?.message}/>

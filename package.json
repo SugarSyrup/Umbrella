@@ -11,10 +11,10 @@
     "test": "jest --watch"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-svg-core": "^6.2.1",
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-brands-svg-icons": "^6.3.0",
     "@fortawesome/free-regular-svg-icons": "^6.2.1",
-    "@fortawesome/free-solid-svg-icons": "^6.2.1",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@hookform/resolvers": "^2.9.11",
     "@next/font": "13.1.2",

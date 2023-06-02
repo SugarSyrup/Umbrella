@@ -20,9 +20,7 @@ export const InputWithErrorMessage = ({inputProps, errorMessage, customref} : In
     return(
         <InputWithErroMessageDiv>
             <label style={{fontSize:'12px', fontWeight:'bold'}}>{inputProps.name}</label>
-            {/* 왜 ref있으면 login 로직이 제대로 동작 안하지? */}
-            {/* <AuthFormInput {...inputProps} ref={customref}/> */}
-            <AuthFormInput {...inputProps} />
+            <AuthFormInput {...inputProps} ref={customref? customref : inputProps.ref}/>
             { errorMessage ? <SmallErrorMessage>{errorMessage}</SmallErrorMessage> : <EmptySpace /> }
         </InputWithErroMessageDiv>
     )
