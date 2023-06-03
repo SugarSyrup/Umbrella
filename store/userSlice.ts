@@ -3,9 +3,11 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export interface UserState {
   isLoggin: boolean;
+  nickname: string;
 }
 const initialState: UserState = {
   isLoggin: false,
+  nickname: "anomynous"
 }
 
 export const userSlice = createSlice({
@@ -13,7 +15,9 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setIsLogin: (state, action) => {
-      state.isLoggin = action.payload
+      // console.log(action.payload);
+      state.isLoggin = action.payload.isLoggin
+      state.nickname = action.payload.nickname
     },
   },
   extraReducers: {},
