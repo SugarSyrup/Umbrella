@@ -1,24 +1,20 @@
-import { useEffect } from "react";
-import { useRouter } from 'next/router';
+import { useEffect, useState } from "react";
 
 import { useSelector } from "react-redux";
-import { RootState } from "@/store";
+import { selectUserState } from "@/store/userSlice";
 
 import { StyledLoginOrganism } from "./UserOragnism.styles";
 import { LoginHeader } from "../../atoms/LoginHeader.styles";
 import { WorkSpaceLinks } from "../../molecules/User/WorkSpaceLinks";
+import useAxios from "@/components/businesses/useAxios";
+import { AxiosResponse } from "axios";
 
 export function WorkSpaceOrganism() {
-    const router = useRouter();
-    const  {name}  = useSelector((state:RootState) => state.user);
-
-    useEffect(() => {
-        if(name === 'anon') router.push({pathname:'login'});
-    }, []);
+    const {nickname} = useSelector(selectUserState);
 
     return(
         <StyledLoginOrganism style={{height:'400px'}}>
-            <LoginHeader>{name}&apos;s WorkSpace</LoginHeader>
+            <LoginHeader>{nickname}&apos;s WorkSpace</LoginHeader>
             <WorkSpaceLinks />
         </StyledLoginOrganism>
     )

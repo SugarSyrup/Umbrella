@@ -1,27 +1,45 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
-import { userReducerState } from '@/store/tmp/userReducer';
+import { selectUserState, setIsLogin } from '@/store/userSlice';
+import wrapper, { AppState } from "@/store/configureStore";
+import userReducer from "@/store/userSlice";
+import { InferGetServerSidePropsType } from "next";
 
 export interface UserAuthTemplateProps { 
-    children: React.ReactNode
+    children: React.ReactNode;
+    // data? : InferGetServerSidePropsType<typeof getServerSideProps>
  }
 
 
 //TODO : useEffect때문에 미묘한 시간차가 발생, 이 시간차로 WorkSpace가 살짝 보였다가 사라짐 
-export function UserAuthTemplate(props : UserAuthTemplateProps) {
+export function UserAuthTemplate({children} : UserAuthTemplateProps) {
     const router = useRouter();
-    const {nick_name} = useSelector((state: userReducerState) => state.user);
+    const {isLoggin} = useSelector(selectUserState);
 
     useEffect(() => {
-        if(nick_name === "") 
+        if(!isLoggin) {
             router.push({pathname:'login'});
-            //TODO : 권한 없어서 로그인 창으로 튕길때, 알림 메세지가 로그인 창에서 떠야하나??
+        }
     }, [])
 
-    if(nick_name === "") {
-        return<>로그인 페이지로 이동합니다...</>
-    }
-
-    return (<>{props.children}</>)
+    return (<>
+        {children}
+    </>)
 }
+
+// export const getServerSideProps = wrapper.getServerSideProps(
+//     (store) =>
+//       async ({ params }) => {
+//         // we can set the initial state from here
+//         // we are setting to false but you can run your custom logic here
+//         //console.log("State on server", store.getState());
+//         const data = useSelector(selectUserState);
+//         console.log(data.isLoggin);
+//         return {
+//           props: {
+//             data: data,
+//           },
+//         };
+//       }
+//   );
