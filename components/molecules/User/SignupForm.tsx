@@ -13,19 +13,24 @@ import { RectangleButton } from '@/components/atoms/RectangleButton.styles';
 import { InputWithErrorMessage } from '@/components/molecules/User/InputWithErrorMessage';
 import { StyledForm, StyledRowDiv, StyledSelect, StyledSelectDiv } from './UserForm.styles';
 
+import styled from 'styled-components';
+import { EmailCheckForm } from './EmailCheckForm';
+
 const schema = Yup.object({
     email: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
+    code: Yup.string(),
     password: Yup.string().min(8,"비밀번호는 최소 8자리 입니다.").max(20,"비밀번호는 최대 20자리 입니다.").matches(/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@!%*#?&])[A-Za-z\d@!%*#?&]{8,}$/,'8글자 이상 염문자, 숫자, 특수문자를 조합해서 입력하세요').required('비밀번호를 입력해 주세요'),
     passwordCheck: Yup.string().min(8,"비밀번호는 최소 8자리 입니다.").max(20,"비밀번호는 최대 20자리 입니다.").label('confirm password').oneOf([Yup.ref('password')], 'Password는 반드시 똑같이 입력해야 합니다.'), //Yup 라이브러리에 대한 적당한 공부?
-    nick_name: Yup.string().max(8).min(2).required('닉네임을 입력해주세요'),
+    nick_name: Yup.string().max(8,'닉네임은 최대 8글자 입니다').min(2,'닉네임은 최소 2글자 입니다.').required('닉네임을 입력해주세요'),
     name: Yup.string().required('이름을 입력해 주세요'),
-    birth: Yup.date().required(),
-    gender: Yup.string().required(),
+    birth: Yup.date().required('생년월일을 입력해 주세요'),
+    gender: Yup.string().required('성별을 입력해 주세요'),
 });
 type FormData = Yup.InferType<typeof schema>;
 
 export function SignUpForm() {
     const router = useRouter();
+    const [isEmailChecked, setIsEmailChecked] = useState(false);
 
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
@@ -61,7 +66,13 @@ export function SignUpForm() {
             gender: gender
         };
 
-        sendData(userdata);
+        if(isEmailChecked) {
+            sendData(userdata);
+        }
+        else {
+            window.alert("이메일 인증을 우선 해주세요")
+        }
+        
 
         if(response) {
             onSignUpSuccess(response)
@@ -73,8 +84,8 @@ export function SignUpForm() {
     }
 
     return(
-        <StyledForm onSubmit={handleSubmit(onSubmit)} style={{marginTop:'10px'}}>
-            <InputWithErrorMessage inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message}/>
+        <StyledForm onSubmit={handleSubmit(onSubmit)}>
+            <EmailCheckForm inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message} setIsChecked={setIsEmailChecked}/>
             <InputWithErrorMessage inputProps={{placeholder:'password', type:'password', ...register('password')}} errorMessage={errors.password?.message}/>
             <InputWithErrorMessage inputProps={{placeholder:'Password를 다시 입력해 주세요', type:'password', ...register('passwordCheck')}} errorMessage={errors.passwordCheck?.message}/>
             <InputWithErrorMessage inputProps={{placeholder:'NickName', type:'text', ...register('nick_name')}} errorMessage={errors.nick_name?.message}/>
