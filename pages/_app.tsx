@@ -1,12 +1,10 @@
+import wrapper from '@/store/configureStore';
 import type { AppProps } from 'next/app'
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
-import { Provider } from 'react-redux';
-import { store, persistor } from "../store/store";
-import { PersistGate } from "redux-persist/integration/react";
-import { config } from '@fortawesome/fontawesome-svg-core'
-import '@fortawesome/fontawesome-svg-core/styles.css'
-config.autoAddCss = false
+// import { Provider } from 'react-redux';
+// import { store, persistor } from "../store/tmp/store";
+// import { PersistGate } from "redux-persist/integration/react";
 
 const GlobalStyle = createGlobalStyle`
   html, body, div, span, applet, object, iframe,
@@ -61,14 +59,14 @@ const defaultTheme = {
 function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <Provider store={store}> 
-        <PersistGate loading="Loading..." persistor={persistor}>
+      {/* <Provider store={store}> 
+        <PersistGate persistor={persistor}> */}
           <GlobalStyle />
           <Component {...pageProps} />
-        </PersistGate>
-       </Provider>
+        {/* </PersistGate>
+       </Provider> */}
     </ThemeProvider>  
   )
 }
 
-export default App;
+export default wrapper.withRedux(App);
