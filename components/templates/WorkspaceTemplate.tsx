@@ -2,6 +2,10 @@ import styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
 import { SideNavigator } from '../molecules/Workspace/SideNavigator';
 import { AddContent } from '../molecules/Workspace/AddContent';
+import { LogOutButton } from '../molecules/Workspace/LogOutButton';
+
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faBell, faCaretDown } from '@fortawesome/free-solid-svg-icons';
 
 const mainTheme = {
     primaryColor: "202123",
@@ -17,9 +21,19 @@ export default function WorkSpaceTemplate() {
                 <SidebarHeading>@Your Company</SidebarHeading>
                 <SideNavigator />
                 <AddContent />
+                <LogOutButton />
             </WorkspaceSidebar>
             <WorkspaceHeader>
-            
+                <div className="welcome">
+                    <span>WelcomeBack, SugarSyrup</span>
+                    <span></span>
+                </div>
+                <HeaderRightDiv>
+                    <FontAwesomeIcon icon={faBell} />
+                    <div className="img"></div>
+                    <span>SugarSyrup</span>
+                    <FontAwesomeIcon icon={faCaretDown} />
+                </HeaderRightDiv>
             </WorkspaceHeader>
             <WorkspaceMain />
         </WorkspaceLayout>
@@ -32,13 +46,14 @@ const WorkspaceLayout = styled.div`
     height: 100vh;
 
     display:grid;
-    grid-template-rows: 1fr 3fr;
-    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 4fr;
+    grid-template-columns: 1fr 5fr;
     grid-template-areas:
-        "sidebar header header header"
-        "sidebar main main main"
-        "sidebar main main main"
-        "sidebar main main main";
+        "sidebar header header header header"
+        "sidebar main main main main"
+        "sidebar main main main main"
+        "sidebar main main main main"
+        "sidebar main main main main";
 `
 
 const WorkspaceSidebar = styled.aside`
@@ -53,17 +68,61 @@ const WorkspaceSidebar = styled.aside`
 `
 
 const WorkspaceHeader = styled.aside`
+    box-sizing: border-box;
     grid-area: header;
-    background-color:red;
+    background-color:white;
+
+    display:flex;
+    flex-direction:row;
+    justify-content:space-between;
+    align-items:center;
+
+    width:100%;
+    padding-left:100px;
+    padding-right:100px;
+
+    .welcome{
+        font-size:22px;
+    }
+`
+
+const HeaderRightDiv = styled.div`
+    display:flex;
+    flex-direction:row;
+    justify-content:space-around;
+    align-items:center;
+
+    width:200px;
+
+    svg{
+        font-size:28px;
+    }    
+    .img{  
+        margin-left:30px;
+        margin-right:30px;
+
+        flex-shrink:0;
+
+        width:100px;
+        height:100px;
+        border-radius:50%;
+        background-color:grey;
+    }
+
+    span{
+        font-size:20px;
+        margin-right:10px;
+    }
 `
 
 const WorkspaceMain = styled.aside`
     grid-area: main;   
-    background-color: blue;
+    background-color: #F3F3F3;
 `
 
 const SidebarHeading = styled.h1`
     font-size:36px;
     font-weight:bolder;
     word-spacing:-3px;
+    margin-bottom:100px;
 `
