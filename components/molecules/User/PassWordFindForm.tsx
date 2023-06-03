@@ -29,7 +29,7 @@ export function PassWordFindForm() {
     });
 
     const { response, error, loading, sendData } = useAxios({
-        method: `POST`,
+        method: `PATCH`,
         url: `user/update/password`,
         headers : {
             "Content-Type" : "application/json",
