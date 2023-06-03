@@ -1,7 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faHome, faBullhorn, faCalendar, faFile } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import Link from 'next/link';
 
 export function SideNavigator() {
     return(
