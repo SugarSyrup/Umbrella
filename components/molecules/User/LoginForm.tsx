@@ -43,7 +43,7 @@ export function LoginForm() {
             email : email,
             password : password,
         };
-        console.log(userdata);
+        //console.log(userdata);
         sendData(userdata);
 
         // if(response) {
@@ -55,6 +55,7 @@ export function LoginForm() {
         // }
     }
     const onLoginSuccess = (response : AxiosResponse) => {
+        //console.log(1)
         const access_token = response.headers.authorization;
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 
@@ -66,7 +67,7 @@ export function LoginForm() {
         })
     }
     const onError = (error: Error|AxiosError) => {
-        console.log(error);
+        //console.log(error);
     }
 
     // const onSilentRefresh = (data:{email:string, password:string}) => {
@@ -76,14 +77,14 @@ export function LoginForm() {
     // }
 
     useEffect(() => {
-        console.log(response);
+        //console.log(response);
         if(response){
             onLoginSuccess(response);
         }
     }, [response])
 
     useEffect(() => {
-        console.log(error);
+        //console.log(error);
         if(error) {
             onError(error);
         }
@@ -98,9 +99,3 @@ export function LoginForm() {
         </StyledForm>
     )
 };
-
-// export const getStaticProps = wrapper.getStaticProps((store) => async ({ params }) => {
-//     const data = await fetch(params!.id as string);
-//     store.dispatch(setIsLogin(true));
-//     return { props: {data}}
-// })

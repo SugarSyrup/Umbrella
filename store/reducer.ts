@@ -3,12 +3,11 @@ import { HYDRATE } from 'next-redux-wrapper'
 
 // import userReducer, { UserState } from "store/slices//usersSlice";
 import userReducer, { UserState } from "./userSlice";
+import workspaceReducer, { WorkspaceState } from "./workspaceSlice";
 
 export interface IState {
   user: UserState,
-//   feeds: FeedState,
-//   filter: FilterState
-//   restaurants: RestaurantState
+  workspace: WorkspaceState,
 }
 
 const rootReducer = (state: IState, action: AnyAction): CombinedState<IState> => {
@@ -22,6 +21,7 @@ const rootReducer = (state: IState, action: AnyAction): CombinedState<IState> =>
         // filter: filterReducer,
         // restaurants: restaurantReducer,
         user: userReducer,
+        workspace: workspaceReducer,
       })
       return combinedReducer(state, action)
     }
