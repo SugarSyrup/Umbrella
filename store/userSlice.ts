@@ -22,3 +22,4 @@ export const userSlice = createSlice({
 export const { setIsLogin } = userSlice.actions
 
 export default userSlice.reducer
+//redux setting
