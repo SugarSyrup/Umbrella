@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 
 //redux
 import { useDispatch } from 'react-redux';
-import { changeCurUser } from '../../../store/CurUserSlice';
+import { loginAction } from '@/store/userActions';
 
 import { StyledLink } from '../../atoms/TextLink.styles';
 import { RectangleButton } from '../../atoms/RectangleButton.styles';
@@ -64,7 +64,7 @@ export function LoginForm() {
     
         // setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
        
-        dispatch(changeCurUser(nick_name as string));
+        dispatch(loginAction({nick_name}));
         
         router.push({
             pathname: 'workspace'

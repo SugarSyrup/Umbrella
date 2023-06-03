@@ -1,8 +1,9 @@
-import { wrapper } from 'store';
-import axios from 'axios'
 import type { AppProps } from 'next/app'
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 
+import { Provider } from 'react-redux';
+import { store, persistor } from "../store/store";
+import { PersistGate } from "redux-persist/integration/react";
 import { config } from '@fortawesome/fontawesome-svg-core'
 import '@fortawesome/fontawesome-svg-core/styles.css'
 config.autoAddCss = false
@@ -57,15 +58,17 @@ const defaultTheme = {
   primaryColor: "#372838"
 }
 
-axios.defaults.withCredentials = true;
-
 function App({ Component, pageProps }: AppProps) {
   return (
     <ThemeProvider theme={defaultTheme}>
-      <GlobalStyle />
-      <Component {...pageProps} />
-    </ThemeProvider>
+      <Provider store={store}> 
+        <PersistGate loading="Loading..." persistor={persistor}>
+          <GlobalStyle />
+          <Component {...pageProps} />
+        </PersistGate>
+       </Provider>
+    </ThemeProvider>  
   )
 }
 
-export default wrapper.withRedux(App);
+export default App;
