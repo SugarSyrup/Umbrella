@@ -13,11 +13,12 @@ export const StyledForm = styled.form`
 `
 
 export const EmptySpace = styled.div`
-    height: 25px;
+    margin-bottom: 15px;
 `
 
 export const InputWithErroMessageDiv = styled.div`
     width:100%;
+    height:90px;
     display:flex;
     flex-direction:column;
 `
