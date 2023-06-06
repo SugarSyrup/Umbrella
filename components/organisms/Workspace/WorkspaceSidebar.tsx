@@ -5,30 +5,44 @@ import { AddContent } from '../../molecules/Workspace/AddContent';
 import { LogOutButton } from '../../molecules/Workspace/LogOutButton';
 
 export function WorkspaceSidebar() {
-    return(<StyledWorkspaceSidebar>
-        <SidebarHeading>@Your Company</SidebarHeading>
+    return(<Sidebar.Container>
+        <Sidebar.Heading onClick={() => {
+            window.location.href = "/";
+            window.location.reload();
+            return;
+        }}>@Your Company</Sidebar.Heading>
         <SideNavigator />
         <AddContent />
         <LogOutButton />
-    </StyledWorkspaceSidebar>)
+    </Sidebar.Container>)
 }
 
 
-const StyledWorkspaceSidebar = styled.aside`
-    grid-area: sidebar;
-    background-color:black;
-    color:white;
-    
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-`
+const Sidebar = {
+    Container : styled.aside`
+        grid-area: sidebar;
+        background-color:#232428;
+        color:white;
+        
+        display:flex;
+        flex-direction:column;
+        justify-content:center;
+        align-items:center;
 
+        width:300px;
+        height:100%;
 
-const SidebarHeading = styled.h1`
-    font-size:36px;
-    font-weight:bolder;
-    word-spacing:-3px;
-    margin-bottom:100px;
-`
+        padding-left:20px;
+        padding-right:20px;
+
+    `,
+
+    Heading : styled.h1`
+        font-size:30px;
+        font-weight:bolder;
+        word-spacing:-3px;
+        margin-bottom:100px;
+
+        cursor:pointer;
+    `
+}

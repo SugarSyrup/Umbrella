@@ -54,7 +54,7 @@ export default function WorkSpaceTemplate({Children} : IWorkSpaceTemplateProps) 
     <ThemeProvider theme={mainTheme}>
         <WorkspaceLayout>
             <WorkspaceSidebar/>
-            <WorkspaceHeader>
+            {/* <WorkspaceHeader>
                 <div className="welcome">
                     <span>WelcomeBack, SugarSyrup</span>
                     <span></span>
@@ -65,7 +65,7 @@ export default function WorkSpaceTemplate({Children} : IWorkSpaceTemplateProps) 
                     <span>SugarSyrup</span>
                     <FontAwesomeIcon icon={faCaretDown} />
                 </HeaderRightDiv>
-            </WorkspaceHeader>
+            </WorkspaceHeader> */}
             <WorkspaceMain>
                 {Children}
             </WorkspaceMain>
@@ -77,7 +77,7 @@ export default function WorkSpaceTemplate({Children} : IWorkSpaceTemplateProps) 
 const WorkspaceLayout = styled.div`
     width: 100%;
     height: 100vh;
-
+/* 
     display:grid;
     grid-template-rows: 1fr 4fr;
     grid-template-columns: 1fr 5fr;
@@ -86,7 +86,12 @@ const WorkspaceLayout = styled.div`
         "sidebar main main main main"
         "sidebar main main main main"
         "sidebar main main main main"
-        "sidebar main main main main";
+        "sidebar main main main main"; */
+
+    display:flex;
+    flex-direction:row;
+    justify-content:flex-start;
+    align-items:flex-start;
 `
 
 const WorkspaceHeader = styled.aside`
@@ -138,6 +143,8 @@ const HeaderRightDiv = styled.div`
 `
 
 const WorkspaceMain = styled.aside`
-    grid-area: main;   
-    background-color: #F3F3F3;
+    height:100%;
+    width:100%;
+    /* grid-area: main;    */
+    background-color: #d6d6d6;
 `
