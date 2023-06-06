@@ -3,10 +3,30 @@ import { createSlice } from "@reduxjs/toolkit";
 import { AppState } from "./configureStore";
 
 export interface WorkspaceState {
-  id: string
+  id: string;
+  title: string;
+  data: {
+    id: string,
+    title: string,
+    boards:{
+      board_id:string,
+      title:string,
+    }[],
+    events:{
+      event_id:string,
+      title: string,
+    }[]
+  }
 }
 const initialState: WorkspaceState = {
-  id: ""
+  id: "",
+  title: "",
+  data:{
+    id:"",
+    title:"",
+    boards:[],
+    events:[],
+  }
 }
 
 export const workspaceSlice = createSlice({
@@ -16,15 +36,19 @@ export const workspaceSlice = createSlice({
     setWorkspaceId: (state, action) => {
       // console.log("payload")
       // console.log(action.payload);
-      state.id = action.payload;
+      state.id = action.payload.id;
+      state.title = action.payload.title;
     },
+    setWorkspaceInfo: (state, action) => {
+      state.data = action.payload;
+    }
   },
   extraReducers: {},
 })
 
-export const { setWorkspaceId } = workspaceSlice.actions
+export const { setWorkspaceId, setWorkspaceInfo } = workspaceSlice.actions
 
-export const selectWorkspaceId = (state : AppState) => state.workspace.id;
+export const selectWorkspaceState = (state : AppState) => state.workspace;
 
 export default workspaceSlice.reducer
 //redux setting

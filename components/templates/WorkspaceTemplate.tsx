@@ -1,11 +1,14 @@
 import styled from 'styled-components';
 import { ThemeProvider } from 'styled-components';
-import { SideNavigator } from '../molecules/Workspace/SideNavigator';
-import { AddContent } from '../molecules/Workspace/AddContent';
-import { LogOutButton } from '../molecules/Workspace/LogOutButton';
+import { WorkspaceSidebar } from '../organisms/Workspace/WorkspaceSidebar';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBell, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import useAxios from '../businesses/useAxios';
+import React, {useEffect} from 'react';
+import { useSelector } from 'react-redux';
+import { selectWorkspaceState, setWorkspaceInfo } from '@/store/workspaceSlice';
+import { useDispatch } from 'react-redux';
 
 const mainTheme = {
     primaryColor: "202123",
@@ -14,20 +17,43 @@ const mainTheme = {
 }
 
 interface IWorkSpaceTemplateProps {
-    children: React.ReactNode;
+    Children?: React.ReactNode
 }
 
-export default function WorkSpaceTemplate({children}: IWorkSpaceTemplateProps) {
+export default function WorkSpaceTemplate({Children} : IWorkSpaceTemplateProps) {
+    const {id, title} = useSelector(selectWorkspaceState);
+    const dispatch = useDispatch();
+    const {response, error, loading, sendData} = useAxios({
+        method: `POST`,
+        url: `/workspace/enter`,
+        headers : {
+            "Content-Type" : "application/json",
+        }
+    })
+
+    useEffect(() => {
+        const data = {
+            id:id,
+            title:title
+        }
+
+        sendData(data);
+    },[])
+
+    useEffect(() => {
+        if(response) {
+            const workspacedata = response.data;
+            dispatch(setWorkspaceInfo(workspacedata));
+        }
+        else if(error){
+            
+        }
+    }, [response, error])
     return(
     <ThemeProvider theme={mainTheme}>
         <WorkspaceLayout>
-            <WorkspaceSidebar>
-                <SidebarHeading>@Your Company</SidebarHeading>
-                <SideNavigator />
-                <AddContent />
-                <LogOutButton />
-            </WorkspaceSidebar>
-            <WorkspaceHeader>
+            <WorkspaceSidebar/>
+            {/* <WorkspaceHeader>
                 <div className="welcome">
                     <span>WelcomeBack, SugarSyrup</span>
                     <span></span>
@@ -38,9 +64,9 @@ export default function WorkSpaceTemplate({children}: IWorkSpaceTemplateProps) {
                     <span>SugarSyrup</span>
                     <FontAwesomeIcon icon={faCaretDown} />
                 </HeaderRightDiv>
-            </WorkspaceHeader>
+            </WorkspaceHeader> */}
             <WorkspaceMain>
-                {children}
+                {Children}
             </WorkspaceMain>
         </WorkspaceLayout>
     </ThemeProvider>
@@ -50,7 +76,7 @@ export default function WorkSpaceTemplate({children}: IWorkSpaceTemplateProps) {
 const WorkspaceLayout = styled.div`
     width: 100%;
     height: 100vh;
-
+/* 
     display:grid;
     grid-template-rows: 1fr 4fr;
     grid-template-columns: 1fr 5fr;
@@ -59,18 +85,12 @@ const WorkspaceLayout = styled.div`
         "sidebar main main main main"
         "sidebar main main main main"
         "sidebar main main main main"
-        "sidebar main main main main";
-`
+        "sidebar main main main main"; */
 
-const WorkspaceSidebar = styled.aside`
-    grid-area: sidebar;
-    background-color:black;
-    color:white;
-    
     display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
+    flex-direction:row;
+    justify-content:flex-start;
+    align-items:flex-start;
 `
 
 const WorkspaceHeader = styled.aside`
@@ -122,14 +142,8 @@ const HeaderRightDiv = styled.div`
 `
 
 const WorkspaceMain = styled.aside`
-    grid-area: main;   
-    background-color: #F3F3F3;
-    position:relative;
-`
-
-const SidebarHeading = styled.h1`
-    font-size:36px;
-    font-weight:bolder;
-    word-spacing:-3px;
-    margin-bottom:100px;
+    height:100%;
+    width:100%;
+    /* grid-area: main;    */
+    background-color: #d6d6d6;
 `
