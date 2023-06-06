@@ -13,7 +13,11 @@ const mainTheme = {
     textColor: "FFFFFF",
 }
 
-export default function WorkSpaceTemplate() {
+interface IWorkSpaceTemplateProps {
+    children: React.ReactNode;
+}
+
+export default function WorkSpaceTemplate({children}: IWorkSpaceTemplateProps) {
     return(
     <ThemeProvider theme={mainTheme}>
         <WorkspaceLayout>
@@ -35,7 +39,9 @@ export default function WorkSpaceTemplate() {
                     <FontAwesomeIcon icon={faCaretDown} />
                 </HeaderRightDiv>
             </WorkspaceHeader>
-            <WorkspaceMain />
+            <WorkspaceMain>
+                {children}
+            </WorkspaceMain>
         </WorkspaceLayout>
     </ThemeProvider>
     )
@@ -118,6 +124,7 @@ const HeaderRightDiv = styled.div`
 const WorkspaceMain = styled.aside`
     grid-area: main;   
     background-color: #F3F3F3;
+    position:relative;
 `
 
 const SidebarHeading = styled.h1`
