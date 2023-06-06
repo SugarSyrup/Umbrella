@@ -96,5 +96,5 @@ export default Editor;
 
 // style
 const CustomReactQuill = styled(ReactQuill)`
-    height: 300px;
+    height: 80%;
 `;

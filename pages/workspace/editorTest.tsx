@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { NextPage } from 'next';
 //https://jforj.tistory.com/211
 
-const Editor = dynamic(() => import('../../components/editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
+const Editor = dynamic(() => import('../../components/molecules/Workspace/editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
 const Index: NextPage = () => {
     // state
