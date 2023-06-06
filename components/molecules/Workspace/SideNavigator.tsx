@@ -1,8 +1,11 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMessage, faHome, faBullhorn, faCalendar, faFile } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
+import { useSelector } from 'react-redux';
+import { selectWorkspaceState } from '@/store/workspaceSlice';
 
 export function SideNavigator() {
+    const {data : {boards, events}} = useSelector(selectWorkspaceState);
     return(
         <StyledWrapper>
             <span>

@@ -32,7 +32,10 @@ export function WorkSpaceLinks() {
             {
                 loading ? <h2>Loading...</h2> : workspace.map((ele) => {
                     const onClick = () => {
-                        dispatch(setWorkspaceId(ele.id));
+                        dispatch(setWorkspaceId({
+                            id : ele.id,
+                            title : ele.title
+                        }));
                         router.push({
                             pathname: '/workspace'
                         })
