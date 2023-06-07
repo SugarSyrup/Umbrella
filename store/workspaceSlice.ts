@@ -16,7 +16,12 @@ export interface WorkspaceState {
       event_id:string,
       title: string,
     }[]
-  }
+  };
+  current:{
+    title:string,
+    id: string,
+    type: "board" | "event" | "",
+  };
 }
 const initialState: WorkspaceState = {
   id: "",
@@ -26,6 +31,11 @@ const initialState: WorkspaceState = {
     title:"",
     boards:[],
     events:[],
+  },
+  current:{
+    title:"none",
+    id:"",
+    type: "",
   }
 }
 
@@ -41,12 +51,15 @@ export const workspaceSlice = createSlice({
     },
     setWorkspaceInfo: (state, action) => {
       state.data = action.payload;
+    },
+    setCurrent: (state, action) => {
+      state.current = action.payload;
     }
   },
   extraReducers: {},
 })
 
-export const { setWorkspaceId, setWorkspaceInfo } = workspaceSlice.actions
+export const { setWorkspaceId, setWorkspaceInfo, setCurrent } = workspaceSlice.actions
 
 export const selectWorkspaceState = (state : AppState) => state.workspace;
 

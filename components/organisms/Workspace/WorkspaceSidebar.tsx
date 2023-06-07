@@ -1,48 +1,70 @@
-import styled from 'styled-components';
+import React from 'react';
 
-import { SideNavigator } from '../../molecules/Workspace/SideNavigator';
 import { AddContent } from '../../molecules/Workspace/AddContent';
 import { LogOutButton } from '../../molecules/Workspace/LogOutButton';
+import { useRouter } from 'next/router';
 
-export function WorkspaceSidebar() {
-    return(<Sidebar.Container>
-        <Sidebar.Heading onClick={() => {
-            window.location.href = "/";
-            window.location.reload();
-            return;
-        }}>@Your Company</Sidebar.Heading>
-        <SideNavigator />
-        <AddContent />
-        <LogOutButton />
-    </Sidebar.Container>)
+import { useSelector } from 'react-redux';
+import { selectWorkspaceState } from '@/store/workspaceSlice';
+
+import { Layout, Menu, theme } from 'antd';
+import { HomeOutlined, NotificationOutlined, CalendarOutlined } from '@ant-design/icons';
+import type { MenuProps } from 'antd';
+
+type MenuItem = Required<MenuProps>['items'][number];
+
+function getItem(
+  label: React.ReactNode,
+  key?: React.Key | null,
+  icon?: React.ReactNode,
+  children?: MenuItem[],
+  type?: 'group',
+): MenuItem {
+  return {
+    key,
+    icon,
+    children,
+    label,
+    type,
+  } as MenuItem;
 }
 
 
-const Sidebar = {
-    Container : styled.aside`
-        grid-area: sidebar;
-        background-color:#232428;
-        color:white;
-        
-        display:flex;
-        flex-direction:column;
-        justify-content:center;
-        align-items:center;
 
-        width:300px;
-        height:100%;
+export function WorkspaceSidebar() {
+    const {
+      token: { colorBgContainer },
+    } = theme.useToken();
+    const {data : {boards, events}} = useSelector(selectWorkspaceState);
+    const router = useRouter();
 
-        padding-left:20px;
-        padding-right:20px;
+    const items: MenuItem[] = [
+        getItem('Home', '/', <HomeOutlined /> ),
+      
+        getItem('Boards', 'boards', <NotificationOutlined />, boards.map((event, index) => {
+            return getItem(event.title, `/board/${event.board_id}`,);
+        })),
+      
+        getItem('Events', 'event', <CalendarOutlined />, events.map((event, index) => {
+            return getItem(event.title, `/event/${event.event_id}`,);
+        })),
+    ];
 
-    `,
+    const onClick: MenuProps['onClick'] = (e) => {
+        router.push({pathname:"/workspace"+e.key})
+    };
 
-    Heading : styled.h1`
-        font-size:30px;
-        font-weight:bolder;
-        word-spacing:-3px;
-        margin-bottom:100px;
-
-        cursor:pointer;
-    `
+    return(
+        <Layout.Sider width={200} style={{ background: colorBgContainer }}>
+          <Menu
+            mode="inline"
+            defaultSelectedKeys={['1']}
+            defaultOpenKeys={['sub1']}
+            style={{ height: '90%', borderRight: 0 }}
+            items={items}
+            onClick={onClick}
+          />
+          <span>TEST</span>
+        </Layout.Sider>
+    )
 }
