@@ -16,9 +16,6 @@ import { useDispatch } from 'react-redux';
 //     textColor: "FFFFFF",
 // }
 
-interface IWorkSpaceTemplateProps {
-    children?: React.ReactNode
-}
 
 // export function WorkSpaceTemplate({children} : IWorkSpaceTemplateProps) {
 //     const {id, title} = useSelector(selectWorkspaceState);
@@ -154,6 +151,9 @@ import { Breadcrumb, Layout, theme } from 'antd';
 
 const { Header, Content } = Layout;
 
+interface IWorkSpaceTemplateProps {
+  children?: React.ReactNode
+}
 
 const WorkspaceTemplate: React.FC = ({children} : IWorkSpaceTemplateProps) => {
   const {
