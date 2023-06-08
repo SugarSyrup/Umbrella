@@ -59,8 +59,8 @@ export function LoginForm() {
         const access_token = response.headers.authorization;
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 
-        const {nick_name} = response.data;
-        dispatch(setIsLogin({isLoggedin : true, nickname : nick_name}));
+        const {nick_name, user_id} = response.data;
+        dispatch(setIsLogin({isLoggedin : true, nickname : nick_name, user_id : user_id}));
         
         router.push({
             pathname: 'workspace'

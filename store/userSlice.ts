@@ -5,10 +5,12 @@ import { AppState } from "./configureStore";
 export interface UserState {
   isLoggin: boolean;
   nickname: string;
+  user_id: number;
 }
 const initialState: UserState = {
   isLoggin: false,
-  nickname: ""
+  nickname: "",
+  user_id: -1,
 }
 
 export const userSlice = createSlice({
@@ -20,6 +22,7 @@ export const userSlice = createSlice({
       // console.log(action.payload);
       state.nickname = action.payload.nickname;
       state.isLoggin = action.payload.isLoggedin;
+      state.user_id = action.payload.user_id;
     },
   },
   extraReducers: {},
