@@ -86,7 +86,7 @@ const WorkspaceTemplate: React.FC = ({children} : IWorkSpaceTemplateProps) => {
 
   return (
     <Layout style={{width:'100%', height:'100vh'}}>
-      <Header style={{ display: 'flex', alignItems: 'center' }}>
+      <Header style={{ display: 'flex', alignItems: 'flex-end', justifyContent: "flex-end" }}>
         <div className="demo-logo" />
         <Dropdown menu={{ items }}>
           <a onClick={(e) => e.preventDefault()}>

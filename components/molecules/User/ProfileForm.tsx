@@ -60,17 +60,6 @@ export function ProfileForm() {
             birth: birth,
         };
         sendData(userdata);
-        dispatch(setIsLogin({isLoggedin : true, nickname : nick_name}));
-    }
-    
-    const onLoginSuccess = (response : AxiosResponse) => {
-        router.push({
-            pathname: 'workspace'
-        })
-    }
-
-    const onError = (error: Error|AxiosError) => {
-        //console.log(error);
     }
 
     useEffect(() => {
@@ -80,14 +69,17 @@ export function ProfileForm() {
     useEffect(() => {
         //console.log(response);
         if(response){
-            onLoginSuccess(response);
+            const {nick_name, name, age} = response.data();
+            dispatch(setIsLogin({isLoggedin : true, nickname : nick_name}));
+            router.push({
+                pathname: "/user/workspace"
+            })
         }
     }, [response])
 
     useEffect(() => {
-        //console.log(error);
         if(error) {
-            onError(error);
+            //console.log(error);
         }
     }, [error])
 
