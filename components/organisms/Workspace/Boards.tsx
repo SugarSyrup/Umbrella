@@ -1,8 +1,11 @@
 import React, {useEffect, useState} from 'react';
-import { Table } from 'antd';
+import { Button, Space, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 
 import useAxios from '@/components/businesses/useAxios';
+import { useSelector } from 'react-redux';
+import { selectBreadcrumbsState } from '@/store/breadCrumb';
+import { useRouter } from 'next/router';
 
 interface IBoardsProps {
     id: string,
@@ -25,6 +28,8 @@ export function Boards({id} : IBoardsProps) {
         }
     })
     const [boards, setBoards] = useState<ColumnsDataType[]>([]);
+    const breadCrumbs = useSelector(selectBreadcrumbsState);
+    const router = useRouter();
 
     useEffect(() => { 
         setBoards(response?.data());
@@ -52,6 +57,27 @@ export function Boards({id} : IBoardsProps) {
     };
 
     return(
-        <Table columns={columns} dataSource={boards} onChange={onChange} />
+        <>
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'95%', margin:'0 auto', marginBottom: '20px'}}>
+            <h2 style={{fontSize:'20px', fontWeight:'bold', color:'#000'}}>{breadCrumbs && breadCrumbs[breadCrumbs.length - 1]}</h2>
+            <Button type="primary" onClick={() => {
+                router.push({
+                    pathname: `board-editor`
+                })
+            }}>글 작성하기</Button>
+        </div>
+            <Table 
+                columns={columns} 
+                dataSource={boards} 
+                onChange={onChange}
+                onRow={(record, rowIndex) => {
+                    return{
+                        onClick: (event) => {
+                            console.log(event);
+                        },
+                    }
+                }}
+            />
+        </>
     )
 }

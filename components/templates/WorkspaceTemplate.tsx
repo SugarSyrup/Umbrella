@@ -10,6 +10,7 @@ import { setIsLogin } from '@/store/userSlice';
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, theme, Dropdown, Space, MenuProps } from 'antd';
 import { selectUserState } from '@/store/userSlice';
+import { selectBreadcrumbsState } from '@/store/breadCrumb';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -25,6 +26,7 @@ const WorkspaceTemplate: React.FC = ({children} : IWorkSpaceTemplateProps) => {
     } = theme.useToken();
     const {id, title} = useSelector(selectWorkspaceState);
     const {nickname} =useSelector(selectUserState);
+    const {breadcrumbs} = useSelector(selectBreadcrumbsState);
     const dispatch = useDispatch();
     const router = useRouter();
     const {response, error, loading, sendData} = useAxios({
@@ -102,9 +104,13 @@ const WorkspaceTemplate: React.FC = ({children} : IWorkSpaceTemplateProps) => {
         <Layout style={{ padding: '0 24px 24px' }}>
             {/* Component 분리 */}
           <Breadcrumb style={{ margin: '16px 0' }}>
-            <Breadcrumb.Item>Home</Breadcrumb.Item>
-            <Breadcrumb.Item>List</Breadcrumb.Item>
-            <Breadcrumb.Item>App</Breadcrumb.Item>
+            {
+              breadcrumbs.map((breadcrumb) => {
+                return(
+                  <Breadcrumb.Item key={breadcrumb}>{breadcrumb}</Breadcrumb.Item>
+                )
+              })
+            }
           </Breadcrumb>
           <Content
             style={{

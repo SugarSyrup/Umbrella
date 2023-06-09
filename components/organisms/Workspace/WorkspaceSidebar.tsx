@@ -5,7 +5,7 @@ import { LogOutButton } from '../../molecules/Workspace/LogOutButton';
 import { useRouter } from 'next/router';
 
 import { useSelector } from 'react-redux';
-import { selectWorkspaceState } from '@/store/workspaceSlice';
+import { selectWorkspaceState, setCurrent } from '@/store/workspaceSlice';
 import  useAxios  from '@/components/businesses/useAxios';
 
 import { Layout, Menu, theme, Button, Modal, Form, Radio, Input } from 'antd';
@@ -14,6 +14,8 @@ import type { MenuProps } from 'antd';
 import axios from 'axios';
 
 import type { FormInstance } from 'antd/es/form';
+import { useDispatch } from 'react-redux';
+import { setBreadCrumbs } from '@/store/breadCrumb';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -41,6 +43,7 @@ export function WorkspaceSidebar() {
     } = theme.useToken();
     const {id ,data : {boards, events}} = useSelector(selectWorkspaceState);
     const router = useRouter();
+    const dispatch = useDispatch();
     const formRef = React.useRef<FormInstance>(null);
 
     const [form] = Form.useForm();
@@ -91,6 +94,9 @@ export function WorkspaceSidebar() {
     ];
 
     const onClick: MenuProps['onClick'] = (e) => {
+        const linkArray = e.key.split("/");
+        dispatch(setBreadCrumbs(["Home", linkArray[0], linkArray[1]]));
+        dispatch(setCurrent(id))
         router.push({pathname:"/workspace"+e.key})
     };
 
@@ -99,7 +105,6 @@ export function WorkspaceSidebar() {
             <Menu
                 mode="inline"
                 defaultSelectedKeys={['1']}
-                defaultOpenKeys={['sub1']}
                 style={{ borderRight: 0, width:"200px" }}
                 items={items}
                 onClick={onClick}
