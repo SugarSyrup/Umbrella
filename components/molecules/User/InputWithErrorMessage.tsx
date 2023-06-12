@@ -21,7 +21,7 @@ export const InputWithErrorMessage = ({inputProps, errorMessage, customref, valu
     return(
         <InputWithErroMessageDiv>
             <label style={{fontSize:'12px', fontWeight:'bold'}}>{inputProps.name}</label>
-            <AuthFormInput {...inputProps} ref={customref? customref : inputProps.ref} value={value? value : ''}/>
+            <AuthFormInput {...inputProps} ref={customref? customref : inputProps.ref} value={value&& value}/>
             { errorMessage ? <SmallErrorMessage>{errorMessage}</SmallErrorMessage> : <EmptySpace /> }
         </InputWithErroMessageDiv>
     )

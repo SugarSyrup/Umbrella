@@ -4,10 +4,10 @@ import {BoardView} from "@/components/organisms/Workspace/BoardView";
 
 export default function BoardViewPage() {
     return(
-        // <UserAuthTemplate>
+        <UserAuthTemplate>
             <WorkSpaceTemplate>
                 <BoardView />
             </WorkSpaceTemplate>
-        // </UserAuthTemplate>
+        </UserAuthTemplate>
     )
 }

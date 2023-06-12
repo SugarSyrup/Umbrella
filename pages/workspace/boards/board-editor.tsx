@@ -4,10 +4,10 @@ import {BoardEditor} from "@/components/organisms/Workspace/BoardEditor";
 
 export default function WorkSpace() {
     return(
-        // <UserAuthTemplate>
+        <UserAuthTemplate>
             <WorkSpaceTemplate>
                 <BoardEditor />
             </WorkSpaceTemplate>
-        // </UserAuthTemplate>
+        </UserAuthTemplate>
     )
 }

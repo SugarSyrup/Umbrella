@@ -43,7 +43,7 @@ export function LoginForm() {
             email : email,
             password : password,
         };
-        //console.log(userdata);
+        console.log(userdata);
         sendData(userdata);
 
         // if(response) {
@@ -56,6 +56,7 @@ export function LoginForm() {
     }
     const onLoginSuccess = (response : AxiosResponse) => {
         //console.log(1)
+        console.log(response.data);
         const access_token = response.headers.authorization;
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 

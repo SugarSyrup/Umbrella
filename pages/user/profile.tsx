@@ -5,9 +5,9 @@ import { UserTemplate } from "@/components/templates/UserTemplate";
 export default function Home() {
   return (
     <UserTemplate>
-      {/* <UserAuthTemplate> */}
+      <UserAuthTemplate>
         <ProfileChangeOrganism />
-      {/* </UserAuthTemplate> */}
+      </UserAuthTemplate>
     </UserTemplate>
   )
 }
