@@ -3,14 +3,11 @@ import {AxiosError, AxiosResponse} from 'axios';
 
 import useAxios from '../../businesses/useAxios';
 
-import { InputWithErrorMessage } from '@/components/molecules/User/InputWithErrorMessage';
-import { InputWithErrorMessagePropsType } from '@/components/molecules/User/InputWithErrorMessage';
-
 import styled from 'styled-components';
 import { AuthFormInput } from '@/components/atoms/AuthFormInput.styles';
 import { SmallErrorMessage } from '@/components/atoms/SmallErrorMessage.styles';
 
-interface EmailCheckFormPropsType extends InputWithErrorMessagePropsType{
+interface EmailCheckFormPropsType{
     setIsChecked : React.Dispatch<React.SetStateAction<boolean>>,
     children: React.ReactNode,
 }
@@ -35,7 +32,6 @@ export function EmailCheckForm({children, setIsChecked} : EmailCheckFormPropsTyp
     })
 
     const onSendSuccess = (response : AxiosResponse) => {
-        console.log(response.data);
         setCode(response.data.auth_key);
     }
 
@@ -66,12 +62,7 @@ export function EmailCheckForm({children, setIsChecked} : EmailCheckFormPropsTyp
         else {
             setEmailErrorMsg(undefined);
             setEmailAuth(true);
-
             const data = {email:emailRef?.value};
-
-            console.log("1.email 전송")
-            console.log(data);
-
             sendData(data);
         }
     }
@@ -79,6 +70,7 @@ export function EmailCheckForm({children, setIsChecked} : EmailCheckFormPropsTyp
     useEffect(() => {
         if(response) {
             console.log('success')
+            console.log(response.data);
             onSendSuccess(response);
 
         }

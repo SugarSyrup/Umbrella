@@ -1,16 +1,24 @@
 import * as React from 'react';
-import dynamic from 'next/dynamic';
 import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
 import useAxios from '@/components/businesses/useAxios';
-import { Button, Input, InputRef } from 'antd';
-
-const Editor = dynamic(() => import('../../molecules/Workspace/editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
 export function BoardView() {
+    const { response, error, loading, sendData } = useAxios({
+        method: `GET`,
+        url: `{POSTID}`,
+        headers : {
+            "Content-Type" : "application/json",
+        }
+    })
+    const [data, setData] = React.useState(null);
+
+    React.useEffect(() => {
+        setData(response?.data)
+    }, [response])
     
     return(<EditorContainer>
-        <h2></h2>
+        <h2>data.</h2>
     </EditorContainer>)
 }
 

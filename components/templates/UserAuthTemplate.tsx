@@ -1,10 +1,7 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
-import { selectUserState, setIsLogin } from '@/store/userSlice';
-import wrapper, { AppState } from "@/store/configureStore";
-import userReducer from "@/store/userSlice";
-import { InferGetServerSidePropsType } from "next";
+import { selectUserState } from '@/store/userSlice';
 
 export interface UserAuthTemplateProps { 
     children: React.ReactNode;
@@ -19,7 +16,7 @@ export function UserAuthTemplate({children} : UserAuthTemplateProps) {
 
     useEffect(() => {
         if(!isLoggin) {
-            router.push({pathname:'login'});
+            router.push({pathname:'/user/login'});
         }
     }, [])
 

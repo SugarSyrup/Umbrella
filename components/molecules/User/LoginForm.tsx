@@ -55,12 +55,19 @@ export function LoginForm() {
         // }
     }
     const onLoginSuccess = (response : AxiosResponse) => {
-        //console.log(1)
+        console.log(1)
         console.log(response.data);
         const access_token = response.headers.authorization;
+        console.log(2)
+        console.log(response.headers);
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
 
         const {nick_name, user_id} = response.data;
+        console.log(3)
+        console.log(nick_name);
+        
+        console.log(4)
+        console.log(user_id);
         dispatch(setIsLogin({isLoggedin : true, nickname : nick_name, user_id : user_id}));
         
         router.push({

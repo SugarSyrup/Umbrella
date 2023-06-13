@@ -19,6 +19,7 @@ export function WorkSpaceLinks() {
 
     useEffect(() => {
         if(response) {
+            console.log(response.data)
             setWorkSpace(response.data);
         }
         else if(error) {
@@ -30,7 +31,7 @@ export function WorkSpaceLinks() {
     return(
         <>
             {
-                loading ? <h2>Loading...</h2> : workspace.map((ele) => {
+                workspace.length == 0 ? <h2>Loading...</h2> : workspace.map((ele) => {
                     const onClick = () => {
                         dispatch(setWorkspaceId({
                             id : ele.id,
