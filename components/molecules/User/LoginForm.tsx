@@ -43,7 +43,7 @@ export function LoginForm() {
             email : email,
             password : password,
         };
-        console.log(userdata);
+        // console.log(userdata);
         sendData(userdata);
 
         // if(response) {
@@ -54,28 +54,28 @@ export function LoginForm() {
         //     onError(error);
         // }
     }
+
     const onLoginSuccess = (response : AxiosResponse) => {
-        console.log(1)
-        console.log(response.data);
+        // console.log(1)
+        // console.log(response.data);
         const access_token = response.headers.authorization;
         console.log(2)
-        console.log(response.headers);
-        axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+        console.log(response.headers.authorization);
 
-        const {nick_name, user_id} = response.data;
-        console.log(3)
-        console.log(nick_name);
+        axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+        //axios.defaults.headers.get['Authorization'] = `Bearer ${access_token}`;
+
+        const {nickName, userId, email} = response.data;
         
-        console.log(4)
-        console.log(user_id);
-        dispatch(setIsLogin({isLoggedin : true, nickname : nick_name, user_id : user_id}));
+        dispatch(setIsLogin({isLoggedin : true, nickname : nickName, user_id : userId}));
         
         router.push({
             pathname: 'workspace'
         })
     }
+    
     const onError = (error: Error|AxiosError) => {
-        //console.log(error);
+        console.log(error);
     }
 
     // const onSilentRefresh = (data:{email:string, password:string}) => {

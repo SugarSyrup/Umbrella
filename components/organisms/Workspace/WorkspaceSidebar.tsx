@@ -1,12 +1,9 @@
 import React, { useRef } from 'react';
-import styled from 'styled-components';
 
-import { LogOutButton } from '../../molecules/Workspace/LogOutButton';
 import { useRouter } from 'next/router';
 
 import { useSelector } from 'react-redux';
 import { selectWorkspaceState, setCurrent } from '@/store/workspaceSlice';
-import  useAxios  from '@/components/businesses/useAxios';
 
 import { Layout, Menu, theme, Button, Modal, Form, Radio, Input } from 'antd';
 import { HomeOutlined, NotificationOutlined, CalendarOutlined } from '@ant-design/icons';

@@ -43,7 +43,7 @@ export function PassWordFindForm() {
         else{
             const userdata = {
                 email:email,
-                newPassword:password,
+                password:password,
             };
             console.log(userdata);
     
