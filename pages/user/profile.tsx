@@ -1,12 +1,12 @@
 import { UserAuthTemplate } from "@/components/templates/UserAuthTemplate";
-import { WorkSpaceCreateOrganism } from "@/components/organisms/User/WorkSpaceCreateOrganism";
+import { ProfileChangeOrganism } from "@/components/organisms/User/ProfileChangeOrganism";
 import { UserTemplate } from "@/components/templates/UserTemplate";
 
 export default function Home() {
   return (
     <UserTemplate>
       <UserAuthTemplate>
-        <WorkSpaceCreateOrganism />
+        <ProfileChangeOrganism />
       </UserAuthTemplate>
     </UserTemplate>
   )

@@ -8,7 +8,6 @@ import { useEffect, useState } from 'react';
 
 //redux
 import { useDispatch } from 'react-redux';
-import { loginAction } from '@/store/userActions';
 
 import { StyledLink } from '../../atoms/TextLink.styles';
 import { RectangleButton } from '../../atoms/RectangleButton.styles';
@@ -16,9 +15,7 @@ import { RectangleButton } from '../../atoms/RectangleButton.styles';
 import { StyledForm } from './UserForm.styles';
 import { InputWithErrorMessage } from './InputWithErrorMessage';
 import useAxios from '../../businesses/useAxios';
-
-// const JWT_EXPIRY_TIME = 1 * 3600 * 1000; // 만료 시간 (24시간 밀리 초로 표현)
-//const API_URL = process.env.NEXT_PUBLIC_API_MOCKING === ('enabled') ? 'https://backend.dev/login' : `http://${window.location.host}/api/auth/silent-refresh`;
+import { setIsLogin } from '@/store/userSlice';
 
 const schema = Yup.object({
     email: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
@@ -46,7 +43,7 @@ export function LoginForm() {
             email : email,
             password : password,
         };
-        console.log(userdata);
+        // console.log(userdata);
         sendData(userdata);
 
         // if(response) {
@@ -57,19 +54,26 @@ export function LoginForm() {
         //     onError(error);
         // }
     }
+
     const onLoginSuccess = (response : AxiosResponse) => {
+        // console.log(1)
+        // console.log(response.data);
         const access_token = response.headers.authorization;
-        const {nick_name} = response.data;
+        console.log(2)
+        console.log(response.headers.authorization);
+
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-    
-        // setTimeout(onSilentRefresh, JWT_EXPIRY_TIME);
-       
-        dispatch(loginAction({nick_name}));
+        //axios.defaults.headers.get['Authorization'] = `Bearer ${access_token}`;
+
+        const {nickName, userId, email} = response.data;
+        
+        dispatch(setIsLogin({isLoggedin : true, nickname : nickName, user_id : userId}));
         
         router.push({
             pathname: 'workspace'
         })
     }
+    
     const onError = (error: Error|AxiosError) => {
         console.log(error);
     }
@@ -81,14 +85,14 @@ export function LoginForm() {
     // }
 
     useEffect(() => {
-        console.log(response);
+        //console.log(response);
         if(response){
             onLoginSuccess(response);
         }
     }, [response])
 
     useEffect(() => {
-        console.log(error);
+        //console.log(error);
         if(error) {
             onError(error);
         }

@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
+import styled from 'styled-components';
 
 import { RectangleButton } from '@/components/atoms/RectangleButton.styles';
-import { StyledForm } from './UserForm.styles';
 
 import { Dispatch } from 'react';
 import { SetStateAction } from 'react';
@@ -22,7 +22,7 @@ export function SignUpAgreeForm({onSubmit}: SignUpAgreeFormPropsType) {
     }
 
     return(
-        <StyledForm onSubmit={onSubmitAction} style={{marginTop:'10px'}}>
+        <StyledDiv style={{marginTop:'10px'}}>
             <div style={{height:"200px", overflow:"auto"}}>
                 <h2 style={{fontSize:"20px", fontWeight:"bolder"}}>이용약관 동의서</h2>
                 <p style={{maxWidth:"100%", maxHeight:"40%"}}>
@@ -87,7 +87,19 @@ export function SignUpAgreeForm({onSubmit}: SignUpAgreeFormPropsType) {
                 <input id="check" type='checkbox' onClick={onCheckboxClick}/>
                 <label htmlFor="check">위의 이용약관에 동의합니다.</label>
             </div>
-            <RectangleButton type="submit">회원가입하기!</RectangleButton>
-        </StyledForm>
+            <RectangleButton type="button" onClick={onSubmitAction} >회원가입하기!</RectangleButton>
+        </StyledDiv>
     )
 };
+
+export const StyledDiv = styled.div`
+    width:100%;
+    margin-top:40px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+    align-items:center;
+
+    position:relative;
+`

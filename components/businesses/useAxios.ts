@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import axios, { AxiosError, RawAxiosRequestConfig, AxiosResponse, AxiosRequestConfig} from 'axios';
 
-axios.defaults.baseURL = process.env.production === "develop" ? "" : "http://localhost:3000/api/";
+axios.defaults.baseURL = process.env.PRODUCTION === "develop" ? "http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/" : "http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/";
+axios.defaults.withCredentials = true;
 
 const useAxios = (axiosParams: RawAxiosRequestConfig) => {
     const [ response, setResponse ] = useState<AxiosResponse>();

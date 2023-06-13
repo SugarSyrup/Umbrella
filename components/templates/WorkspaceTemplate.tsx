@@ -1,128 +1,131 @@
-import styled from 'styled-components';
-import { ThemeProvider } from 'styled-components';
-import { SideNavigator } from '../molecules/Workspace/SideNavigator';
-import { AddContent } from '../molecules/Workspace/AddContent';
-import { LogOutButton } from '../molecules/Workspace/LogOutButton';
+import { WorkspaceSidebar } from '../organisms/Workspace/WorkspaceSidebar';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faBell, faCaretDown } from '@fortawesome/free-solid-svg-icons';
+import useAxios from '../businesses/useAxios';
+import React, {useEffect} from 'react';
+import { useSelector } from 'react-redux';
+import { selectWorkspaceState, setWorkspaceInfo } from '@/store/workspaceSlice';
+import { useDispatch } from 'react-redux';
+import { setIsLogin } from '@/store/userSlice';
 
-const mainTheme = {
-    primaryColor: "202123",
-    secondaryColor : "F3F3F3",
-    textColor: "FFFFFF",
+import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
+import { Breadcrumb, Layout, theme, Dropdown, Space, MenuProps } from 'antd';
+import { selectUserState } from '@/store/userSlice';
+import { selectBreadcrumbsState } from '@/store/breadCrumb';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
+
+const { Header, Content } = Layout;
+
+interface IWorkSpaceTemplateProps {
+  children?: React.ReactNode
 }
 
-export default function WorkSpaceTemplate() {
-    return(
-    <ThemeProvider theme={mainTheme}>
-        <WorkspaceLayout>
-            <WorkspaceSidebar>
-                <SidebarHeading>@Your Company</SidebarHeading>
-                <SideNavigator />
-                <AddContent />
-                <LogOutButton />
-            </WorkspaceSidebar>
-            <WorkspaceHeader>
-                <div className="welcome">
-                    <span>WelcomeBack, SugarSyrup</span>
-                    <span></span>
-                </div>
-                <HeaderRightDiv>
-                    <FontAwesomeIcon icon={faBell} />
-                    <div className="img"></div>
-                    <span>SugarSyrup</span>
-                    <FontAwesomeIcon icon={faCaretDown} />
-                </HeaderRightDiv>
-            </WorkspaceHeader>
-            <WorkspaceMain />
-        </WorkspaceLayout>
-    </ThemeProvider>
-    )
-}
+const WorkspaceTemplate: React.FC = ({children} : IWorkSpaceTemplateProps) => {
+    const {
+        token: { colorBgContainer },
+    } = theme.useToken();
+    const {id, title} = useSelector(selectWorkspaceState);
+    const {nickname} =useSelector(selectUserState);
+    const {breadcrumbs} = useSelector(selectBreadcrumbsState);
+    const dispatch = useDispatch();
+    const router = useRouter();
+    const {response, error, loading, sendData} = useAxios({
+        method: `POST`,
+        url: `/workspace/enter`,
+        headers : {
+            "Content-Type" : "application/json",
+        }
+    })
+  
+    const items: MenuProps['items'] = [
+      {
+        label: (
+          <Link rel="noopener noreferrer" href="/user/profile">
+            개인 정보 수정
+          </Link>
+        ),
+        key: '0',
+      },
+      {
+        type: 'divider',
+      },
+      {
+        label: (
+          <Link rel="noopener noreferrer" href="/" onClick={(e) => {
+            e.preventDefault();
+            dispatch(setIsLogin({isLoggedin : false, nickname : ""}));
+            
+            router.push({
+              pathname: '/'
+            })
+          }} style={{color: "red"}}>
+            <LogoutOutlined style={{ marginRight: 8 }} />
+            Logout
+          </Link>
+        ),
+        key: '2',
+      },
+    ];
 
-const WorkspaceLayout = styled.div`
-    width: 100%;
-    height: 100vh;
+    useEffect(() => {
+      const data = {
+          id:id,
+          title:title
+      }
+  
+      sendData(data);
+    },[])
+  
+    useEffect(() => {
+        if(response) {
+            const workspacedata = response.data;
+            dispatch(setWorkspaceInfo(workspacedata));
+        }
+        else if(error){
+              
+        }
+    }, [response, error])
 
-    display:grid;
-    grid-template-rows: 1fr 4fr;
-    grid-template-columns: 1fr 5fr;
-    grid-template-areas:
-        "sidebar header header header header"
-        "sidebar main main main main"
-        "sidebar main main main main"
-        "sidebar main main main main"
-        "sidebar main main main main";
-`
+  return (
+    <Layout style={{width:'100%', height:'100vh'}}>
+      <Header style={{ display: 'flex', alignItems: 'flex-end', justifyContent: "flex-end" }}>
+        <div className="demo-logo" />
+        <Dropdown menu={{ items }}>
+          <a onClick={(e) => e.preventDefault()}>
+            <Space>
+              { nickname }
+              <DownOutlined />
+            </Space>
+          </a>
+        </Dropdown>
+      </Header>
+      <Layout>
+        <WorkspaceSidebar />
+        <Layout style={{ padding: '0 24px 24px' }}>
+            {/* Component 분리 */}
+          <Breadcrumb style={{ margin: '16px 0' }}>
+            {
+              breadcrumbs.map((breadcrumb) => {
+                return(
+                  <Breadcrumb.Item key={breadcrumb}>{breadcrumb}</Breadcrumb.Item>
+                )
+              })
+            }
+          </Breadcrumb>
+          <Content
+            style={{
+              padding: 24,
+              margin: 0,
+              minHeight: 280,
+              background: colorBgContainer,
+            }}
+          >
+            {children}
+          </Content>
+        </Layout>
+      </Layout>
+    </Layout>
+  );
+};
 
-const WorkspaceSidebar = styled.aside`
-    grid-area: sidebar;
-    background-color:black;
-    color:white;
-    
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    align-items:center;
-`
-
-const WorkspaceHeader = styled.aside`
-    box-sizing: border-box;
-    grid-area: header;
-    background-color:white;
-
-    display:flex;
-    flex-direction:row;
-    justify-content:space-between;
-    align-items:center;
-
-    width:100%;
-    padding-left:100px;
-    padding-right:100px;
-
-    .welcome{
-        font-size:22px;
-    }
-`
-
-const HeaderRightDiv = styled.div`
-    display:flex;
-    flex-direction:row;
-    justify-content:space-around;
-    align-items:center;
-
-    width:200px;
-
-    svg{
-        font-size:28px;
-    }    
-    .img{  
-        margin-left:30px;
-        margin-right:30px;
-
-        flex-shrink:0;
-
-        width:100px;
-        height:100px;
-        border-radius:50%;
-        background-color:grey;
-    }
-
-    span{
-        font-size:20px;
-        margin-right:10px;
-    }
-`
-
-const WorkspaceMain = styled.aside`
-    grid-area: main;   
-    background-color: #F3F3F3;
-`
-
-const SidebarHeading = styled.h1`
-    font-size:36px;
-    font-weight:bolder;
-    word-spacing:-3px;
-    margin-bottom:100px;
-`
+export default WorkspaceTemplate;

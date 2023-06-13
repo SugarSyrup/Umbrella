@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {AxiosError, AxiosResponse} from 'axios';
 
 import useAxios from '../../businesses/useAxios';
@@ -13,7 +13,6 @@ import { RectangleButton } from '@/components/atoms/RectangleButton.styles';
 import { InputWithErrorMessage } from '@/components/molecules/User/InputWithErrorMessage';
 import { StyledForm, StyledRowDiv, StyledSelect, StyledSelectDiv } from './UserForm.styles';
 
-import styled from 'styled-components';
 import { EmailCheckForm } from './EmailCheckForm';
 
 const schema = Yup.object({
@@ -38,54 +37,60 @@ export function SignUpForm() {
 
     const { response, error, loading, sendData } = useAxios({
         method: `POST`,
-        url: `signup`,
+        url: `signUp`,
         headers : {
             "Content-Type" : "application/json",
-        }
+        },
     })
 
     const onError = (error: Error|AxiosError) => {
-        console.log(error);
     }
     
     const onSignUpSuccess = (response : AxiosResponse) => {
+        console.log(response);
         router.push({
             pathname: 'login'
         })
     }
 
-    const onSubmit:SubmitHandler<FieldValues> = ({email, password, nickname, name, birth, gender}) => {
+    const onSubmit:SubmitHandler<FieldValues> = ({email, password, nick_name, name, birth, gender}) => {
         let _birth = `${birth.getFullYear()}${birth.getMonth().toString().length < 2 ? '0' + birth.getMonth().toString() : birth.getMonth()}${birth.getDate().toString().length < 2 ? '0' + birth.getDate().toString() : birth.getDate()}`;
 
         const userdata = {
             email : email,
             password : password,
-            nick_name : nickname,
+            nick_name : nick_name,
             name : name,
             birth_date : _birth,
             gender: gender
         };
+        console.log(userdata);
 
         if(isEmailChecked) {
+            console.log("123")
             sendData(userdata);
         }
         else {
             window.alert("이메일 인증을 우선 해주세요")
         }
-        
+    }
 
+    useEffect(() => {
         if(response) {
+            console.log('success')
             onSignUpSuccess(response)
         }
-
-        if(error) { 
-            onError(error);
+        else if(error) {
+            console.log('error')
+            onError(error)
         }
-    }
+    }, [response, error])
 
     return(
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-            <EmailCheckForm inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message} setIsChecked={setIsEmailChecked}/>
+            <EmailCheckForm setIsChecked={setIsEmailChecked}>
+                <InputWithErrorMessage inputProps={{placeholder:'email', type:'email', ...register('email')}} errorMessage={errors.email?.message}/>
+            </EmailCheckForm>
             <InputWithErrorMessage inputProps={{placeholder:'password', type:'password', ...register('password')}} errorMessage={errors.password?.message}/>
             <InputWithErrorMessage inputProps={{placeholder:'Password를 다시 입력해 주세요', type:'password', ...register('passwordCheck')}} errorMessage={errors.passwordCheck?.message}/>
             <InputWithErrorMessage inputProps={{placeholder:'NickName', type:'text', ...register('nick_name')}} errorMessage={errors.nick_name?.message}/>
@@ -96,13 +101,13 @@ export function SignUpForm() {
                 <StyledSelectDiv style={{display:'flex', flexDirection:'column'}}>
                     <label style={{fontSize:'12px', fontWeight:'bold'}}>성별</label>
                     <StyledSelect {...register('gender')}>
-                        <option value="woman">여성</option>
-                        <option value="man">남성</option>
+                        <option value="FEMALE">여성</option>
+                        <option value="MALE">남성</option>
                     </StyledSelect>
                 </StyledSelectDiv>
             </StyledRowDiv>
     
-          <RectangleButton type="submit">Sign Up</RectangleButton>
+            <RectangleButton type="submit">회원가입</RectangleButton>
         </StyledForm>
     )
 };

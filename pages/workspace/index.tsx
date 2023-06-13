@@ -3,8 +3,8 @@ import WorkSpaceTemplate from "@/components/templates/WorkspaceTemplate";
 
 export default function WorkSpace() {
     return(
-        // <UserAuthTemplate>
+        <UserAuthTemplate>
             <WorkSpaceTemplate />
-        // </UserAuthTemplate>
+        </UserAuthTemplate>
     )
 }

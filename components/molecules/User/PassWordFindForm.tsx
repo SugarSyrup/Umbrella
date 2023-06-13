@@ -29,8 +29,8 @@ export function PassWordFindForm() {
     });
 
     const { response, error, loading, sendData } = useAxios({
-        method: `POST`,
-        url: `user/update/password`,
+        method: `PATCH`,
+        url: `/forget/password`,
         headers : {
             "Content-Type" : "application/json",
         }
@@ -43,8 +43,9 @@ export function PassWordFindForm() {
         else{
             const userdata = {
                 email:email,
-                newPassword:password,
+                password:password,
             };
+            console.log(userdata);
     
             if(isEmailChecked){
                 sendData(userdata);
@@ -77,7 +78,9 @@ export function PassWordFindForm() {
 
     return(
         <StyledForm onSubmit={handleSubmit(onSubmit)}>
-            <EmailCheckForm inputProps={{placeholder:'Email', type:'email', ...register('email')}} errorMessage={errors.email?.message} setIsChecked={setIsEmailChecked}/>
+            <EmailCheckForm setIsChecked={setIsEmailChecked}>
+                <InputWithErrorMessage inputProps={{placeholder:'Email', type:'email', ...register('email')}} errorMessage={errors.email?.message} />
+            </EmailCheckForm>
             <InputWithErrorMessage inputProps={{placeholder:'이전 Password', type:'string', ...register('password')}} errorMessage={errors.password?.message}/>
             <InputWithErrorMessage inputProps={{placeholder:'새로운 Password', type:'password', ...register('passwordCheck')}} errorMessage={errors.passwordCheck?.message}/>
             <RectangleButton type="submit">비밀번호 변경</RectangleButton>
