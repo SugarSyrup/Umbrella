@@ -28,7 +28,7 @@ export function Boards({id} : IBoardsProps) {
         }
     })
     const [boards, setBoards] = useState<ColumnsDataType[]>([]);
-    const breadCrumbs = useSelector(selectBreadcrumbsState);
+    const breadcrumbs = useSelector(selectBreadcrumbsState);
     const router = useRouter();
 
     useEffect(() => { 
@@ -59,7 +59,7 @@ export function Boards({id} : IBoardsProps) {
     return(
         <>
         <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'95%', margin:'0 auto', marginBottom: '20px'}}>
-            <h2 style={{fontSize:'20px', fontWeight:'bold', color:'#000'}}>{breadCrumbs && breadCrumbs[breadCrumbs.length - 1]}</h2>
+            <h2 style={{fontSize:'20px', fontWeight:'bold', color:'#000'}}>{breadcrumbs.length > 0 && breadcrumbs[breadcrumbs.length - 1]}</h2>
             <Button type="primary" onClick={() => {
                 router.push({
                     pathname: `board-editor`

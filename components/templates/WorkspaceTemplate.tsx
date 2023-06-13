@@ -20,13 +20,13 @@ interface IWorkSpaceTemplateProps {
   children?: React.ReactNode
 }
 
-const WorkspaceTemplate: React.FC = ({children} : IWorkSpaceTemplateProps) => {
+const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
     const {id, title} = useSelector(selectWorkspaceState);
     const {nickname} =useSelector(selectUserState);
-    const {breadcrumbs} = useSelector(selectBreadcrumbsState);
+    const breadcrumbs = useSelector(selectBreadcrumbsState);
     const dispatch = useDispatch();
     const router = useRouter();
     const {response, error, loading, sendData} = useAxios({
@@ -59,7 +59,7 @@ const WorkspaceTemplate: React.FC = ({children} : IWorkSpaceTemplateProps) => {
               pathname: '/'
             })
           }} style={{color: "red"}}>
-            <LogoutOutlined style={{ marginRight: 8 }} />
+            {/* <LogoutOutlined style={{ marginRight: 8 }} /> */}
             Logout
           </Link>
         ),
@@ -94,7 +94,7 @@ const WorkspaceTemplate: React.FC = ({children} : IWorkSpaceTemplateProps) => {
           <a onClick={(e) => e.preventDefault()}>
             <Space>
               { nickname }
-              <DownOutlined />
+              {/* <DownOutlined /> */}
             </Space>
           </a>
         </Dropdown>

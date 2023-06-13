@@ -6,7 +6,7 @@ export interface BreadCrumbState {
   breadcrumbs: string[];
 }
 const initialState: BreadCrumbState = {
-  breadcrumbs:["Home"]
+  breadcrumbs:["Home"],
 }
 
 export const breadCrumbsSlice = createSlice({
@@ -23,7 +23,7 @@ export const breadCrumbsSlice = createSlice({
 export const { setBreadCrumbs } = breadCrumbsSlice.actions
 
 export const selectBreadcrumbsState = (state : AppState) => {
-  return state.breadCrumbs;
+  return state.breadCrumbs.breadcrumbs;
 }
 
 export default breadCrumbsSlice.reducer

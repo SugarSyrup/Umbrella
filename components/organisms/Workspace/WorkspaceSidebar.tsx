@@ -78,14 +78,23 @@ export function WorkspaceSidebar() {
     };
 
 
-    const items: MenuItem[] = [
-        getItem('Home', '/', <HomeOutlined /> ),
+    const items: MenuProps['items'] = [
+        // getItem('Home', '/', <HomeOutlined /> ),
       
-        getItem('Boards', 'boards', <NotificationOutlined />, boards.map((event, index) => {
+        // getItem('Boards', 'boards', <NotificationOutlined />, boards.map((event, index) => {
+        //     return getItem(event.title, `/board/${event.board_id}`,);
+        // })),
+      
+        // getItem('Events', 'event', <CalendarOutlined />, events.map((event, index) => {
+        //     return getItem(event.title, `/event/${event.event_id}`,);
+        // })),
+        getItem('Home', '/' ),
+      
+        getItem('Boards', 'boards', <span>1</span>, boards.map((event, index) => {
             return getItem(event.title, `/board/${event.board_id}`,);
         })),
       
-        getItem('Events', 'event', <CalendarOutlined />, events.map((event, index) => {
+        getItem('Events', 'event', <span>1</span>, events.map((event, index) => {
             return getItem(event.title, `/event/${event.event_id}`,);
         })),
     ];
