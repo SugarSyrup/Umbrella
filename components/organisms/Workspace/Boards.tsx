@@ -3,9 +3,9 @@ import { Button, Space, Table } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 
 import useAxios from '@/components/businesses/useAxios';
-import { useSelector } from 'react-redux';
-import { selectBreadcrumbsState } from '@/store/breadCrumb';
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { breadcrumbsAtom } from '@/atoms/breadcrumbs';
 
 interface IBoardsProps {
     id: string,
@@ -22,17 +22,19 @@ interface ColumnsDataType {
 export function Boards({id} : IBoardsProps) {
     const {response, error, loading} = useAxios({
         method: `GET`,
-        url: `/${id}/posts`,
+        url: `${id}/posts`,
         headers : {
             "Content-Type" : "application/json",
         }
     })
+
     const [boards, setBoards] = useState<ColumnsDataType[]>([]);
-    const breadcrumbs = useSelector(selectBreadcrumbsState);
+    const [breadcrumbs,_] = useRecoilState(breadcrumbsAtom);
     const router = useRouter();
 
     useEffect(() => { 
-        setBoards(response?.data());
+        console.log(response?.data);
+        setBoards(response?.data.content);
     }, [response]);
 
     
@@ -59,11 +61,12 @@ export function Boards({id} : IBoardsProps) {
     return(
         <>
         <div style={{display:'flex', justifyContent:'space-between', alignItems:'center', width:'95%', margin:'0 auto', marginBottom: '20px'}}>
-            <h2 style={{fontSize:'20px', fontWeight:'bold', color:'#000'}}>{breadcrumbs.length > 0 && breadcrumbs[breadcrumbs.length - 1]}</h2>
+            <h2 style={{fontSize:'20px', fontWeight:'bold', color:'#000'}}>{breadcrumbs.breadcrumbs.length > 0 && breadcrumbs.breadcrumbs[breadcrumbs.breadcrumbs.length - 1]}</h2>
             <Button type="primary" onClick={() => {
                 router.push({
                     pathname: `board-editor`
                 })
+                localStorage.setItem('boardId', id);
             }}>글 작성하기</Button>
         </div>
             <Table 

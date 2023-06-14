@@ -9,10 +9,11 @@ const Editor = dynamic(() => import('../../molecules/Workspace/editor'), { ssr: 
 
 export function BoardEditor() {
     const [htmlStr, setHtmlStr] = React.useState<string>('');
+    const [imgList, setImgList] = React.useState<string[]>([]);
     const titleRef = React.useRef<InputRef>(null);
     const {response, error, loading, sendData} = useAxios({
         method: `POST`,
-        url: `login`,
+        url: `${localStorage.getItem('boardId')}/post`,
         headers : {
             "Content-Type" : "application/json",
         }
@@ -20,9 +21,13 @@ export function BoardEditor() {
     
     return(<EditorContainer>
         <Input type="text" placeholder="title" ref={titleRef} style={{width:"90%", height:"40px", marginBottom:"10px"}}/>
-        <Editor htmlStr={htmlStr} setHtmlStr={setHtmlStr} />
+        <Editor htmlStr={htmlStr} setHtmlStr={setHtmlStr} setImgList={setImgList}/>
         <Button type="primary" style={{marginTop:"70px"}} onClick={() => {
-            
+            sendData({            
+                title : titleRef.current?.input?.value,
+                content : htmlStr,
+                fileNameList : imgList,
+            })
         }}>제출하기</Button>
     </EditorContainer>)
 }

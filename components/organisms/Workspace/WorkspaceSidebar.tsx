@@ -2,8 +2,6 @@ import React, { useRef } from 'react';
 
 import { useRouter } from 'next/router';
 
-import { useSelector } from 'react-redux';
-import { selectWorkspaceState, setCurrent } from '@/store/workspaceSlice';
 
 import { Layout, Menu, theme, Button, Modal, Form, Radio, Input } from 'antd';
 import { HomeOutlined, NotificationOutlined, CalendarOutlined } from '@ant-design/icons';
@@ -12,7 +10,9 @@ import axios from 'axios';
 
 import type { FormInstance } from 'antd/es/form';
 import { useDispatch } from 'react-redux';
-import { setBreadCrumbs } from '@/store/breadCrumb';
+import { useRecoilState } from 'recoil';
+import { workspaceAtom } from '@/atoms/workspace';
+import { breadcrumbsAtom } from '@/atoms/breadcrumbs';
 
 type MenuItem = Required<MenuProps>['items'][number];
 
@@ -22,6 +22,7 @@ function getItem(
   icon?: React.ReactNode,
   children?: MenuItem[],
   type?: 'group',
+  onClick?: () => void,
 ): MenuItem {
   return {
     key,
@@ -29,6 +30,7 @@ function getItem(
     children,
     label,
     type,
+    onClick,
   } as MenuItem;
 }
 
@@ -38,9 +40,9 @@ export function WorkspaceSidebar() {
     const {
       token: { colorBgContainer },
     } = theme.useToken();
-    const {id ,data : {boards, events}} = useSelector(selectWorkspaceState);
+    const [workspace, setWorkspaceAtom] = useRecoilState(workspaceAtom);
+    const [breadcrumbs, setBreadcrumbs] = useRecoilState(breadcrumbsAtom);
     const router = useRouter();
-    const dispatch = useDispatch();
     const formRef = React.useRef<FormInstance>(null);
 
     const [form] = Form.useForm();
@@ -66,7 +68,7 @@ export function WorkspaceSidebar() {
     };
 
     const handleOk = () => {
-        axios.post(`${id}/create`, {title : formRef.current?.getFieldValue('title')})
+        axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/${workspace.id}/create`, {title : formRef.current?.getFieldValue('title')})
         setConfirmLoading(true);
         setOpen(false);
         setConfirmLoading(false);
@@ -77,32 +79,37 @@ export function WorkspaceSidebar() {
         setOpen(false);
     };
 
+    const [items, setItems] = React.useState<MenuItem[]>([]);
 
-    const items: MenuProps['items'] = [
-        // getItem('Home', '/', <HomeOutlined /> ),
-      
-        // getItem('Boards', 'boards', <NotificationOutlined />, boards.map((event, index) => {
-        //     return getItem(event.title, `/board/${event.board_id}`,);
-        // })),
-      
-        // getItem('Events', 'event', <CalendarOutlined />, events.map((event, index) => {
-        //     return getItem(event.title, `/event/${event.event_id}`,);
-        // })),
-        getItem('Home', '/' ),
-      
-        getItem('Boards', 'boards', <span>1</span>, boards.map((event, index) => {
-            return getItem(event.title, `/board/${event.board_id}`,);
-        })),
-      
-        getItem('Events', 'event', <span>1</span>, events.map((event, index) => {
-            return getItem(event.title, `/event/${event.event_id}`,);
-        })),
-    ];
+    React.useEffect(() => {
+        const items: MenuProps['items'] = [
+            // getItem('Home', '/', <HomeOutlined /> ),
+          
+            // getItem('Boards', 'boards', <NotificationOutlined />, boards.map((event, index) => {
+            //     return getItem(event.title, `/board/${event.board_id}`,);
+            // })),
+          
+            // getItem('Events', 'event', <CalendarOutlined />, events.map((event, index) => {
+            //     return getItem(event.title, `/event/${event.event_id}`,);
+            // })),
+            getItem('Home', '/' ),
+          
+            getItem('Boards', '/boards', <span>1</span>, workspace.data?.boards.map((event, index) => {
+                return getItem(event.title, `/boards/${event.board_id}`,);
+            })),
+          
+            getItem('Events', '/event', <span>1</span>, workspace.data?.events.map((event, index) => {
+                return getItem(event.title, `/event/${event.event_id}`,);
+            })),
+        ];
+        setItems(items);
+        // console.log(items);
+    }, [workspace])
+    
 
     const onClick: MenuProps['onClick'] = (e) => {
         const linkArray = e.key.split("/");
-        dispatch(setBreadCrumbs(["Home", linkArray[0], linkArray[1]]));
-        dispatch(setCurrent(id))
+        setBreadcrumbs({breadcrumbs : ["Home", linkArray[0], linkArray[1]]});
         router.push({pathname:"/workspace"+e.key})
     };
 

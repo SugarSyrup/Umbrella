@@ -2,15 +2,13 @@ import { WorkspaceSidebar } from '../organisms/Workspace/WorkspaceSidebar';
 
 import useAxios from '../businesses/useAxios';
 import React, {useEffect} from 'react';
-import { useSelector } from 'react-redux';
-import { selectWorkspaceState, setWorkspaceInfo } from '@/store/workspaceSlice';
-import { useDispatch } from 'react-redux';
-import { setIsLogin } from '@/store/userSlice';
 
-import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
+import { useRecoilState } from "recoil";
+import { userAtom } from "@/atoms/user";
+import { workspaceAtom } from "@/atoms/workspace";
+import { breadcrumbsAtom } from "@/atoms/breadcrumbs";
+
 import { Breadcrumb, Layout, theme, Dropdown, Space, MenuProps } from 'antd';
-import { selectUserState } from '@/store/userSlice';
-import { selectBreadcrumbsState } from '@/store/breadCrumb';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
@@ -25,14 +23,14 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
         token: { colorBgContainer },
     } = theme.useToken();
     
-    const {id, title} = useSelector(selectWorkspaceState);
-    const {nickname} =useSelector(selectUserState);
-    const breadcrumbs = useSelector(selectBreadcrumbsState);
-    const dispatch = useDispatch();
+    const [{isLoggedin,nickname, user_id,email}, setUser] = useRecoilState(userAtom);
+    const [workspace, setWorkspace] = useRecoilState(workspaceAtom);
+    const [{breadcrumbs}, setBreadcrumbsState] = useRecoilState(breadcrumbsAtom);
+
     const router = useRouter();
     const {response, error, loading, sendData} = useAxios({
-        method: `POST`,
-        url: `/workspace/enter`,
+        method: `GET`,
+        url: `/workspace/${workspace.id}`,
         headers : {
             "Content-Type" : "application/json",
         }
@@ -54,7 +52,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
         label: (
           <Link rel="noopener noreferrer" href="/" onClick={(e) => {
             e.preventDefault();
-            dispatch(setIsLogin({isLoggedin : false, nickname : ""}));
+            setUser({isLoggedin : false, nickname : "", email: "", user_id:-1});
             
             router.push({
               pathname: '/'
@@ -69,11 +67,13 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
     ];
 
     useEffect(() => {
+      // console.log(workspace);
+      // console.log('workspace');
       const data = {
-          id:id,
-          title:title
+          id:workspace.id,
+          title:workspace.title
       }
-      console.log(data);
+      // console.log(data);
   
       sendData(data);
     },[])
@@ -81,7 +81,8 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
     useEffect(() => {
         if(response) {
             const workspacedata = response.data;
-            dispatch(setWorkspaceInfo(workspacedata));
+            // console.log(workspacedata);
+            setWorkspace({id:workspace.id,title:workspace.title,data:{...workspacedata}});
         }
         else if(error){
               

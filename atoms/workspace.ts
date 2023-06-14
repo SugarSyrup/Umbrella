@@ -2,11 +2,11 @@ import { atom } from 'recoil';
 import {recoilPersist} from 'recoil-persist';
 
 const {persistAtom} = recoilPersist({
-    key: 'user'
+    key: 'workspaceatom'
 })
 
 export interface WorkspaceState {
-  id: string;
+  id: number;
   title: string;
   data?: {
     id: string,
@@ -20,14 +20,14 @@ export interface WorkspaceState {
       title: string,
     }[]
   };
-  current?:{
-    title:string,
-    id: string,
-    type: "board" | "event" | "",
-  };
+//   current?:{
+//     title?:string,
+//     id: string,
+//     type?: "board" | "event" | "",
+//   };
 }
 const initialState: WorkspaceState = {
-  id: "",
+  id: -1,
   title: "",
   data:{
     id:"",
@@ -35,11 +35,11 @@ const initialState: WorkspaceState = {
     boards:[],
     events:[],
   },
-  current:{
-    title:"none",
-    id:"",
-    type: "",
-  }
+//   current:{
+//     title:"none",
+//     id:"",
+//     type: "",
+//   }
 }
 
 

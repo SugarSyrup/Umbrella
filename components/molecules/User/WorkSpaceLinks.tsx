@@ -41,8 +41,9 @@ export function WorkSpaceLinks() {
             {
                 workspace.length == 0 ? <h2>Loading...</h2> : workspace.map((ele) => {
                     const onClick = () => {
+                        console.log(ele);
                         setWorkspaceAtom({
-                            id : ele.workspaceId,
+                            id : Number(ele.workspaceId),
                             title : ele.title
                         });
                         router.push({

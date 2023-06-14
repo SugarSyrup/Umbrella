@@ -17,6 +17,7 @@ import { InputWithErrorMessage } from './InputWithErrorMessage';
 import useAxios from '../../businesses/useAxios';
 
 import { userAtom } from '@/atoms/user';
+import { accessTokenAtom } from '@/atoms/accessToken';
 
 const schema = Yup.object({
     email: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
@@ -30,6 +31,7 @@ export function LoginForm() {
         resolver: yupResolver(schema)
     });
     const [user, setUser] = useRecoilState(userAtom);
+    const [_, setAccessToken] = useRecoilState(accessTokenAtom);
 
     const { response, error, loading, sendData } = useAxios({
         method: `POST`,
@@ -50,6 +52,7 @@ export function LoginForm() {
     const onLoginSuccess = (response : AxiosResponse) => {
         const access_token = response.headers.authorization;
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+        setAccessToken({accesstoken : `Bearer ${access_token}`});
 
         const {nickName, userId, email} = response.data;
         

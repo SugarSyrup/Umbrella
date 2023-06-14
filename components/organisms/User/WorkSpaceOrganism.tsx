@@ -1,8 +1,4 @@
 import { useEffect, useState, useRef } from "react";
-
-import { useSelector } from "react-redux";
-import { selectUserState } from "@/store/userSlice";
-
 import { StyledLoginOrganism } from "./UserOragnism.styles";
 import { LoginHeader } from "../../atoms/LoginHeader.styles";
 import { WorkSpaceLinks } from "../../molecules/User/WorkSpaceLinks";
@@ -10,9 +6,11 @@ import { Button, Modal, Form, Input } from "antd";
 import type { FormInstance } from 'antd/es/form';
 
 import axios from "axios";
+import { useRecoilState } from "recoil";
+import { userAtom } from "@/atoms/user";
 
 export function WorkSpaceOrganism() {
-    const {nickname} = useSelector(selectUserState);
+    const [{nickname},_] = useRecoilState(userAtom);
 
     const [form] = Form.useForm();
     const [open, setOpen] = useState(false);

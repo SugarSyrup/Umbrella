@@ -1,7 +1,8 @@
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { useRouter } from 'next/router';
-import { selectUserState } from '@/store/userSlice';
+import { useRecoilState } from "recoil";
+import { userAtom } from "@/atoms/user";
 
 export interface UserAuthTemplateProps { 
     children: React.ReactNode;
@@ -12,10 +13,10 @@ export interface UserAuthTemplateProps {
 //TODO : useEffect때문에 미묘한 시간차가 발생, 이 시간차로 WorkSpace가 살짝 보였다가 사라짐 
 export function UserAuthTemplate({children} : UserAuthTemplateProps) {
     const router = useRouter();
-    const {isLoggin} = useSelector(selectUserState);
+    const [_userAtom, _setUserAtom] = useRecoilState(userAtom)
 
     useEffect(() => {
-        if(!isLoggin) {
+        if(!_userAtom.isLoggedin) {
             router.push({pathname:'/user/login'});
         }
     }, [])

@@ -2,18 +2,16 @@ import { useForm } from 'react-hook-form';
 import { FieldValues, SubmitHandler } from 'react-hook-form/dist/types';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
-import {AxiosError, AxiosResponse} from 'axios';
+import { StyledForm } from './UserForm.styles';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
-import { useDispatch } from 'react-redux';
 
-import { StyledForm } from './UserForm.styles';
 import { InputWithErrorMessage } from './InputWithErrorMessage';
 import useAxios from '../../businesses/useAxios';
 import { RectangleButton } from '@/components/atoms/RectangleButton.styles';
-import { selectUserState, setIsLogin } from '@/store/userSlice';
-import { useSelector } from 'react-redux';
+import { useRecoilState } from 'recoil';
+import { userAtom } from '@/atoms/user';
 
 const schema = Yup.object({
     nick_name: Yup.string().max(8,'닉네임은 최대 8글자 입니다').min(2,'닉네임은 최소 2글자 입니다.').required('닉네임을 입력해주세요'),
@@ -33,13 +31,13 @@ export function ProfileForm() {
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
     });
-    const dispatch = useDispatch();
-    const {user_id} = useSelector(selectUserState);
+    
+    const [_userAtom, setUserAtom] = useRecoilState(userAtom);
     const [userInfo, setUserInfo] = useState<userProfileInfo | null>(null);
 
     const { response: responseGet, error: errorGet, loading: loadingGet } = useAxios({
         method: `GET`,
-        url: `user/${user_id}/info`,
+        url: `user/${_userAtom.user_id}/info`,
         headers : {
             "Content-Type" : "application/json",
         }
@@ -63,14 +61,14 @@ export function ProfileForm() {
     }
 
     useEffect(() => {
-        setUserInfo(responseGet?.data());
-    }, [])
+        console.log(response)
+        setUserInfo(responseGet?.data);
+    }, [responseGet])
 
     useEffect(() => {
-        //console.log(response);
         if(response){
             const {nick_name, name, age} = response.data();
-            dispatch(setIsLogin({isLoggedin : true, nickname : nick_name}));
+            setUserAtom({isLoggedin : true, nickname : nick_name, email: _userAtom.email, user_id: _userAtom.user_id});
             router.push({
                 pathname: "/user/workspace"
             })

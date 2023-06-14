@@ -1,4 +1,5 @@
 // import wrapper from '@/store/configureStore';
+import React from 'react';
 import type { AppProps } from 'next/app'
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
 import {RecoilRoot} from 'recoil';
@@ -58,6 +59,15 @@ const defaultTheme = {
 }
 
 function App({ Component, pageProps }: AppProps) {
+  const [hydrated, setHydrated] = React.useState(false);
+    React.useEffect(() => {
+        setHydrated(true);
+    }, []);
+    if (!hydrated) {
+        // Returns null on first render, so the client and server match
+        return null;
+    }
+    
   return (
     <ThemeProvider theme={defaultTheme}>
       {/* <Provider store={store}> 
