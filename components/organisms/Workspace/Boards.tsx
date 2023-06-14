@@ -41,7 +41,6 @@ export function Boards({id} : IBoardsProps) {
         {
             title: '제목',
             dataIndex: 'title',
-            // sorter: (a, b) => a - b,
         },
         {
             title: '글쓴이',

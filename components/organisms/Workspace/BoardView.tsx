@@ -4,6 +4,7 @@ import 'react-quill/dist/quill.snow.css';
 import useAxios from '@/components/businesses/useAxios';
 import {Comments} from '@/components/molecules/Workspace/Comments';
 import { useRouter } from 'next/router';
+import axios from 'axios';
 
 interface IBoradViewProps {
     id: number;
@@ -28,10 +29,10 @@ export function BoardView({id} : IBoradViewProps) {
 
     const onDeletePost = () => {
         if(!confirm("정말 이 게시글을 삭제하시겠습니까?")) {
-            alert("삭제를 취소합니다.")
+            alert("삭제를 취소합니다.");
         }
         else {
-            //axios.
+            axios.delete(`${localStorage.getItem('boardId')}/${id}/delete`);
         }
     }
 

@@ -1,14 +1,14 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 import styled from 'styled-components';
-import { useDispatch } from 'react-redux';
-import { setIsLogin } from '@/store/userSlice';
+import { useRecoilState } from 'recoil';
+import { userAtom } from '@/atoms/user';
 
 export function LogOutButton() {
-    const dispatch = useDispatch();
+    const [user,setUser] = useRecoilState(userAtom);
     return(
         <StyledLogout onClick={() => {
-            dispatch(setIsLogin({isLoggedin : false, nickname : ""}));
+            setUser({isLoggedin : false, nickname : "", email:"", user_id:-1});
         }}>
             <FontAwesomeIcon icon={faRightFromBracket} />
             Logout
