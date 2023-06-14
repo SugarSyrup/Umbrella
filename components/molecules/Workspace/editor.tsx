@@ -28,13 +28,18 @@ const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr, setImgList}) => {
             const formData = new FormData();
 
             if(file) {
-                formData.append("multipartFiles", file[0]);
+                console.log(file[0]);
+                formData.append("image", file[0]);
             }
-            
 
             // file 데이터 담아서 서버에 전달하여 이미지 업로드
-            const res = await axios.post('http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/s3/upload', {image:formData});
-            setImgList((prev) => [res.data, ...prev])
+            const res = await axios.post('http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/s3/upload', {'image':formData.get('image')}, {
+                headers:{
+                    'Content-Type': 'multipart/form-data',
+                }
+            });
+
+            setImgList((prev) => [res.data.imgName, ...prev])
 
             if(quillRef.current) {
                 // 현재 Editor 커서 위치에 서버로부터 전달받은 이미지 불러오는 url을 이용하여 이미지 태그 추가
@@ -45,7 +50,7 @@ const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr, setImgList}) => {
 
                 quillEditor.clipboard.dangerouslyPasteHTML(
                     index,
-                    `<img src=${res.data} alt=${'alt text'} />`
+                    `<img src=${res.data.imgUrl} alt=${'${res.data.imgName}'} />`
                 );
             }
         }

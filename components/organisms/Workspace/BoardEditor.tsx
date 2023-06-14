@@ -4,10 +4,12 @@ import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
 import useAxios from '@/components/businesses/useAxios';
 import { Button, Input, InputRef } from 'antd';
+import { useRouter } from 'next/router';
 
 const Editor = dynamic(() => import('../../molecules/Workspace/editor'), { ssr: false }); // client 사이드에서만 동작되기 때문에 ssr false로 설정
 
 export function BoardEditor() {
+    const router = useRouter();
     const [htmlStr, setHtmlStr] = React.useState<string>('');
     const [imgList, setImgList] = React.useState<string[]>([]);
     const titleRef = React.useRef<InputRef>(null);
@@ -27,6 +29,9 @@ export function BoardEditor() {
                 title : titleRef.current?.input?.value,
                 content : htmlStr,
                 fileNameList : imgList,
+            })
+            router.push({
+                pathname: `/workspace/boards/${localStorage.getItem('boardId')}`
             })
         }}>제출하기</Button>
     </EditorContainer>)

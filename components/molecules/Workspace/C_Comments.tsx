@@ -6,17 +6,16 @@ import axios from "axios";
 import { useRecoilState } from "recoil";
 import { userAtom } from "@/atoms/user";
 import { MenuOutlined } from "@ant-design/icons";
-import { C_Comments } from "./C_Comments";
 
 
 interface IComments {
     id: number;
 }
 
-export function Comments({id} : IComments) {
+export function C_Comments({id} : IComments) {
     const {response, error, loading} = useAxios({ 
         method: `GET`,
-        url: `/posts/${id}/comments`,
+        url: `/comments/${id}/childComments`,
         headers : {
             "Content-Type" : "application/json",
         }
@@ -28,7 +27,6 @@ export function Comments({id} : IComments) {
     }[]>([])
     const formRef = React.useRef<FormInstance>(null);
     const [user, setUser] = useRecoilState(userAtom);
-    const commentsCommentForm = React.useRef<FormInstance>(null);
 
     
     const onFinish = (values: any) => {
@@ -60,7 +58,8 @@ export function Comments({id} : IComments) {
                 />
             </Form.Item> 
             <Button type="primary" htmlType="submit" onClick={() => {
-                axios.post(`posts/${id}/comments`, {
+                axios.post(`/comments/${id}/childComments`, {
+                    'commentId' : id,
                     'content': formRef.current?.getFieldValue('comment'),
                     'nickName': user.nickname,
                 })
@@ -86,9 +85,7 @@ export function Comments({id} : IComments) {
                         }}>삭제</span>
                     </>
                 }
-                <C_Comments id={comment.commentId} />
             </div>
         })}
     </>
 }
-

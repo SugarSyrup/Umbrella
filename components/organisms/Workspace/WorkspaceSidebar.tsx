@@ -83,33 +83,23 @@ export function WorkspaceSidebar() {
 
     React.useEffect(() => {
         const items: MenuProps['items'] = [
-            // getItem('Home', '/', <HomeOutlined /> ),
+            getItem('Home', '/', <HomeOutlined rev={1}/> ),
           
-            // getItem('Boards', 'boards', <NotificationOutlined />, boards.map((event, index) => {
-            //     return getItem(event.title, `/board/${event.board_id}`,);
-            // })),
-          
-            // getItem('Events', 'event', <CalendarOutlined />, events.map((event, index) => {
-            //     return getItem(event.title, `/event/${event.event_id}`,);
-            // })),
-            getItem('Home', '/' ),
-          
-            getItem('Boards', '/boards', <span>1</span>, workspace.data?.boards.map((event, index) => {
+            getItem('Boards', '/boards', <NotificationOutlined rev={3}/>, workspace.data?.boards.map((event, index) => {
                 return getItem(event.title, `/boards/${event.board_id}`,);
             })),
           
-            getItem('Events', '/event', <span>1</span>, workspace.data?.events.map((event, index) => {
+            getItem('Events', '/event', <CalendarOutlined rev={2}/>, workspace.data?.events.map((event, index) => {
                 return getItem(event.title, `/event/${event.event_id}`,);
             })),
         ];
         setItems(items);
-        // console.log(items);
     }, [workspace])
     
 
     const onClick: MenuProps['onClick'] = (e) => {
         const linkArray = e.key.split("/");
-        setBreadcrumbs({breadcrumbs : ["Home", linkArray[0], linkArray[1]]});
+        setBreadcrumbs({breadcrumbs : ["Home", linkArray[1]]});
         router.push({pathname:"/workspace"+e.key})
     };
 

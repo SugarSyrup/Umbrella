@@ -12,7 +12,7 @@ interface IBoardsProps {
 }
 
 interface ColumnsDataType {
-    postId : number;
+    post_id : number;
     title: string;
     writer: string;
     like_count : number;
@@ -22,7 +22,7 @@ interface ColumnsDataType {
 export function Boards({id} : IBoardsProps) {
     const {response, error, loading} = useAxios({
         method: `GET`,
-        url: `${id}/posts`,
+        url: `${id}/posts?page=0`,
         headers : {
             "Content-Type" : "application/json",
         }
@@ -33,7 +33,6 @@ export function Boards({id} : IBoardsProps) {
     const router = useRouter();
 
     useEffect(() => { 
-        console.log(response?.data);
         setBoards(response?.data.content);
     }, [response]);
 
@@ -76,7 +75,9 @@ export function Boards({id} : IBoardsProps) {
                 onRow={(record, rowIndex) => {
                     return{
                         onClick: (event) => {
-                            console.log(event);
+                            router.push({
+                                pathname:`/workspace/board/${record.post_id}`
+                            })
                         },
                     }
                 }}

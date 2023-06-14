@@ -12,11 +12,12 @@ interface IBoradViewProps {
 export function BoardView({id} : IBoradViewProps) {
     const { response, error, loading, sendData } = useAxios({
         method: `GET`,
-        url: `{id}`,
+        url: `${localStorage.getItem('boardId')}/${id}/findOne`,
         headers : {
             "Content-Type" : "application/json",
         }
     })
+
     const [data, setData] = React.useState<{id:number, title: string, writer: string, content: string, likeCount:number}>();
     const viewContainerRef = React.useRef<HTMLDivElement>(null);
     const router = useRouter();
@@ -52,7 +53,7 @@ export function BoardView({id} : IBoradViewProps) {
         <span onClick={() => {
             onDeletePost();
         }}>삭제</span>
-        <Comments id={Number(data?.id)}/>
+        <Comments id={id}/>
     </EditorContainer>)
 }
 

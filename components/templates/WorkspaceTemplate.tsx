@@ -8,6 +8,7 @@ import { userAtom } from "@/atoms/user";
 import { workspaceAtom } from "@/atoms/workspace";
 import { breadcrumbsAtom } from "@/atoms/breadcrumbs";
 
+import { LogoutOutlined,DownOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, theme, Dropdown, Space, MenuProps } from 'antd';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
@@ -58,7 +59,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
               pathname: '/'
             })
           }} style={{color: "red"}}>
-            {/* <LogoutOutlined style={{ marginRight: 8 }} /> */}
+            <LogoutOutlined style={{ marginRight: 8 }} rev={4}/> 
             Logout
           </Link>
         ),
@@ -97,7 +98,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
           <a onClick={(e) => e.preventDefault()}>
             <Space>
               { nickname }
-              {/* <DownOutlined /> */}
+              <DownOutlined rev={14}/> 
             </Space>
           </a>
         </Dropdown>
@@ -106,7 +107,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
         <WorkspaceSidebar />
         <Layout style={{ padding: '0 24px 24px' }}>
             {/* Component 분리 */}
-          <Breadcrumb style={{ margin: '16px 0' }}>
+          {/* <Breadcrumb style={{ margin: '16px 0' }}>
             {
               breadcrumbs.map((breadcrumb) => {
                 return(
@@ -114,7 +115,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
                 )
               })
             }
-          </Breadcrumb>
+          </Breadcrumb> */}
           <Content
             style={{
               padding: 24,

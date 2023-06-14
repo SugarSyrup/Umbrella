@@ -33,6 +33,7 @@ export function WorkSpaceOrganism() {
         setConfirmLoading(true);
         setOpen(false);
         setConfirmLoading(false);
+        //window.location.reload();
     };
 
     const handleCancel = () => {

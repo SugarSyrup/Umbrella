@@ -1,21 +1,17 @@
 import { UserAuthTemplate } from "@/components/templates/UserAuthTemplate";
 import  WorkSpaceTemplate  from "@/components/templates/WorkspaceTemplate";
 import {BoardView} from "@/components/organisms/Workspace/BoardView";
-import useAxios from "@/components/businesses/useAxios";
+import { useRouter } from 'next/router';
 
 export default function BoardViewPage() {
-    const {response, error, loading} = useAxios({
-        method: `GET`,
-        url: `{POSTID}`,
-        headers : {
-            "Content-Type" : "application/json",
-        }
-    })
+    const router = useRouter();
+    const {id} = router.query;
+
     return(
-        // <UserAuthTemplate>
+        <UserAuthTemplate>
             <WorkSpaceTemplate>
-                <BoardView />
+                <BoardView id={Number(id)}/>
             </WorkSpaceTemplate>
-        // </UserAuthTemplate>
+        </UserAuthTemplate>
     )
 }

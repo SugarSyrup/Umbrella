@@ -18,7 +18,8 @@ export interface WorkspaceState {
     events:{
       event_id:string,
       title: string,
-    }[]
+    }[],
+    userListInWorkspace:[]
   };
 //   current?:{
 //     title?:string,
@@ -34,6 +35,7 @@ const initialState: WorkspaceState = {
     title:"",
     boards:[],
     events:[],
+    userListInWorkspace: [],
   },
 //   current:{
 //     title:"none",
