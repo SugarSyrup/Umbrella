@@ -1,6 +1,7 @@
-import wrapper from '@/store/configureStore';
+// import wrapper from '@/store/configureStore';
 import type { AppProps } from 'next/app'
 import { ThemeProvider, createGlobalStyle } from 'styled-components';
+import {RecoilRoot} from 'recoil';
 
 // import { Provider } from 'react-redux';
 // import { store, persistor } from "../store/tmp/store";
@@ -61,12 +62,14 @@ function App({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={defaultTheme}>
       {/* <Provider store={store}> 
         <PersistGate persistor={persistor}> */}
+        <RecoilRoot>
           <GlobalStyle />
           <Component {...pageProps} />
+        </RecoilRoot>
         {/* </PersistGate>
        </Provider> */}
     </ThemeProvider>  
   )
 }
 
-export default wrapper.withRedux(App);
+export default App;

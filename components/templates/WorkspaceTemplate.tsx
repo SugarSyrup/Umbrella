@@ -24,6 +24,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+    
     const {id, title} = useSelector(selectWorkspaceState);
     const {nickname} =useSelector(selectUserState);
     const breadcrumbs = useSelector(selectBreadcrumbsState);
@@ -72,6 +73,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
           id:id,
           title:title
       }
+      console.log(data);
   
       sendData(data);
     },[])

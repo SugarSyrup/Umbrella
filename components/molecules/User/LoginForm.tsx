@@ -7,7 +7,7 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 
 //redux
-import { useDispatch } from 'react-redux';
+import { useRecoilState} from 'recoil';
 
 import { StyledLink } from '../../atoms/TextLink.styles';
 import { RectangleButton } from '../../atoms/RectangleButton.styles';
@@ -15,7 +15,8 @@ import { RectangleButton } from '../../atoms/RectangleButton.styles';
 import { StyledForm } from './UserForm.styles';
 import { InputWithErrorMessage } from './InputWithErrorMessage';
 import useAxios from '../../businesses/useAxios';
-import { setIsLogin } from '@/store/userSlice';
+
+import { userAtom } from '@/atoms/user';
 
 const schema = Yup.object({
     email: Yup.string().email('email 형식을 입력해주세요').required('이메일(아이디)를 입력해 주세요'),
@@ -28,7 +29,7 @@ export function LoginForm() {
     const {register, handleSubmit, formState: {errors}} = useForm<FormData>({
         resolver: yupResolver(schema)
     });
-    const dispatch = useDispatch();
+    const [user, setUser] = useRecoilState(userAtom);
 
     const { response, error, loading, sendData } = useAxios({
         method: `POST`,
@@ -43,31 +44,17 @@ export function LoginForm() {
             email : email,
             password : password,
         };
-        // console.log(userdata);
         sendData(userdata);
-
-        // if(response) {
-        //     onLoginSuccess(response);
-        // }
-
-        // if (error) { 
-        //     onError(error);
-        // }
     }
 
     const onLoginSuccess = (response : AxiosResponse) => {
-        // console.log(1)
-        // console.log(response.data);
         const access_token = response.headers.authorization;
-        console.log(2)
-        console.log(response.headers.authorization);
-
         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-        //axios.defaults.headers.get['Authorization'] = `Bearer ${access_token}`;
 
         const {nickName, userId, email} = response.data;
         
-        dispatch(setIsLogin({isLoggedin : true, nickname : nickName, user_id : userId}));
+       // dispatch(setIsLogin({isLoggedin : true, nickname : nickName, user_id : userId}));
+        setUser({isLoggedin : true, nickname : nickName, user_id : userId, email : email});
         
         router.push({
             pathname: 'workspace'

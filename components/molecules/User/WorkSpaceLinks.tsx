@@ -2,13 +2,16 @@ import { useEffect, useState } from "react";
 import useAxios from "../../businesses/useAxios";
 import {useRouter} from "next/router";
 import styled from "styled-components";
-import { useDispatch } from 'react-redux';
-import { setWorkspaceId } from "@/store/workspaceSlice";
+
+import {useRecoilState} from 'recoil';
+import {workspaceAtom} from "@/atoms/workspace";
+// import { useDispatch } from 'react-redux';
+// import { setWorkspaceId } from "@/store/workspaceSlice";
 
 export function WorkSpaceLinks() {
-    const [workspace, setWorkSpace] = useState<{id:string, title:string}[]>([]);
-    const dispatch = useDispatch();
+    const [workspace, setWorkSpace] = useState<{workspaceId:string, title:string}[]>([]);
     const router = useRouter();
+    const [workspaceatom ,setWorkspaceAtom] = useRecoilState(workspaceAtom);
     const {response, error, loading } = useAxios({
         method: `GET`,
         url: `workspace`,
@@ -19,8 +22,13 @@ export function WorkSpaceLinks() {
 
     useEffect(() => {
         if(response) {
-            console.log(response.data)
-            setWorkSpace(response.data);
+            console.log(response.data);
+            if(response.data.errorCode) {
+
+            }
+            else {
+                setWorkSpace(response.data);
+            }
         }
         else if(error) {
             console.log("error");
@@ -29,21 +37,20 @@ export function WorkSpaceLinks() {
     },[response,error])
 
     return(
-        <>
+        <div style={{width:"100%",height:"400px"}}>
             {
                 workspace.length == 0 ? <h2>Loading...</h2> : workspace.map((ele) => {
                     const onClick = () => {
-                        dispatch(setWorkspaceId({
-                            id : ele.id,
+                        setWorkspaceAtom({
+                            id : ele.workspaceId,
                             title : ele.title
-                        }));
+                        });
                         router.push({
                             pathname: '/workspace'
                         })
                     }
-                    if(typeof ele.id === 'string'){
                         return(
-                            <StyledDiv key={ele.id}>
+                            <StyledDiv key={ele.workspaceId}>
                                 <StyledWorkSpaceLink >
                                     {ele.title}
                                 </StyledWorkSpaceLink>
@@ -52,10 +59,10 @@ export function WorkSpaceLinks() {
                                 </StyledButton>
                             </StyledDiv>
                         )
-                    }
+                    
                 })
             }
-        </>
+        </div>
     )
 }
 
