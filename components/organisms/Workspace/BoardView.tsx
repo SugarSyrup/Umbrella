@@ -52,7 +52,7 @@ export function BoardView({id} : IBoradViewProps) {
         <span onClick={() => {
             onDeletePost();
         }}>삭제</span>
-        <Comments id={data?.id}/>
+        <Comments id={Number(data?.id)}/>
     </EditorContainer>)
 }
 

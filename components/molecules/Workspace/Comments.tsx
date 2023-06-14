@@ -51,5 +51,10 @@ export function Comments({id} : IComments) {
                 Submit
             </Button>
         </Form>
+        {comments && comments.map((comment) => {
+            return <div key={comment.commentId}>
+                {comment.nickName} : {comment.content}
+            </div>
+        })}
     </>
 }
