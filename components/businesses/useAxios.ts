@@ -4,7 +4,8 @@ import axios, { AxiosError, RawAxiosRequestConfig, AxiosResponse, AxiosRequestCo
 import { accessTokenAtom } from '@/atoms/accessToken';
 import { useRecoilState } from 'recoil';
 
-axios.defaults.baseURL = process.env.PRODUCTION === "develop" ? "http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/" : "http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/";
+// axios.defaults.baseURL = process.env.PRODUCTION === "develop" ? "http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/" : "http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/";
+axios.defaults.baseURL = process.env.PRODUCTION === "develop" ? "https://umbrellaapp.net" : "https://umbrellaapp.net";
 // axios.defaults.withCredentials = true;
 
 const useAxios = (axiosParams: RawAxiosRequestConfig) => {
