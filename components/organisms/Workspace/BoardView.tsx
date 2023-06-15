@@ -43,9 +43,12 @@ export function BoardView({id} : IBoradViewProps) {
         }
     }, [response])
     
-    return(<EditorContainer>
-        <h2>{data?.title}</h2>
-        <span>{data?.writer}</span>
+    return(
+    <EditorContainer>
+        <div>
+            <h2 style={{fontSize:"32px", fontWeight:"bolder", marginBottom:"5px"}}>{data?.title}</h2>
+            <span style={{fontSize:"16px",  marginLeft:"10px"}}>{data?.writer}</span>
+        </div>
         <span ref={viewContainerRef}></span>
         <span>{data?.likeCount}</span>
         <span onClick={() => {

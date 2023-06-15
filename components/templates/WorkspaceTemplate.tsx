@@ -7,6 +7,7 @@ import { useRecoilState } from "recoil";
 import { userAtom } from "@/atoms/user";
 import { workspaceAtom } from "@/atoms/workspace";
 import { breadcrumbsAtom } from "@/atoms/breadcrumbs";
+import { chattingAtom } from '@/atoms/chatting';
 
 import { LogoutOutlined,DownOutlined } from '@ant-design/icons';
 import { Breadcrumb, Layout, theme, Dropdown, Space, MenuProps } from 'antd';
@@ -26,6 +27,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
     
     const [{isLoggedin,nickname, user_id,email}, setUser] = useRecoilState(userAtom);
     const [workspace, setWorkspace] = useRecoilState(workspaceAtom);
+    const [chatting, setChatting] = useRecoilState(chattingAtom);
     const [{breadcrumbs}, setBreadcrumbsState] = useRecoilState(breadcrumbsAtom);
 
     const router = useRouter();
@@ -35,6 +37,14 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
         headers : {
             "Content-Type" : "application/json",
         }
+    })
+
+    const {response:response2, error:error2, loading:loading2, sendData:sendData2} = useAxios({
+      method:"GET",
+      url: `/workspaces/${workspace.id}/chatRooms`,
+      headers:{
+        "Content-Type" : "application/json"
+      }
     })
   
     const items: MenuProps['items'] = [
@@ -89,6 +99,18 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
               
         }
     }, [response, error])
+
+    
+    useEffect(() => {
+      if(response2) {
+          const workspacedata = response2.data;
+          // console.log(workspacedata);
+          setChatting(workspacedata);
+      }
+      else if(error2){
+            
+      }
+  }, [response2, error2])
 
   return (
     <Layout style={{width:'100%', height:'100vh'}}>

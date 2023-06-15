@@ -36,9 +36,8 @@ export function Comments({id} : IComments) {
     };
 
     React.useEffect(() => {
-        console.log(id);
         if(response) {
-            setCommnets(response.data);
+            setCommnets(response.data.content);
         }
         
         else if(error) {
@@ -60,7 +59,7 @@ export function Comments({id} : IComments) {
                 />
             </Form.Item> 
             <Button type="primary" htmlType="submit" onClick={() => {
-                axios.post(`posts/${id}/comments`, {
+                axios.post(`posts/${id}/comments/create`, {
                     'content': formRef.current?.getFieldValue('comment'),
                     'nickName': user.nickname,
                 })
@@ -82,7 +81,7 @@ export function Comments({id} : IComments) {
                             toggle = !toggle;
                         }}>수정</span>
                         <span onClick={() => {
-                            axios.delete(`/posts/${id}/comments/${comment.commentId}`)
+                            axios.delete(`/posts/${id}/comments/${comment.commentId}`);
                         }}>삭제</span>
                     </>
                 }
