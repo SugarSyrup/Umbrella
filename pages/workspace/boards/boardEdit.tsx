@@ -1,6 +1,6 @@
 import { UserAuthTemplate } from "@/components/templates/UserAuthTemplate";
 import  WorkSpaceTemplate  from "@/components/templates/WorkspaceTemplate";
-import {BoardEdit} from "@/components/organisms/Workspace/BoardEdit";
+import {BoardEditor} from "@/components/organisms/Workspace/BoardEdit";
 import useAxios from "@/components/businesses/useAxios";
 
 export default function BoardEditPage() {
@@ -14,7 +14,7 @@ export default function BoardEditPage() {
     return(
         // <UserAuthTemplate>
             <WorkSpaceTemplate>
-                <BoardEdit />
+                <BoardEditor />
             </WorkSpaceTemplate>
         // </UserAuthTemplate>
     )
