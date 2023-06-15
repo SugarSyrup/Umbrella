@@ -81,6 +81,7 @@ export function Boards({id} : IBoardsProps) {
                 onRow={(record, rowIndex) => {
                     return{
                         onClick: (event) => {
+                            localStorage.setItem('currentPostId', record.post_id.toString());
                             router.push({
                                 pathname:`/workspace/board/${record.post_id}`
                             })

@@ -24,7 +24,7 @@ export function Announcement() {
     const [workspace, setWorkspace] = useRecoilState(workspaceAtom);
     const {response, error, loading} = useAxios({
         method: `GET`,
-        url: `${workspace.data?.boards[0]}/posts?page=0`,
+        url: `${workspace.data?.boards[0].board_id}/posts?page=0`,
         headers : {
             "Content-Type" : "application/json",
         }
@@ -77,6 +77,7 @@ export function Announcement() {
                     onRow={(record, rowIndex) => {
                         return{
                             onClick: (event) => {
+                                localStorage.setItem('currentPostId', record.post_id.toString());
                                 router.push({
                                     pathname:`/workspace/board/${record.post_id}`
                                 })

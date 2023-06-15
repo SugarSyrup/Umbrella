@@ -1,11 +1,11 @@
 import useAxios from "@/components/businesses/useAxios";
 import { Form, Button, Input, Dropdown, MenuProps } from "antd";
 import type {FormInstance} from 'antd/es/form'
-import React from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useRecoilState } from "recoil";
 import { userAtom } from "@/atoms/user";
-import { MenuOutlined } from "@ant-design/icons";
+import {useRouter} from 'next/router';
 import { C_Comments } from "./C_Comments";
 
 
@@ -14,6 +14,7 @@ interface IComments {
 }
 
 export function Comments({id} : IComments) {
+    const router = useRouter();
     const {response, error, loading} = useAxios({ 
         method: `GET`,
         url: `/posts/${id}/comments`,
@@ -29,6 +30,7 @@ export function Comments({id} : IComments) {
     const formRef = React.useRef<FormInstance>(null);
     const [user, setUser] = useRecoilState(userAtom);
     const commentsCommentForm = React.useRef<FormInstance>(null);
+    const [toggle, setToggle] = useState(false);
 
     
     const onFinish = (values: any) => {
@@ -51,11 +53,14 @@ export function Comments({id} : IComments) {
             layout="inline"
             onFinish={onFinish}
             ref={formRef}
+            style={{
+                marginBottom:"20px"
+            }}
         >
             <Form.Item name="comment" label="Comment" >
                 <Input 
                     type="text"
-                    style={{ width: 100 }}
+                    style={{ width: 300 }}
                 />
             </Form.Item> 
             <Button type="primary" htmlType="submit" onClick={() => {
@@ -64,28 +69,48 @@ export function Comments({id} : IComments) {
                     'nickName': user.nickname,
                 })
             }}>
-                Submit
+                댓글 작성
             </Button>
         </Form>
         {comments && comments.map((comment) => {
-            let toggle = false;
-            return <div key={comment.commentId}>
-                <span>{comment.nickName}</span>
+            return <div key={comment.commentId} style={{
+                overflowY:"scroll",
+                height:'100px',
+                display:'flex',
+                flexDirection:'column',
+                gap:'10px'
+            }}>
+                <div style={{display:'flex', width:'90%', justifyContent:'space-between'}}>
+                    <span style={{fontWeight:'bolder', fontSize:18}}>{comment.nickName}</span>
+                    { comment.nickName === user.nickname &&
+                        <div style={{fontSize:12}}>
+                            <span 
+                                style={{
+                                    cursor:'pointer',
+                                    marginRight:'10px'
+                                }}
+                                onClick={() => {
+                                if(toggle){
+                                    const inputValue = document.querySelector<HTMLInputElement>(`.Re${comment.commentId}`)?.value
+                                    axios.put(`posts/${id}/comments/update`, {'commentId' : comment.commentId, 'content' : inputValue})
+                                    window.location.reload();
+                                }else {
+                                    setToggle(prev => !prev);
+                                }
+                            }}>수정</span>
+                            <span onClick={() => {
+                                axios.delete(`/posts/${id}/comments/${comment.commentId}`);
+                                router
+                            }}>삭제</span>
+                        </div>
+                    }
+                </div>
                 { toggle ?
-                    <input type="text" value={comment.content} onChange={(e) => {comment.content = e.currentTarget.value }} />
+                    <input type="text" defaultValue={comment.content} className={`Re${comment.commentId}`}/>
                     : <span>{comment.content} </span>
                 }
-                { comment.nickName === user.nickname &&
-                    <>
-                        <span onClick={() => {
-                            toggle = !toggle;
-                        }}>수정</span>
-                        <span onClick={() => {
-                            axios.delete(`/posts/${id}/comments/${comment.commentId}`);
-                        }}>삭제</span>
-                    </>
-                }
-                <C_Comments id={comment.commentId} />
+                
+                {/* <C_Comments id={comment.commentId} /> */}
             </div>
         })}
     </>

@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router';
 import { UserAuthTemplate } from "@/components/templates/UserAuthTemplate";
-import { Boards } from '@/components/organisms/Workspace/Boards';
+import { Chatting } from '@/components/organisms/Workspace/Chatting';
 import WorkSpaceTemplate from "@/components/templates/WorkspaceTemplate";
 
 export default function WorkSpace() {
@@ -9,7 +9,7 @@ export default function WorkSpace() {
     return(
         <UserAuthTemplate>
             <WorkSpaceTemplate>
-                <Boards id={typeof id === 'string' ? id : ''} />
+                <Chatting id={Number(id)} />
             </WorkSpaceTemplate>
         </UserAuthTemplate>
     )

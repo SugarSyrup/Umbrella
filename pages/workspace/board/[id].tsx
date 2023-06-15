@@ -10,7 +10,7 @@ export default function BoardViewPage() {
     return(
         <UserAuthTemplate>
             <WorkSpaceTemplate>
-                <BoardView id={Number(id)}/>
+                <BoardView/>
             </WorkSpaceTemplate>
         </UserAuthTemplate>
     )

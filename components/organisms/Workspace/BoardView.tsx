@@ -5,12 +5,15 @@ import useAxios from '@/components/businesses/useAxios';
 import {Comments} from '@/components/molecules/Workspace/Comments';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import { useRecoilState } from 'recoil';
+import { userAtom } from '@/atoms/user';
 
-interface IBoradViewProps {
-    id: number;
-}
 
-export function BoardView({id} : IBoradViewProps) {
+export function BoardView() {
+    const router = useRouter();
+    const id = localStorage.getItem('currentPostId');
+    const [user, setUser] = useRecoilState(userAtom);
+
     const { response, error, loading, sendData } = useAxios({
         method: `GET`,
         url: `${localStorage.getItem('boardId')}/${id}/findOne`,
@@ -21,7 +24,6 @@ export function BoardView({id} : IBoradViewProps) {
 
     const [data, setData] = React.useState<{id:number, title: string, writer: string, content: string, likeCount:number}>();
     const viewContainerRef = React.useRef<HTMLDivElement>(null);
-    const router = useRouter();
 
     const onEdit = () => {
         router.push(`/workspace/board/edit/${id}`)
@@ -33,6 +35,9 @@ export function BoardView({id} : IBoradViewProps) {
         }
         else {
             axios.delete(`${localStorage.getItem('boardId')}/${id}/delete`);
+            router.push({
+                pathname: `/workspace`,
+            })
         }
     }
 
@@ -45,19 +50,36 @@ export function BoardView({id} : IBoradViewProps) {
     
     return(
     <EditorContainer>
-        <div>
-            <h2 style={{fontSize:"32px", fontWeight:"bolder", marginBottom:"5px"}}>{data?.title}</h2>
-            <span style={{fontSize:"16px",  marginLeft:"10px"}}>{data?.writer}</span>
+        <div style={{marginBottom:"10px"}}>
+            <h2 style={{fontSize:"28px", fontWeight:"bolder", marginBottom:"5px"}}>{data?.title}</h2>
+            <div style={{
+                width:"100%",
+                display:"flex",
+                justifyContent:"space-between",
+            }}>
+                <span style={{fontSize:"16px", color:'grey'}}>{data?.writer}</span>
+                {data?.writer === user.nickname &&
+                    <div style={{marginRight:"10px", display:"flex", alignItems:"center", gap:"10px", cursor:"pointer", fontSize:"12px", fontWeight:"bold"}}>
+                        <span onClick={() => {
+                            onEdit();
+                        }}>수정</span>
+                        <span onClick={() => {
+                            onDeletePost();
+                        }}>삭제</span>
+                    </div>
+                }
+            </div>
         </div>
-        <span ref={viewContainerRef}></span>
-        <span>{data?.likeCount}</span>
-        <span onClick={() => {
-            onEdit();
-        }}>수정</span>
-        <span onClick={() => {
-            onDeletePost();
-        }}>삭제</span>
-        <Comments id={id}/>
+        <div style={{
+            width:"100%",
+            height:"70%",
+            overflowY:'scroll',
+            marginBottom:"30px"
+        }}>
+            <span ref={viewContainerRef}></span>
+            <span>{data?.likeCount}</span>
+        </div>
+        <Comments id={Number(id)}/>
     </EditorContainer>)
 }
 

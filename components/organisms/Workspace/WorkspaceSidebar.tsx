@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 
 
 import { Layout, Menu, theme, Button, Modal, Form, Radio, Input } from 'antd';
-import { HomeOutlined, NotificationOutlined, CalendarOutlined } from '@ant-design/icons';
+import { HomeOutlined, NotificationOutlined, WechatOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import axios from 'axios';
 
@@ -34,7 +34,7 @@ function getItem(
   } as MenuItem;
 }
 
-type featuresType = "board" | "event";
+type featuresType = "board" | "chatting";
 
 export function WorkspaceSidebar() {
     const {
@@ -68,7 +68,12 @@ export function WorkspaceSidebar() {
     };
 
     const handleOk = () => {
-        axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/${workspace.id}/create`, {title : formRef.current?.getFieldValue('title')})
+        if(featureType === 'board'){
+            axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/${workspace.id}/create`, {title : formRef.current?.getFieldValue('title')})
+        }
+        else if(featureType === 'chatting'){
+
+        }
         setConfirmLoading(true);
         setOpen(false);
         setConfirmLoading(false);
@@ -89,7 +94,7 @@ export function WorkspaceSidebar() {
                 return getItem(event.title, `/boards/${event.board_id}`,);
             })),
           
-            getItem('Events', '/event', <CalendarOutlined rev={2}/>, workspace.data?.events.map((event, index) => {
+            getItem('chatting', '/chatting', <WechatOutlined  rev={2}/>, workspace.data?.events.map((event, index) => {
                 return getItem(event.title, `/event/${event.event_id}`,);
             })),
         ];
@@ -140,12 +145,16 @@ export function WorkspaceSidebar() {
                     <Form.Item label="추가할 기능 타입" name="featureType">
                         <Radio.Group>
                             <Radio.Button value="board">Board</Radio.Button>
-                            <Radio.Button value="event">Event</Radio.Button>
+                            <Radio.Button value="chatting">Chatting</Radio.Button>
                         </Radio.Group>
                     </Form.Item>
-                    <Form.Item label="title" name="title" required tooltip="This is a required field">
+                    {featureType === 'board' && (<Form.Item label="title" name="title" required tooltip="This is a required field">
                         <Input placeholder="board 제목을 입력해주세요" />
-                    </Form.Item>
+                    </Form.Item>)}
+                    {featureType === 'chatting' && (<Form.Item label="title" name="title" required tooltip="This is a required field">
+                        <Input placeholder="Chatting 방 이름을 입력해 주세요" />
+
+                    </Form.Item>)}
                 </Form>
             </Modal>
         </Layout.Sider>

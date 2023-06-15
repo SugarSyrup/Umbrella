@@ -64,7 +64,7 @@ export function C_Comments({id} : IComments) {
                     'nickName': user.nickname,
                 })
             }}>
-                Submit
+                대댓글 작성
             </Button>
         </Form>
         {comments && comments.map((comment) => {
