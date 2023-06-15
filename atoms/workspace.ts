@@ -19,7 +19,12 @@ export interface WorkspaceState {
       event_id:string,
       title: string,
     }[],
-    userListInWorkspace:[]
+    userListInWorkspace:{
+      userId: number,
+      email:string,
+      nickName:string,
+      userRole:string,
+    }[]
   };
 //   current?:{
 //     title?:string,

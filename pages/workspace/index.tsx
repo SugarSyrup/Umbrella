@@ -6,7 +6,7 @@ export default function WorkSpace() {
     return(
         <UserAuthTemplate>
             <WorkSpaceTemplate>
-                {/* <WorkSpaceMain /> */}
+                <WorkSpaceMain />
             </WorkSpaceTemplate>
         </UserAuthTemplate>
     )
