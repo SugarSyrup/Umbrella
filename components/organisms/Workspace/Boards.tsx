@@ -1,5 +1,6 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Space, Table } from 'antd';
+import { Button, Space, Table, Pagination } from 'antd';
+import type { PaginationProps } from 'antd';
 import type { ColumnsType, TableProps } from 'antd/es/table';
 
 import useAxios from '@/components/businesses/useAxios';
@@ -20,17 +21,23 @@ interface ColumnsDataType {
 
 
 export function Boards({id} : IBoardsProps) {
+    const [current, setCurrent] = useState(1);
     const {response, error, loading} = useAxios({
         method: `GET`,
-        url: `${id}/posts?page=0`,
+        url: `${id}/posts?page=${current-1}`,
         headers : {
             "Content-Type" : "application/json",
         }
     })
 
     const [boards, setBoards] = useState<ColumnsDataType[]>([]);
-    const [breadcrumbs,_] = useRecoilState(breadcrumbsAtom);
+    const [breadcrumbs,setBreadcrumbs] = useRecoilState(breadcrumbsAtom);
     const router = useRouter();
+
+    const onPageChange: PaginationProps['onChange'] = (page) => {
+        console.log(page);
+        setCurrent(page);
+    }
 
     useEffect(() => { 
         setBoards(response?.data.content);

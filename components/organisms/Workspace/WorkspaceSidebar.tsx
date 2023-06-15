@@ -99,8 +99,7 @@ export function WorkspaceSidebar() {
 
     const onClick: MenuProps['onClick'] = (e) => {
         const linkArray = e.key.split("/");
-        console.log(linkArray);
-        setBreadcrumbs({breadcrumbs : ["Home", linkArray[0],linkArray[1]]});
+        setBreadcrumbs({breadcrumbs : ["Home", linkArray[1],e.domEvent.currentTarget?.innerText]});
         router.push({pathname:"/workspace"+e.key})
     };
 

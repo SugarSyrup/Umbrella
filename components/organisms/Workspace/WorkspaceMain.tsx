@@ -4,9 +4,16 @@ import { Avatar } from "antd";
 import { UserOutlined } from "@ant-design/icons";
 import { useRecoilState } from "recoil"
 import {Announcement } from '@/components/molecules/Workspace/Announcement'
+import { breadcrumbsAtom } from "@/atoms/breadcrumbs";
+import { useEffect } from "react";
 
 export default function WorkSpaceMain() {
     const [workspace, setWorkspace] = useRecoilState(workspaceAtom);
+    const [breadcrmbs, setBreadcrumbs] = useRecoilState(breadcrumbsAtom);
+
+    useEffect(() => {
+        setBreadcrumbs({breadcrumbs : ["Home"]});
+    }, [])
 
     return (
         <div style={{
@@ -18,14 +25,14 @@ export default function WorkSpaceMain() {
             justifyContent:"space-between",
         }}>
             <div style={{
-                width:"45%",
+                width:"50%",
                 height:"100%",
                 position:"relative",   
             }}>
                 <Announcement />
             </div>
             <div style={{
-                width:"45%",
+                width:"50%",
                 height:"100%",
                 position:"relative",   
                 
@@ -35,7 +42,7 @@ export default function WorkSpaceMain() {
             }}>
                 <div style={{
                     width: '100%',
-                    height: '45%',
+                    height: '50%',
                     border: "1px solid rgb(240, 240, 240)",
                     borderRadius: "8px",
                     boxSizing: 'border-box',

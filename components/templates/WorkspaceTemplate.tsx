@@ -129,7 +129,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
         <WorkspaceSidebar />
         <Layout style={{ padding: '0 24px 24px' }}>
             {/* Component 분리 */}
-          {/* <Breadcrumb style={{ margin: '16px 0' }}>
+          <Breadcrumb style={{ margin: '16px 0' }}>
             {
               breadcrumbs.map((breadcrumb) => {
                 return(
@@ -137,7 +137,7 @@ const WorkspaceTemplate = ({children} : IWorkSpaceTemplateProps) => {
                 )
               })
             }
-          </Breadcrumb> */}
+          </Breadcrumb>
           <Content
             style={{
               padding: 24,

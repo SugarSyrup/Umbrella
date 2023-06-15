@@ -60,6 +60,8 @@ export function Announcement() {
 
     return(
         <div style={{
+            width:'95%', 
+            height:'100%',
             border: "1px solid rgb(240, 240, 240)",
             borderRadius: "8px",
             boxSizing: 'border-box',
