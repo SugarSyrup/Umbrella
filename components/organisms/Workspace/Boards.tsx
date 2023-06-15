@@ -22,6 +22,7 @@ interface ColumnsDataType {
 
 export function Boards({id} : IBoardsProps) {
     const [current, setCurrent] = useState(1);
+    localStorage.setItem('boardId', id);
     const {response, error, loading} = useAxios({
         method: `GET`,
         url: `${id}/posts?page=${current-1}`,

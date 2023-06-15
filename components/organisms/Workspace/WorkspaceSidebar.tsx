@@ -2,13 +2,13 @@ import React, { useRef } from 'react';
 
 import { useRouter } from 'next/router';
 
-
 import { Layout, Menu, theme, Button, Modal, Form, Radio, Input } from 'antd';
 import { HomeOutlined, NotificationOutlined, WechatOutlined } from '@ant-design/icons';
 import type { MenuProps } from 'antd';
 import axios from 'axios';
 
 import type { FormInstance } from 'antd/es/form';
+import useAxios from '@/components/businesses/useAxios';
 import { useDispatch } from 'react-redux';
 import { useRecoilState } from 'recoil';
 import { workspaceAtom } from '@/atoms/workspace';
@@ -48,6 +48,29 @@ export function WorkspaceSidebar() {
     const [form] = Form.useForm();
     const [featureType, setFeatureType] = React.useState<featuresType>('board');
 
+    const [chatting, setChatting] = React.useState<{
+        chatRoomId: number,
+        roomName: string,
+        createdBy: string}[]>();
+    const {response:response2, error:error2, loading:loading2} = useAxios({
+        method:"GET",
+        url: `/workspace/${workspace.id}/chatRooms`,
+        headers:{
+          "Content-Type" : "application/json"
+        }
+      })
+    React.useEffect(() => {
+        if(response2) {
+            const workspacedata = response2.data;
+            // console.log(workspacedata);
+            setChatting(workspacedata);
+        }
+        else if(error2){
+              
+        }
+    }, [response2, error2])
+
+
     const onFeatureTypeChange = ({ featureType }: { featureType: featuresType }) => {
         setFeatureType(featureType);
     }
@@ -68,15 +91,17 @@ export function WorkspaceSidebar() {
     };
 
     const handleOk = () => {
-        if(featureType === 'board'){
-            axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/${workspace.id}/create`, {title : formRef.current?.getFieldValue('title')})
+        console.log(formRef.current?.getFieldValue('featureType'))
+        if(formRef.current?.getFieldValue('featureType') == 'board'){
+            axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/${workspace.id}/create`, {'title' : formRef.current?.getFieldValue('title')})
         }
-        else if(featureType === 'chatting'){
-
+        else if(formRef.current?.getFieldValue('featureType') == 'chatting'){
+            axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/workspace/${workspace.id}/createChatRoom`, {'roomName' : formRef.current?.getFieldValue('title')})
         }
         setConfirmLoading(true);
         setOpen(false);
         setConfirmLoading(false);
+        window.location.reload();
     };
 
     const handleCancel = () => {
@@ -94,8 +119,8 @@ export function WorkspaceSidebar() {
                 return getItem(event.title, `/boards/${event.board_id}`,);
             })),
           
-            getItem('chatting', '/chatting', <WechatOutlined  rev={2}/>, workspace.data?.events.map((event, index) => {
-                return getItem(event.title, `/event/${event.event_id}`,);
+            getItem('chatting', '/chatting', <WechatOutlined  rev={2}/>, chatting?.map((event, index) => {
+                return getItem(event.roomName, `/event/${event.chatRoomId}`,);
             })),
         ];
         setItems(items);
@@ -148,13 +173,9 @@ export function WorkspaceSidebar() {
                             <Radio.Button value="chatting">Chatting</Radio.Button>
                         </Radio.Group>
                     </Form.Item>
-                    {featureType === 'board' && (<Form.Item label="title" name="title" required tooltip="This is a required field">
-                        <Input placeholder="board 제목을 입력해주세요" />
-                    </Form.Item>)}
-                    {featureType === 'chatting' && (<Form.Item label="title" name="title" required tooltip="This is a required field">
-                        <Input placeholder="Chatting 방 이름을 입력해 주세요" />
-
-                    </Form.Item>)}
+                    <Form.Item label="title" name="title" required tooltip="This is a required field">
+                        <Input placeholder={featureType === "board" ? "board 제목을 입력해주세요" : "chattingRoom 제목을 입력해주세요"} />
+                    </Form.Item>
                 </Form>
             </Modal>
         </Layout.Sider>

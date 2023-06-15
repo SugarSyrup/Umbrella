@@ -6,6 +6,7 @@ import WorkSpaceTemplate from "@/components/templates/WorkspaceTemplate";
 export default function WorkSpace() {
     const router = useRouter();
     const {id} = router.query;
+    localStorage.setItem('currentBoards', String(id));
     return(
         <UserAuthTemplate>
             <WorkSpaceTemplate>

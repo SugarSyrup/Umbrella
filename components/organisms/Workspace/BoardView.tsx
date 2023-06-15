@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import 'react-quill/dist/quill.snow.css';
 import useAxios from '@/components/businesses/useAxios';
 import {Comments} from '@/components/molecules/Workspace/Comments';
+import { HeartFilled, HeartOutlined } from '@ant-design/icons';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import { useRecoilState } from 'recoil';
@@ -22,11 +23,11 @@ export function BoardView() {
         }
     })
 
-    const [data, setData] = React.useState<{id:number, title: string, writer: string, content: string, likeCount:number}>();
+    const [data, setData] = React.useState<{id:number, title: string, writer: string, content: string, likeCount:number, nickname:string}>();
     const viewContainerRef = React.useRef<HTMLDivElement>(null);
 
     const onEdit = () => {
-        router.push(`/workspace/board/edit/${id}`)
+        router.push(`/workspace/board/edit`)
     }
 
     const onDeletePost = () => {
@@ -42,23 +43,38 @@ export function BoardView() {
     }
 
     React.useEffect(() => {
+        if(response){
+            console.log(response.data);
+        }
+        
         setData(response?.data);
         if(viewContainerRef.current){
             viewContainerRef.current.innerHTML = response?.data?.content;
         }
     }, [response])
+
+    function onHeartClick() {
+        axios.post('/post/heart', {'postId' : id});
+        // window.location.reload();        
+    }
     
     return(
     <EditorContainer>
         <div style={{marginBottom:"10px"}}>
-            <h2 style={{fontSize:"28px", fontWeight:"bolder", marginBottom:"5px"}}>{data?.title}</h2>
+            <h2 style={{fontSize:"28px", fontWeight:"bolder", marginBottom:"5px"}}>
+                {data?.title} 
+                    {data?.likeCount !== 0 ? 
+                        <HeartFilled  rev={3} style={{marginLeft:"20px",fontSize:18}} onClick={onHeartClick}/>
+                        : <HeartOutlined rev={4} style={{marginLeft:"20px",fontSize:18}} onClick={onHeartClick}/>
+                    }
+            </h2>
             <div style={{
                 width:"100%",
                 display:"flex",
                 justifyContent:"space-between",
             }}>
                 <span style={{fontSize:"16px", color:'grey'}}>{data?.writer}</span>
-                {data?.writer === user.nickname &&
+                {data?.nickname === user.nickname &&
                     <div style={{marginRight:"10px", display:"flex", alignItems:"center", gap:"10px", cursor:"pointer", fontSize:"12px", fontWeight:"bold"}}>
                         <span onClick={() => {
                             onEdit();
@@ -77,7 +93,6 @@ export function BoardView() {
             marginBottom:"30px"
         }}>
             <span ref={viewContainerRef}></span>
-            <span>{data?.likeCount}</span>
         </div>
         <Comments id={Number(id)}/>
     </EditorContainer>)

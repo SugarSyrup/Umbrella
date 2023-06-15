@@ -100,7 +100,7 @@ export function Comments({id} : IComments) {
                             }}>수정</span>
                             <span onClick={() => {
                                 axios.delete(`/posts/${id}/comments/${comment.commentId}`);
-                                router
+                                window.location.reload();
                             }}>삭제</span>
                         </div>
                     }

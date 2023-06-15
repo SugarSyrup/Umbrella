@@ -45,7 +45,7 @@ export function ProfileForm() {
 
     const { response, error, loading, sendData } = useAxios({
         method: `PUT`,
-        url: `user`,
+        url: `user/update/info`,
         headers : {
             "Content-Type" : "application/json",
         }
