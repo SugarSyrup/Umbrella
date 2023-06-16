@@ -90,13 +90,15 @@ export function WorkspaceSidebar() {
         setOpen(true);
     };
 
-    const handleOk = () => {
+    const handleOk = async () => {
         console.log(formRef.current?.getFieldValue('featureType'))
         if(formRef.current?.getFieldValue('featureType') == 'board'){
-            axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/${workspace.id}/create`, {'title' : formRef.current?.getFieldValue('title')})
+            console.log('1');
+            await axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/${workspace.id}/create`, {'title' : formRef.current?.getFieldValue('title')})
         }
         else if(formRef.current?.getFieldValue('featureType') == 'chatting'){
-            axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/workspace/${workspace.id}/createChatRoom`, {'roomName' : formRef.current?.getFieldValue('title')})
+            console.log('123');
+            await axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/workspace/${workspace.id}/createChatRoom`, {'roomName' : formRef.current?.getFieldValue('title')})
         }
         setConfirmLoading(true);
         setOpen(false);

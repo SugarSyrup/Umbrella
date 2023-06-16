@@ -28,8 +28,8 @@ export function WorkSpaceOrganism() {
         console.log('Failed:', errorInfo);
     };
     
-    const handleOk = () => {
-        axios.post(`workspace/create`, {title : formRef.current?.getFieldValue('title'), description : formRef.current?.getFieldValue('desc')})
+    const handleOk = async () => {
+        await axios.post(`workspace/create`, {title : formRef.current?.getFieldValue('title'), description : formRef.current?.getFieldValue('desc')})
         setConfirmLoading(true);
         setOpen(false);
         setConfirmLoading(false);
