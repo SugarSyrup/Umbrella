@@ -33,7 +33,7 @@ const Editor: NextPage<IEditor> = ({ htmlStr, setHtmlStr, setImgList}) => {
             }
 
             // file 데이터 담아서 서버에 전달하여 이미지 업로드
-            const res = await axios.post('http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/s3/upload', {'image':formData.get('image')}, {
+            const res = await axios.post('https://umbrellaapp.net/s3/upload', {'image':formData.get('image')}, {
                 headers:{
                     'Content-Type': 'multipart/form-data',
                 }

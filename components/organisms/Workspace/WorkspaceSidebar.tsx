@@ -94,11 +94,11 @@ export function WorkspaceSidebar() {
         console.log(formRef.current?.getFieldValue('featureType'))
         if(formRef.current?.getFieldValue('featureType') == 'board'){
             console.log('1');
-            await axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/${workspace.id}/create`, {'title' : formRef.current?.getFieldValue('title')})
+            await axios.post(`https://umbrellaapp.net/${workspace.id}/create`, {'title' : formRef.current?.getFieldValue('title')})
         }
         else if(formRef.current?.getFieldValue('featureType') == 'chatting'){
             console.log('123');
-            await axios.post(`http://ec2-3-39-93-217.ap-northeast-2.compute.amazonaws.com:8800/workspace/${workspace.id}/createChatRoom`, {'roomName' : formRef.current?.getFieldValue('title')})
+            await axios.post(`https://umbrellaapp.net/workspace/${workspace.id}/createChatRoom`, {'roomName' : formRef.current?.getFieldValue('title')})
         }
         setConfirmLoading(true);
         setOpen(false);
